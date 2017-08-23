@@ -59,168 +59,15 @@ for ( var key in imgNormalMap) {
 	 */
 	Sensor.prototype.getSensorInfo = function() {
 		var arr = [];
-		for (var i = 0; i < 10; i++) {
-			var item = {};
-			// 传感器编号
-			item.SensorID = 'L0001_001_016A0' + i.toString();
-			switch (i) {
-			case 0:
-				item.Location = '14103辅运副巷配电点CH4';
-				item.SensorTypeID = '1';
-				item.SensorType = '低浓度甲烷';
-				item.SensorDataID = '1';
-				item.Unit = '%';
-				item.MinMete = 0.00;
-				item.MaxMete = 4.00;
-				item.MinAlarm = 0.50;
-				item.MaxAlarm = 0.80;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.49;
-				item.LResetValue = 0.00;
-				break;
-			case 1:
-				item.Location = '二号煤仓联络巷工作面CH4';
-				item.SensorTypeID = '1';
-				item.SensorType = '高浓度甲烷';
-				item.SensorDataID = '1';
-				item.Unit = '%';
-				item.MinMete = 0.00;
-				item.MaxMete = 4.00;
-				item.MinAlarm = 0.80;
-				item.MaxAlarm = 1.20;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.79;
-				item.LResetValue = 0.00;
-				break;
-			case 2:
-				item.Location = '避难硐室后门外CH4';
-				item.SensorTypeID = '1';
-				item.SensorType = '高浓度甲烷';
-				item.SensorDataID = '1';
-				item.Unit = '%';
-				item.MinMete = 0.00;
-				item.MaxMete = 4.00;
-				item.MinAlarm = 0.80;
-				item.MaxAlarm = 1.20;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.79;
-				item.LResetValue = 0.00;
-				break;
-			case 3:
-				item.Location = 'CO避难硐室后门过渡仓';
-				item.SensorTypeID = '0';
-				item.SensorType = '一氧化碳';
-				item.SensorDataID = '1';
-				item.Unit = 'ppm';
-				item.MinMete = 0.00;
-				item.MaxMete = 500.00;
-				item.MinAlarm = 24.00;
-				item.MaxAlarm = 1.20;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.79;
-				item.LResetValue = 0.00;
-				break;
-			case 4:
-				item.Location = 'WD14201工作面';
-				item.SensorTypeID = '6';
-				item.SensorType = '温度';
-				item.SensorDataID = '1';
-				item.Unit = '℃';
-				item.MinMete = 0.00;
-				item.MaxMete = 50.00;
-				item.MinAlarm = 40.00;
-				item.MaxAlarm = 45.00;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			case 5:
-				item.Location = 'FS北总回风(西)';
-				item.SensorTypeID = '7';
-				item.SensorType = '风速';
-				item.SensorDataID = '1';
-				item.Unit = 'm/s';
-				item.MinMete = 0.00;
-				item.MaxMete = 15.00;
-				item.MinAlarm = 8.00;
-				item.MaxAlarm = 0.00;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			case 6:
-				item.Location = 'O2避难硐室前门外';
-				item.SensorTypeID = '3';
-				item.SensorType = '氧气';
-				item.SensorDataID = '1';
-				item.Unit = '%';
-				item.MinMete = 0.00;
-				item.MaxMete = 25.00;
-				item.MinAlarm = 23.00;
-				item.MaxAlarm = 0.00;
-				item.HCutValue = 18.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			case 7:
-				item.Location = 'WD五采区变电所';
-				item.SensorTypeID = '6';
-				item.SensorType = '温度';
-				item.SensorDataID = '1';
-				item.Unit = '℃';
-				item.MinMete = 0.00;
-				item.MaxMete = 50.00;
-				item.MinAlarm = 40.00;
-				item.MaxAlarm = 45.00;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			case 8:
-				item.Location = 'WD14201工作面';
-				item.SensorTypeID = '6';
-				item.SensorType = '温度';
-				item.SensorDataID = '1';
-				item.Unit = '℃';
-				item.MinMete = 0.00;
-				item.MaxMete = 50.00;
-				item.MinAlarm = 40.00;
-				item.MaxAlarm = 45.00;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			case 9:
-				item.Location = 'CO2避难硐室前门外';
-				item.SensorTypeID = '2';
-				item.SensorType = '二氧化碳';
-				item.SensorDataID = '1';
-				item.Unit = '%';
-				item.MinMete = 0.00;
-				item.MaxMete = 5.00;
-				item.MinAlarm = 1.00;
-				item.MaxAlarm = 0.00;
-				item.HCutValue = 0.00;
-				item.HResetValue = 0.00;
-				item.LCutValue = 0.00;
-				item.LResetValue = 0.00;
-				break;
-			default:
-				break;
+		$.ajax({
+			url : "/sensor",
+			type : "GET",
+			async : false,
+			dataType : "json",
+			success : function(data) {
+				arr = data;
 			}
-
-			arr.push(item);
-		}
-
+		});
 		// 如果数组大于0
 		if (arr.length > 0) {
 			return arr;
@@ -244,11 +91,11 @@ for ( var key in imgNormalMap) {
 				}
 				var length = data.length;
 				for (var i = 0; i < length; i++) {
-					var name = data[i].name;
-					var x = data[i].x;
-					var y = data[i].y;
-					var point = new mxLib.Point(x, y);
-					self.sensorPosition[name] = point;
+					var sensor = data[i];
+					var sensorId = sensor.sensorId;
+					var point = new mxLib.Point(sensor.x, sensor.y);
+					point.systemId = sensor.systemId;
+					self.sensorPosition[sensorId] = point;
 				}
 			},
 			error : function(msg) {
@@ -262,39 +109,42 @@ for ( var key in imgNormalMap) {
 	 */
 	Sensor.prototype.savePosition = function() {
 		var data = [];
-		for (var name in this.sensorPosition) {
-			var point = this.sensorPosition[name];
-			var x = point.x;
-			var y = point.y;
+		for ( var sensorId in this.sensorPosition) {
+			var point = this.sensorPosition[sensorId];
 			var position = {};
-			position.name = name;
-			position.x = x;
-			position.y = y;
+			position.sensorId = sensorId;
+			position.systemId = point.systemId;
+			position.x = point.x;
+			position.y = point.y;
 			data.push(position);
 		}
 		if (data.length > 0) {
 			$.ajax({
-				url : "/sensorposition",
+				url : "/sensorposition/update",
 				type : "POST",
 				async : true,
 				cache : false,
-				contentType: "application/json",
-				data: JSON.stringify(data),
+				contentType : "application/json",
+				data : JSON.stringify(data),
 				dataType : "json",
-				success: function(data) {
+				success : function(data) {
 					alert("保存成功！");
 				},
-				error: function(data) {
-					
+				error : function(data) {
+
 				}
 			});
 		}
-		
+
 		// 要删除的监测点
 		var removedData = [];
-		for (var name in this.removedSensorPosition) {
+		for ( var sensorId in this.removedSensorPosition) {
+			var point = this.removedSensorPosition[sensorId];
 			var position = {};
-			position.name = name;
+			position.sensorId = sensorId;
+			position.systemId = point.systemId;
+			position.x = point.x;
+			position.y = point.y;
 			removedData.push(position);
 		}
 		if (removedData.length > 0) {
@@ -303,17 +153,17 @@ for ( var key in imgNormalMap) {
 				type : "POST",
 				async : true,
 				cache : false,
-				contentType: "application/json",
-				data: JSON.stringify(removedData),
+				contentType : "application/json",
+				data : JSON.stringify(removedData),
 				dataType : "json",
-				success: function(data) {
+				success : function(data) {
 				},
-				error: function(data) {
+				error : function(data) {
 				}
 			});
 		}
 	}
-	
+
 	/**
 	 * 添加一个传感器覆盖物
 	 * 
@@ -327,32 +177,28 @@ for ( var key in imgNormalMap) {
 				return;
 			}
 		}
-
 		// 判断是否有效
 		if ($.isEmptyObject(opts)) {
 			return;
 		}
 
 		// 如果opts没有下列属性则返回
-		if (!opts.hasOwnProperty("SensorID")
-				|| !opts.hasOwnProperty("SensorTypeID"))
+		if (!opts.hasOwnProperty("sensorId")
+				|| !opts.hasOwnProperty("sensorType"))
 			return;
 
-		// 获取测点ID
-		var sensorId = opts.SensorID;
-		// 获取测点ID
-		var typeId = opts.SensorTypeID;
-		// 获取系统坐标x
+		// 获取测点ID 坐标x/y
+		var sensorId = opts.sensorId;
 		var x = opts.x;
-		// 获取系统坐标y
 		var y = opts.y;
-
-		// 判断格式是否正确
 		if (!($.isNumeric(x)) || !($.isNumeric(y))) {
 			return;
 		}
+		var point = new mxLib.Point(x, y);
+		point.systemId = opts.systemId;
 
 		// 根据类型判断图片基本路径
+		var typeId = opts.sensorType;
 		var strBasePath = scriptBaseDir + "dataMine/image/";
 
 		// 根据类测点型判断需要哪一张图片
@@ -366,10 +212,10 @@ for ( var key in imgNormalMap) {
 
 		// 实时值
 		var ssz = this.getValue(sensorId);
-    	opts.ssz = ssz;
+		opts.ssz = ssz;
 		var text = "";
-		if (opts.hasOwnProperty("Unit")) {
-			text = opts.ssz + opts.Unit;
+		if (opts.hasOwnProperty("unit")) {
+			text = opts.ssz + opts.unit;
 		} else {
 			text = opts.ssz;
 		}
@@ -383,7 +229,6 @@ for ( var key in imgNormalMap) {
 				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;">'
 				+ text + '</label>';
 
-		var point = new mxLib.Point(x, y);
 		var myRichMarker = new mxLib.RichMarker(html, point, {
 			"anchor" : new mxLib.Size(-18, -27),
 			"enableDragging" : false
@@ -409,6 +254,7 @@ for ( var key in imgNormalMap) {
 
 		// 添加到map
 		this.sensorMap[sensorId] = myRichMarker;
+		this.updatePoint(sensorId, point);
 
 		// 添加事件响应
 		this.addEvent(myRichMarker);
@@ -423,7 +269,7 @@ for ( var key in imgNormalMap) {
 		}
 
 		// 传感器编号
-		var sensorID = marker.SensorID;
+		var sensorId = marker.sensorId;
 
 		// 数据类型ID
 		var sensorDataID = marker.SensorDataID;
@@ -433,6 +279,7 @@ for ( var key in imgNormalMap) {
 				.addEventListener(
 						"click",
 						function() {
+							return;
 							// 信息窗口坐标
 							var point = marker.getPosition();
 
@@ -454,10 +301,8 @@ for ( var key in imgNormalMap) {
 							}
 
 							// 运用ifame框架
-							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src="
-									+ scriptBaseDir
-									+ "dataMine/html/PropertyTip.html?sensorID="
-									+ sensorID + "></iframe>";
+							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/sensor/" + 
+							sensorId + "'></iframe>";
 
 							// 弹出信息窗口
 							var infoWindow = new mxLib.InfoWindow(map, html,
@@ -469,18 +314,18 @@ for ( var key in imgNormalMap) {
 		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir
 				+ "dataMine/image/删除.gif", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
-				var marker = self.sensorMap[sensorID];
+				var marker = self.sensorMap[sensorId];
 				if (!$.isEmptyObject(marker)
 						&& marker instanceof mxLib.RichMarker) {
 					map.removeOverlay(marker);
-					window.sensor.removePoint(sensorID);
+					window.sensor.removePoint(sensorId);
 				}
 			}
 		});
 		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir
 				+ "dataMine/image/编辑.png", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
-				var marker = self.sensorMap[sensorID];
+				var marker = self.sensorMap[sensorId];
 				if (!$.isEmptyObject(marker)
 						&& marker instanceof mxLib.RichMarker) {
 					marker.enableDragging();
@@ -529,9 +374,9 @@ for ( var key in imgNormalMap) {
 				}
 				var length = data.length;
 				for (var i = 0; i < length; i++) {
-					var name = data[i].name;
+					var sensorId = data[i].sensorId;
 					var value = data[i].value;
-					self.sensorData[name] = value;
+					self.sensorData[sensorId] = value;
 				}
 				self.updateInternal();
 			},
@@ -561,18 +406,18 @@ for ( var key in imgNormalMap) {
 			if ($.isEmptyObject(sensorObj))
 				continue;
 
-			if (sensorObj.hasOwnProperty("SensorTypeID")
-					&& sensorObj.hasOwnProperty("SensorID")) {
+			if (sensorObj.hasOwnProperty("sensorType")
+					&& sensorObj.hasOwnProperty("sensorId")) {
 				// 传感器编号
-				var sensorID = sensorObj.SensorID;
+				var sensorId = sensorObj.sensorId;
 				// 类型编号
-				var sensorTypeID = sensorObj.SensorTypeID;
+				var sensorTypeID = sensorObj.sensorType;
 				// 单位
-				var unit = sensorObj.Unit;
+				var unit = sensorObj.unit;
 
 				var value = "";
-				if (this.sensorData.hasOwnProperty(sensorID)) {
-					value = this.sensorData[sensorID];
+				if (this.sensorData.hasOwnProperty(sensorId)) {
+					value = this.sensorData[sensorId];
 				}
 				// 如果为温度
 				if (sensorTypeID == 6) {
@@ -580,7 +425,7 @@ for ( var key in imgNormalMap) {
 				}
 				value += unit;
 				// 修改实时值
-				self.setValue(sensorID, value);
+				self.setValue(sensorId, value);
 			}
 		}
 	}
@@ -601,48 +446,44 @@ for ( var key in imgNormalMap) {
 	/**
 	 * 更新坐标
 	 * 
-	 * @param sensorID测点编号
+	 * @param sensorId测点编号
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.updatePoint = function(sensorID, point) {
-		if ($.isEmptyObject(this.sensorPosition))
-			return;
-		this.sensorPosition[sensorID] = point;
+	Sensor.prototype.updatePoint = function(sensorId, point) {
+		this.sensorPosition[sensorId] = point;
 	}
 
 	/**
 	 * 得到点坐标
 	 * 
-	 * @param sensorID测点编号
+	 * @param sensorId测点编号
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.getPoint = function(sensorID) {
+	Sensor.prototype.getPoint = function(sensorId) {
 		if ($.isEmptyObject(this.sensorPosition))
 			return null;
 
-		if (this.sensorPosition.hasOwnProperty(sensorID)) {
-			return this.sensorPosition[sensorID];
-		} else {
-			return null;
+		if (this.sensorPosition.hasOwnProperty(sensorId)) {
+			return this.sensorPosition[sensorId];
 		}
 	}
 
 	/**
 	 * 删除点坐标
 	 * 
-	 * @param sensorID测点编号
+	 * @param sensorId测点编号
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.removePoint = function(sensorID) {
+	Sensor.prototype.removePoint = function(sensorId) {
 		if ($.isEmptyObject(this.sensorPosition))
 			return null;
 
-		if (this.sensorPosition.hasOwnProperty(sensorID)) {
-			this.removedSensorPosition[sensorID] = this.sensorPosition[sensorID];
-			delete this.sensorPosition[sensorID];
+		if (this.sensorPosition.hasOwnProperty(sensorId)) {
+			this.removedSensorPosition[sensorId] = this.sensorPosition[sensorId];
+			delete this.sensorPosition[sensorId];
 		}
 	}
 
@@ -651,11 +492,11 @@ for ( var key in imgNormalMap) {
 	 * 
 	 * @pararm 测点ID
 	 */
-	Sensor.prototype.dolly = function(sensorID) {
-		if (sensorID == "")
+	Sensor.prototype.dolly = function(sensorId) {
+		if (sensorId == "")
 			return;
 
-		var marker = this.sensorMap[sensorID];
+		var marker = this.sensorMap[sensorId];
 		if ($.isEmptyObject(marker))
 			return;
 
@@ -701,7 +542,7 @@ for ( var key in imgNormalMap) {
 	}
 
 	/**
-	 * 从href中查询相关参数(?sysID=12&sensorID="001A01")
+	 * 从href中查询相关参数(?sysID=12&sensorId="001A01")
 	 * 
 	 * @param sHref网址
 	 * @param 属性名称

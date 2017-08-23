@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>传感器属性页面</title>
+    <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
+    <script src="mx/mxlib/jquery-1.11.2.min.js"></script>
+    <script src="mx/dataMine/easyui/jquery.easyui.min.js"></script>
+    <script src="mx/dataMine/easyui/datagrid-groupview.js"></script>
+</head>
+<body>
+    <div id="proertyTip"></div>
+</body>
+<script type="text/javascript">
+    //监测属性提示
+    function jcProperty(sensorID) {
+
+        $('#proertyTip').propertygrid({
+            showGroup: true,
+            fitColumns: true,
+            columns: [[
+                {
+                    field: 'name',
+                    title: '名称',
+                    width: 30,
+                    align: 'left'
+                },
+                {
+                    field: 'value',
+                    title: '值',
+                    width: 70,
+                    align: 'center',
+                    styler: function (value, row, index) {
+                        if (row.name == "0态值:") {
+                            return 'color:green;';
+                        }
+                        if (row.name == "1态值:") {
+                            return 'color:red;';
+                        }
+                        if (row.name == "2态值:") {
+                            return 'color:blue;';
+                        }
+                        if (row.name == "量程下限:" || row.name == "量程上限:") {
+                            return 'color:blue;';
+                        }
+                        if (row.name == "报警下限:" || row.name == "报警上限:") {
+                            return 'color:red;';
+                        }
+                        if (row.name == "断电上限:" || row.name == "断电下限:" || row.name == "复电上限:" || row.name == "复电下限:") {
+                            return 'color:green;';
+                        }
+                    }
+                }
+            ]],
+            showHeader: false,
+        });
+
+        //得到属性对象
+        var sensorObj = parent.sensor.sensorMap[sensorID];
+        if ($.isEmptyObject(sensorObj))
+            return;
+
+        var arr = [];
+        //遍历
+        if (sensorObj.hasOwnProperty("SensorID") && sensorObj["SensorID"] != "") {
+            var sensorIDobj = {};
+            sensorIDobj.name = "测点编号:";
+            sensorIDobj.value = sensorObj["SensorID"];
+            sensorIDobj.group = "基本属性";
+            sensorIDobj.editor = "text";
+            //添加到数组
+            arr.push(sensorIDobj);
+        }
+        if (sensorObj.hasOwnProperty("Location") && sensorObj["Location"] != "") {
+            var locationObj = {};
+            locationObj.name = "安装位置:";
+            locationObj.value = sensorObj["Location"];
+            locationObj.group = "基本属性";
+            locationObj.editor = "text";
+            //添加到数组
+            arr.push(locationObj);
+        }
+        if (sensorObj.hasOwnProperty("SensorType") && sensorObj["SensorType"] != "") {
+            var sensorTypeObj = {};
+            sensorTypeObj.name = "测点类型:";
+            sensorTypeObj.value = sensorObj["SensorType"];
+            sensorTypeObj.group = "基本属性";
+            sensorTypeObj.editor = "text";
+            //添加到数组
+            arr.push(sensorTypeObj);
+        }
+        if (sensorObj.hasOwnProperty("MinMete") && sensorObj["MinMete"] != "") {
+            var minMeteDescObj = {};
+            minMeteDescObj.name = "量程下限:";
+            minMeteDescObj.value = sensorObj["MinMete"];
+            minMeteDescObj.group = "基本属性";
+            minMeteDescObj.editor = "text";
+            //添加到数组
+            arr.push(minMeteDescObj);
+        }
+        if (sensorObj.hasOwnProperty("MaxMete") && sensorObj["MaxMete"] != "") {
+            var maxMeteDescObj = {};
+            maxMeteDescObj.name = "量程上限:";
+            maxMeteDescObj.value = sensorObj["MaxMete"];
+            maxMeteDescObj.group = "基本属性";
+            maxMeteDescObj.editor = "text";
+            //添加到数组
+            arr.push(maxMeteDescObj);
+        }
+        if (sensorObj.hasOwnProperty("MinAlarm") && sensorObj["MinAlarm"] != "") {
+            var minAlarmDescObj = {};
+            minAlarmDescObj.name = "报警下限:";
+            minAlarmDescObj.value = sensorObj["MinAlarm"];
+            minAlarmDescObj.group = "基本属性";
+            minAlarmDescObj.editor = "text";
+            //添加到数组
+            arr.push(minAlarmDescObj);
+        }
+        if (sensorObj.hasOwnProperty("MaxAlarm") && sensorObj["MaxAlarm"] != "") {
+            var maxAlarmDescObj = {};
+            maxAlarmDescObj.name = "报警上限:";
+            maxAlarmDescObj.value = sensorObj["MaxAlarm"];
+            maxAlarmDescObj.group = "基本属性";
+            maxAlarmDescObj.editor = "text";
+            //添加到数组
+            arr.push(maxAlarmDescObj);
+        }
+        if (sensorObj.hasOwnProperty("HCutValue") && sensorObj["HCutValue"] != "") {
+            var hCutValueDescObj = {};
+            hCutValueDescObj.name = "断电上限:";
+            hCutValueDescObj.value = sensorObj["HCutValue"];
+            hCutValueDescObj.group = "基本属性";
+            hCutValueDescObj.editor = "text";
+            //添加到数组
+            arr.push(hCutValueDescObj);
+        }
+        if (sensorObj.hasOwnProperty("LCutValue") && sensorObj["LCutValue"] != "") {
+            var hResetValueObj = {};
+            hResetValueObj.name = "断电下限:";
+            hResetValueObj.value = sensorObj["LCutValue"];
+            hResetValueObj.group = "基本属性";
+            hResetValueObj.editor = "text";
+            //添加到数组
+            arr.push(hResetValueObj);
+        }
+        if (sensorObj.hasOwnProperty("HResetValue") && sensorObj["HResetValue"] != "") {
+            var hResetValueObj = {};
+            hResetValueObj.name = "复电上限:";
+            hResetValueObj.value = sensorObj["HResetValue"];
+            hResetValueObj.group = "基本属性";
+            hResetValueObj.editor = "text";
+            //添加到数组
+            arr.push(hResetValueObj);
+        }
+        if (sensorObj.hasOwnProperty("LResetValue") && sensorObj["LResetValue"] != "") {
+            var hResetValueObj = {};
+            hResetValueObj.name = "复电下限:";
+            hResetValueObj.value = sensorObj["LResetValue"];
+            hResetValueObj.group = "基本属性";
+            hResetValueObj.editor = "text";
+            //添加到数组
+            arr.push(hResetValueObj);
+        }
+        if (sensorObj.hasOwnProperty("Xs0") && sensorObj["Xs0"] != "") {
+            var xs0ValueObj = {};
+            xs0ValueObj.name = "0态值:";
+            xs0ValueObj.value = sensorObj["Xs0"];
+            xs0ValueObj.group = "基本属性";
+            xs0ValueObj.editor = "text";
+            //添加到数组
+            arr.push(xs0ValueObj);
+        }
+        if (sensorObj.hasOwnProperty("Xs1") && sensorObj["Xs1"] != "") {
+            var xs1ValueObj = {};
+            xs1ValueObj.name = "1态值:";
+            xs1ValueObj.value = sensorObj["Xs1"];
+            xs1ValueObj.group = "基本属性";
+            xs1ValueObj.editor = "text";
+            //添加到数组
+            arr.push(xs1ValueObj);
+        }
+        if (sensorObj.hasOwnProperty("Xs2") && sensorObj["Xs2"] != "") {
+            var xs2ValueObj = {};
+            xs2ValueObj.name = "2态值:";
+            xs2ValueObj.value = sensorObj["Xs2"];
+            xs2ValueObj.group = "基本属性";
+            xs2ValueObj.editor = "text";
+            //添加到数组
+            arr.push(xs2ValueObj);
+        }
+
+        var json = {};
+        json.total = arr.length;
+        json.rows = arr;
+
+        //加载数据
+        $("#proertyTip").propertygrid('loadData', json);
+    }
+
+    $(function () {
+
+        //html页面地址
+        var href = decodeURI(window.location.href);
+
+        //得到测点编号
+        var sensorID = parent.sensor.getArgsFromHref(href, "sensorID");
+
+        //调用监测属性查询
+        jcProperty(sensorID);
+    });
+
+</script>
+</html>

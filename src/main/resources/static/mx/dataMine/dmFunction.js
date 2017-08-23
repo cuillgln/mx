@@ -45,19 +45,18 @@ function jcdManage() {
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
-            { field: 'SensorID', title: '测点编号', width: 100, align: 'center', hidden:true},
-            { field: 'Location', title: '安装位置', width: 120, align: 'center' },
-            { field: 'SensorType', title: '类型', width: 75, align: 'center' },
-            { field: 'Unit', title: '单位', width: 75, align: 'center', hidden: true },
-            { field: 'SensorDataID', title: '数据类型', width: 75, align: 'center', hidden: true },
-            { field: 'MinMete', title: '量程下限', width: 90, align: 'center', hidden: true },
-            { field: 'MaxMete', title: '量程上限', width: 90, align: 'center', hidden: true },
-            { field: 'MinAlarm', title: '报警下限', width: 90, align: 'center', hidden: true },
-            { field: 'MaxAlarm', title: '报警上限', width: 90, align: 'center', hidden: true },
-            { field: 'HCutValue', title: '断电上限', width: 90, align: 'center', hidden: true },
-            { field: 'HResetValue', title: '复电上限', width: 90, align: 'center', hidden: true },
-            { field: 'LCutValue', title: '断电下限', width: 90, align: 'center', hidden: true },
-            { field: 'LResetValue', title: '复电下限', width: 30, align: 'center', hidden: true },
+            { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
+            { field: 'sensorId', title: '测点编号', width: 100, align: 'center', hidden:true},
+            { field: 'sensorName', title: '名称', width: 75, align: 'center', hidden: true },
+            { field: 'location', title: '安装位置', width: 120, align: 'center' },
+            { field: 'sensorTypeName', title: '类型', width: 75, align: 'center' },
+            { field: 'unit', title: '单位', width: 75, align: 'center', hidden: true },
+            { field: 'meteMinValue', title: '量程下限', width: 90, align: 'center', hidden: true },
+            { field: 'meteMaxValue', title: '量程上限', width: 90, align: 'center', hidden: true },
+            { field: 'alarmMinValue', title: '报警下限', width: 90, align: 'center', hidden: true },
+            { field: 'alarmMaxValue', title: '报警上限', width: 90, align: 'center', hidden: true },
+            { field: 'powerCutValue', title: '断电值', width: 90, align: 'center', hidden: true },
+            { field: 'powerResetValue', title: '复电值', width: 90, align: 'center', hidden: true },
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true },
             { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true },
             {
@@ -75,9 +74,9 @@ function jcdManage() {
     //单击列事件
     $('#jcManage').datagrid({
         onDblClickRow: function (index, row) {
-            var sensorID = row.SensorID;
+            var sensorId = row.sensorId;
             //执行定位脚本
-            MetaMapX.CurViewEvaluateJavaScript("sensor.dolly('" + sensorID + "')");
+            MetaMapX.CurViewEvaluateJavaScript("sensor.dolly('" + sensorId + "')");
         },
         onClickCell: function (index, field, value) {
             if (field == "pick") {
@@ -87,21 +86,19 @@ function jcdManage() {
 
                 //构造对象
                 var opts = {};
-                opts.SensorID = curRow["SensorID"];
+                opts.systemId = curRow["systemId"];
+                opts.sensorId = curRow["sensorId"];
                 opts.SysID = curRow["SysID"];
-                opts.Location = curRow["Location"];
-                opts.SensorTypeID = curRow["SensorTypeID"];
-                opts.SensorType = curRow["SensorType"];
-                opts.SensorDataID = curRow["SensorDataID"];
-                opts.Unit = curRow["Unit"];
-                opts.MinMete = curRow["MinMete"];
-                opts.MaxMete = curRow["MaxMete"];
-                opts.MinAlarm = curRow["MinAlarm"];
-                opts.MaxAlarm = curRow["MaxAlarm"];
-                opts.HCutValue = curRow["HCutValue"];
-                opts.HResetValue = curRow["HResetValue"];
-                opts.LCutValue = curRow["LCutValue"];
-                opts.LResetValue = curRow["LResetValue"];
+                opts.location = curRow["location"];
+                opts.sensorType = curRow["sensorType"];
+                opts.sensorTypeName = curRow["sensorTypeName"];
+                opts.unit = curRow["unit"];
+                opts.meteMinValue = curRow["meteMinValue"];
+                opts.meteMaxValue = curRow["meteMaxValue"];
+                opts.alarmMinValue = curRow["alarmMinValue"];
+                opts.alarmMaxValue = curRow["alarmMaxValue"];
+                opts.powerCutValue = curRow["powerCutValue"];
+                opts.powerResetValue = curRow["powerResetValue"];
                 
                 var strOpts = "";
                 try{

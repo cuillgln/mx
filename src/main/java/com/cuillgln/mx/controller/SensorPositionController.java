@@ -1,15 +1,16 @@
 package com.cuillgln.mx.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cuillgln.mx.domain.SensorPosition;
+import com.cuillgln.mx.entity.SensorPosition;
+import com.cuillgln.mx.service.SensorPositionService;
 
 /**
  * 传感器位置
@@ -20,44 +21,35 @@ import com.cuillgln.mx.domain.SensorPosition;
 @RestController
 public class SensorPositionController {
 
+	@Autowired
+	private SensorPositionService sensorPositionService;
+
 	@GetMapping("/sensorposition")
 	public List<SensorPosition> list() {
-		List<SensorPosition> positionList = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
-			SensorPosition position = new SensorPosition();
-			String sensorName = "L0001_001_016A0" + i;
-			position.setName(sensorName);
-			position.setX(7.0);
-			position.setY(3.0);
-			positionList.add(position);
-		}
-		return positionList;
+		return sensorPositionService.list();
 	}
 
-	@PostMapping("/sensorposition")
+	@PostMapping("/sensorposition/update")
 	public String update(@RequestBody List<SensorPosition> positionList) {
-		System.out.println(positionList.size());
+		sensorPositionService.save(positionList);
 		return "{\"result\":\"success\"}";
 	}
-	
+
 	@PostMapping("/sensorposition/remove")
 	public String remove(@RequestBody List<SensorPosition> positionList) {
-		System.out.println(positionList.size());
+		sensorPositionService.remove(positionList);
 		return "{\"result\":\"success\"}";
 	}
 
 	@GetMapping("/sensorposition/{id}")
-	public SensorPosition get(String id) {
+	public SensorPosition get(Long id) {
 		SensorPosition position = new SensorPosition();
-		position.setName(id);
-		position.setX(7.0);
-		position.setY(3.0);
 
 		return position;
 	}
 
 	@PutMapping("/sensorposition/{id}")
-	public SensorPosition put(SensorPosition position) {
+	public SensorPosition put(Long id, SensorPosition position) {
 
 		return position;
 	}

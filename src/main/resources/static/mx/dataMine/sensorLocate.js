@@ -25,11 +25,15 @@ LocateCmd.prototype.start = function (map) {
     var data = this.opts.rows;
     for (var i = 0; i < total; i++) {
     	var sensor = data[i];
-    	var sensorId = sensor.SensorID;
+    	var sensorId = sensor.sensorId;
     	// TODO 此处将坐标
     	var point = window.sensor.getPoint(sensorId);
+    	if ($.isEmptyObject(point)) {
+    		continue;
+    	}
     	sensor.x = point.x;
     	sensor.y = point.y;
+    	sensor.systemId = point.systemId;
     	
     	// 判断x/y
     	var x = sensor.x;

@@ -41,7 +41,7 @@ PickCmd.prototype.start = function (map) {
 
     //根据类型判断需要哪一张图片
     var strTotalPath = "";
-    var typeId = this.opts.SensorTypeID;
+    var typeId = this.opts.sensorType;
     if (!$.isEmptyObject(imgNormalMap)) {
         //获取测点对应的类型id
         var value = imgNormalMap[typeId];
@@ -95,7 +95,6 @@ PickCmd.prototype.mousemove = function (e, data) {
 PickCmd.prototype.leftMouseup = function (e, data) {
     var point = mxLib.Util.getEventPoint(this.map, e);
     this.point = point;
-
     //手动结束命令
     this.end(false);
 
@@ -105,7 +104,7 @@ PickCmd.prototype.leftMouseup = function (e, data) {
     }
 
     //添加到sensor中
-    if ($.isEmptyObject(sensor))
+    if ($.isEmptyObject(window.sensor))
         return;
 
     //坐标
@@ -113,12 +112,7 @@ PickCmd.prototype.leftMouseup = function (e, data) {
     this.opts.y = this.point.y;
 
     //添加到测点
-    sensor.addSensor(this.opts);
-
-    //保存测点坐标
-    if (this.opts.hasOwnProperty("SensorID")) {
-        window.sensor.updatePoint(this.opts.SensorID, this.point);
-    }
+    window.sensor.addSensor(this.opts);
 }
 /**
 * 抽象方法，结束命令
