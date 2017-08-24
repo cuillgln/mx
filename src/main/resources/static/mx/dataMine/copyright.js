@@ -29,7 +29,7 @@ LogControl.prototype.initialize = function (map) {
     imgLog.style.top = '6px',
     imgLog.style.width = '70px';
     imgLog.style.height = '16px';
-    imgLog.src = scriptBaseDir + 'dataMine/image/元图地图.png';
+    imgLog.src = scriptBaseDir + 'dataMine/image/metamap.png';
     div.appendChild(imgLog);
 
     //标识

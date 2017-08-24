@@ -17,4 +17,4 @@ include(scriptBaseDir + "dataMine/sensorLocate.js");
 include(scriptBaseDir + "dataMine/copyright.js");
 
 //二次开发入口文件 加载完成了dom后
-domLoadedInclude(scriptBaseDir + "main.js");
+domLoadedInclude(scriptBaseDir + "Main.js");

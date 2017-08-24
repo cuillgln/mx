@@ -65,7 +65,7 @@ function jcdManage() {
                 width: 30,
                 align: 'center',
                 formatter: function (value, row, index) {
-                    return '<img src="mx/dataMine/image/坐标拾取.png"/>';
+                    return '<img src="mx/dataMine/image/pick.png"/>';
                 }
             }
         ]]

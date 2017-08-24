@@ -312,7 +312,7 @@ for ( var key in imgNormalMap) {
 
 		var self = this;
 		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir
-				+ "dataMine/image/删除.gif", "", function(e) {
+				+ "dataMine/image/del.gif", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
 				var marker = self.sensorMap[sensorId];
 				if (!$.isEmptyObject(marker)
@@ -323,7 +323,7 @@ for ( var key in imgNormalMap) {
 			}
 		});
 		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir
-				+ "dataMine/image/编辑.png", "", function(e) {
+				+ "dataMine/image/edit.png", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
 				var marker = self.sensorMap[sensorId];
 				if (!$.isEmptyObject(marker)
@@ -523,7 +523,7 @@ for ( var key in imgNormalMap) {
 		// 添加定位覆盖物
 		var sizeDolly = new mxLib.Size(8, 8);
 		var myIconDolly = new mxLib.Icon(scriptBaseDir
-				+ "dataMine/image/定位.png", new mxLib.Size(16, 16), {
+				+ "dataMine/image/locate.png", new mxLib.Size(16, 16), {
 			anchor : sizeDolly
 		});
 		var markerDolly = new mxLib.Marker(point, {
