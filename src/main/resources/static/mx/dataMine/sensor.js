@@ -349,12 +349,13 @@ for ( var key in imgNormalMap) {
 							var opts = {
 								width : 240,
 								height : 220,
-								title : "测点定义信息查询"
+								title : "传感器信息查询"
 							};
 
+							var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + sensorId;
 							// 运用ifame框架
-							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/sensorinfo?sensorId=" + 
-							sensorId + "'></iframe>";
+							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='"
+								+ sensorInfoUrl + "'></iframe>";
 
 							// 弹出信息窗口
 							var infoWindow = new mxLib.InfoWindow(map, html, opts);
