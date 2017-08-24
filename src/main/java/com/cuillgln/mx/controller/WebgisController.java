@@ -1,5 +1,6 @@
 package com.cuillgln.mx.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,9 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class WebgisController {
+
+	@Value("${app.map.name}")
+	private String baseMap;
 
 	@RequestMapping("/")
 	public String index(WebRequest request, Model model) {
@@ -18,8 +22,7 @@ public class WebgisController {
 		} else {
 			model.addAttribute("type", "application/metamap2d");
 		}
-		model.addAttribute("rootpath", request.getContextPath());
-
+		model.addAttribute("baseMap", baseMap);
 		return "webgis";
 	}
 

@@ -14,6 +14,13 @@
 </body>
 <script th:inline="javascript">
 /*<![CDATA[*/
+$(function () {
+    //得到测点编号
+    //调用监测属性查询
+    var sensorId = /*[[${sensorId}]]*/ 'sensor_9001';
+    jcProperty(sensorId);
+});
+
 //监测属性提示
 function jcProperty(sensorId) {
 
@@ -139,12 +146,6 @@ function jcProperty(sensorId) {
     $("#proertyTip").propertygrid('loadData', json);
 }
 
-$(function () {
-    //得到测点编号
-    //调用监测属性查询
-    var sensorId = /*[[${sensorId}]]*/ 'sensor_9001';
-    jcProperty(sensorId);
-});
 /*]]>*/
 </script>
 </html>

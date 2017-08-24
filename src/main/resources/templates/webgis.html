@@ -24,7 +24,8 @@
         <object th:classid="${classid}" th:type="${type}" id="MetaMapX" codebase="" width="100%" height="450px"></object>
     </div>
 </body>
-<script type="text/javascript">
+<script th:inline="javascript">
+/*<![CDATA[*/
 $(function () {
     //收缩
     $('#cc').layout('collapse', 'west');
@@ -69,19 +70,11 @@ function openDwg() {
     var webUrl = strFullPath.substring(0, index);
 
     //设置网站根目录
-    MetaMapX.SetWebRootPath(webUrl + "/");
-
     //设置元图脚本API路径，相对于根目录地址
-    MetaMapX.SetMapScriptPath("mx/");
-
-    //新增空白view,目的为了传入扩展数据
-    MetaMapX.AddView("mmap");
-
-    //设置扩展数据,view层通过MvHost.GetData("mineId")来取出扩展数据
-    MetaMapX.CurViewSetData("mineId", "1");
-
     //打开图形，第二个参数表示是否新增View，第三个参数表示view名称
-    var strPath = webUrl + "/mx/dataMine/dwg/d.dwg";
+    MetaMapX.SetWebRootPath(webUrl + "/");
+    MetaMapX.SetMapScriptPath("mx/");
+    var strPath = webUrl + "/" + /*[[${baseMap}]]*/ "dwg/d.dwg";
     MetaMapX.OpenDwg(strPath, false, "");
 }
 
@@ -105,5 +98,6 @@ function addClickEvent() {
     $(".ribbon-group").css("height", 60);
     $(".ribbon-group-sep").css("height", 60);
 }
+/*]]>*/
 </script>
 </html>
