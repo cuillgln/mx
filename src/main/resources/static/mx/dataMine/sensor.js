@@ -57,12 +57,12 @@ for ( var key in imgNormalMap) {
 	}
 
 	/**
-	 * 加载各类专业定义数据
+	 * 加载传感器基本数据
 	 */
 	Sensor.prototype.getSensorInfo = function() {
 		var arr = [];
 		$.ajax({
-			url : "/sensor",
+			url : contextPath + "/sensor",
 			type : "GET",
 			async : false,
 			dataType : "json",
@@ -75,14 +75,75 @@ for ( var key in imgNormalMap) {
 			return arr;
 		}
 	}
+	
+	/**
+	 * 更新数据（定时器更新）
+	 */
+	Sensor.prototype.getData = function() {
+		var self = this;
+		$.ajax({
+			url : contextPath + "/sensordata",
+			type : "GET",
+			async : true,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if ($.isEmptyObject(data)) {
+					return;
+				}
+				var length = data.length;
+				for (var i = 0; i < length; i++) {
+					var sensorId = data[i].sensorId;
+					var value = data[i].value;
+					self.sensorData[sensorId] = value;
+				}
+				self.updateInternal();
+			},
+			error : function(msg) {
+
+			}
+		});
+	}
+	
+	// 设置实时值
+	Sensor.prototype.updateInternal = function() {
+		var self = this;
+		for ( var i in self.sensorMap) {
+			var sensorObj = self.sensorMap[i];
+			if ($.isEmptyObject(sensorObj))
+				continue;
+
+			if (sensorObj.hasOwnProperty("sensorType")
+					&& sensorObj.hasOwnProperty("sensorId")) {
+				// 传感器编号
+				var sensorId = sensorObj.sensorId;
+				// 类型编号
+				var sensorTypeID = sensorObj.sensorType;
+				// 单位
+				var unit = sensorObj.unit;
+
+				var value = "";
+				if (this.sensorData.hasOwnProperty(sensorId)) {
+					value = this.sensorData[sensorId];
+				}
+				// 如果为温度
+				// if (sensorTypeID == 6) {
+				//		value += 20;
+				// }
+				value += unit;
+				// 修改实时值
+				self.setValue(sensorId, value);
+			}
+		}
+	}
 
 	/**
-	 * 取得传感器位置
+	 * 加载传感器位置
 	 */
 	Sensor.prototype.getPosition = function() {
 		var self = this;
 		$.ajax({
-			url : "/sensorposition",
+			url : contextPath + "/sensorposition",
 			type : "GET",
 			async : true,
 			cache : false,
@@ -107,7 +168,7 @@ for ( var key in imgNormalMap) {
 	}
 
 	/**
-	 * 更新传感器位置
+	 * 保存传感器位置
 	 */
 	Sensor.prototype.savePosition = function() {
 		var data = [];
@@ -122,7 +183,7 @@ for ( var key in imgNormalMap) {
 		}
 		if (data.length > 0) {
 			$.ajax({
-				url : "/sensorposition/update",
+				url : contextPath + "/sensorposition/update",
 				type : "POST",
 				async : true,
 				cache : false,
@@ -151,7 +212,7 @@ for ( var key in imgNormalMap) {
 		}
 		if (removedData.length > 0) {
 			$.ajax({
-				url : "/sensorposition/remove",
+				url : contextPath + "/sensorposition/remove",
 				type : "POST",
 				async : true,
 				cache : false,
@@ -338,34 +399,6 @@ for ( var key in imgNormalMap) {
 	}
 
 	/**
-	 * 更新数据（定时器更新）
-	 */
-	Sensor.prototype.getData = function() {
-		var self = this;
-		$.ajax({
-			url : "/sensordata",
-			type : "GET",
-			async : true,
-			cache : false,
-			dataType : "json",
-			success : function(data) {
-				if ($.isEmptyObject(data)) {
-					return;
-				}
-				var length = data.length;
-				for (var i = 0; i < length; i++) {
-					var sensorId = data[i].sensorId;
-					var value = data[i].value;
-					self.sensorData[sensorId] = value;
-				}
-				self.updateInternal();
-			},
-			error : function(msg) {
-
-			}
-		});
-	}
-	/**
 	 * 取得实时值
 	 */
 	Sensor.prototype.getValue = function(sensorId) {
@@ -375,46 +408,9 @@ for ( var key in imgNormalMap) {
 		}
 		return value;
 	}
-
-	/**
-	 * 设置实时值
-	 */
-	Sensor.prototype.updateInternal = function() {
-		var self = this;
-		for ( var i in self.sensorMap) {
-			var sensorObj = self.sensorMap[i];
-			if ($.isEmptyObject(sensorObj))
-				continue;
-
-			if (sensorObj.hasOwnProperty("sensorType")
-					&& sensorObj.hasOwnProperty("sensorId")) {
-				// 传感器编号
-				var sensorId = sensorObj.sensorId;
-				// 类型编号
-				var sensorTypeID = sensorObj.sensorType;
-				// 单位
-				var unit = sensorObj.unit;
-
-				var value = "";
-				if (this.sensorData.hasOwnProperty(sensorId)) {
-					value = this.sensorData[sensorId];
-				}
-				// 如果为温度
-				// if (sensorTypeID == 6) {
-				//		value += 20;
-				// }
-				value += unit;
-				// 修改实时值
-				self.setValue(sensorId, value);
-			}
-		}
-	}
-
+	
 	/**
 	 * 设置测点实时值
-	 * 
-	 * @sensorId 传入的传感器编号
-	 * @value 文本值
 	 */
 	Sensor.prototype.setValue = function(sensorId, value) {
 		var marker = this.sensorMap[sensorId];

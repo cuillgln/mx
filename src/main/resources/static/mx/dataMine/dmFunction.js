@@ -9,16 +9,14 @@
 * 前端采用jquery easyui 框架datagrid
 */
 function jcdManage() {
-//    if ($.isEmptyObject("MetaMapX"))
-//        return;
-
     //展开
     $('#cc').layout('expand', 'west');
 
     //demo中用easyui库进行前端开发,运用accordion控件添加panel
     addPanel('监测点管理', 'jcManage');
 
-    //获得监控基本信息(通过执行脚本和view层交互,getJKInfo()函数在view页面中data.js中定义,由view页面加载,具体在mxLib/LoadMxLib.js中定义)
+    //获得各类数据
+    MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
     MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
     MetaMapX.CurViewEvaluateJavaScript("window.sensor.getData()");
     var jcData = MetaMapX.CurViewEvaluateJavaScript("window.sensor.getSensorInfo()");
@@ -120,7 +118,6 @@ function jcdManage() {
                 } catch (e) {
                     return;
                 }
-                alert(strOpts);
 
                 var script = "var pickCmd = new mxLib.PickCmd('', null, '" + strOpts + "'); map.startCommand(pickCmd);"
                 //执行拾取命令(命令写法参照说明文档,脚本文件sensorPick.js由view层LoadMxLib加载)
