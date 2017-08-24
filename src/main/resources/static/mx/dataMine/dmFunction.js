@@ -47,9 +47,9 @@ function jcdManage() {
         columns: [[
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'sensorId', title: '测点编号', width: 100, align: 'center', hidden:true},
-            { field: 'sensorName', title: '名称', width: 75, align: 'center', hidden: true },
+            { field: 'sensorName', title: '名称', width: 75, align: 'center'},
             { field: 'location', title: '安装位置', width: 120, align: 'center' },
-            { field: 'sensorTypeName', title: '类型', width: 75, align: 'center' },
+            { field: 'sensorTypeName', title: '类型', width: 75, align: 'center', hidden: true },
             { field: 'unit', title: '单位', width: 75, align: 'center', hidden: true },
             { field: 'meteMinValue', title: '量程下限', width: 90, align: 'center', hidden: true },
             { field: 'meteMaxValue', title: '量程上限', width: 90, align: 'center', hidden: true },

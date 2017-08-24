@@ -9,18 +9,20 @@
  * 
  */
 var imgNormalMap = {};
-// 一氧化碳
-imgNormalMap[0] = "co-normal.png";
+//粉尘
+imgNormalMap[0] = "smoke-normal.png";
 // 甲烷
 imgNormalMap[1] = "gas-normal.png";
-// 二氧化碳
-imgNormalMap[2] = "co2-normal.png";
-// 氧气
-imgNormalMap[3] = "o2-normal.png";
+// 一氧化碳
+imgNormalMap[2] = "co-normal.png";
 // 温度
 imgNormalMap[6] = "temparture-normal.png";
-// 风速
-imgNormalMap[7] = "speed-normal.png";
+// 二氧化碳
+imgNormalMap[16] = "co2-normal.png";
+// 氧气
+imgNormalMap[17] = "o2-normal.png";
+// 开关
+imgNormalMap[100] = "switch-normal.png";
 
 /**
  * @报警时候测点显示的图片路径
@@ -198,16 +200,18 @@ for ( var key in imgNormalMap) {
 		point.systemId = opts.systemId;
 
 		// 根据类型判断图片基本路径
+		// 根据类测点型判断需要哪一张图片
 		var typeId = opts.sensorType;
 		var strBasePath = scriptBaseDir + "dataMine/image/";
-
-		// 根据类测点型判断需要哪一张图片
 		var strTotalPath = "";
 		if (!$.isEmptyObject(imgNormalMap)) {
-
 			// 获取测点对应的类型id
-			var value = imgNormalMap[typeId];
-			strTotalPath = strBasePath + value;
+			var imagName = imgNormalMap[typeId];
+			if (!$.isEmptyObject(imagName)) {
+				strTotalPath = strBasePath + imagName;
+			} else {
+				strTotalPath = strBasePath + "";
+			}
 		}
 
 		// 实时值
@@ -279,7 +283,6 @@ for ( var key in imgNormalMap) {
 				.addEventListener(
 						"click",
 						function() {
-							return;
 							// 信息窗口坐标
 							var point = marker.getPosition();
 
@@ -301,12 +304,11 @@ for ( var key in imgNormalMap) {
 							}
 
 							// 运用ifame框架
-							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/sensor/" + 
+							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/info/" + 
 							sensorId + "'></iframe>";
 
 							// 弹出信息窗口
-							var infoWindow = new mxLib.InfoWindow(map, html,
-									opts);
+							var infoWindow = new mxLib.InfoWindow(map, html, opts);
 							map.openInfoWindow(infoWindow, point);
 						});
 
@@ -329,32 +331,22 @@ for ( var key in imgNormalMap) {
 				if (!$.isEmptyObject(marker)
 						&& marker instanceof mxLib.RichMarker) {
 					marker.enableDragging();
+					marker.addEventListener("onmouseup", function(e) {
+						// 更新坐标位置
+						var point = e.point;
+						self.updatePoint(sensorId, point);
+						marker.disableDragging();
+					});
 				}
 			}
 		});
 
 		// 添加右键菜单
+		// 添加到覆盖物
 		var contextMenu = new mxLib.ContextMenu();
 		contextMenu.appendItem(menu1);
 		contextMenu.appendItem(menu2);
-
-		// 添加到覆盖物
 		marker.addContextMenu(contextMenu);
-
-		// 覆盖物移动开始
-		marker.addEventListener("ondragstart", function(e) {
-
-		});
-		// 覆盖物移动时
-		marker.addEventListener("ondragging", function(e) {
-			var point = marker.getPosition();
-			console.log(point);
-			marker.setPosition(point);
-		});
-		// 覆盖物移动时
-		marker.addEventListener("ondragend", function(e) {
-
-		});
 	}
 
 	/**
@@ -420,9 +412,9 @@ for ( var key in imgNormalMap) {
 					value = this.sensorData[sensorId];
 				}
 				// 如果为温度
-				if (sensorTypeID == 6) {
-					value += 20;
-				}
+				// if (sensorTypeID == 6) {
+				//		value += 20;
+				// }
 				value += unit;
 				// 修改实时值
 				self.setValue(sensorId, value);
@@ -451,6 +443,10 @@ for ( var key in imgNormalMap) {
 	 * @return 返回json格式的数据项
 	 */
 	Sensor.prototype.updatePoint = function(sensorId, point) {
+		if (this.sensorPosition.hasOwnProperty(sensorId)) {
+			var oldPoint = this.sensorPosition[sensorId];
+			point.systemId = oldPoint.systemId;
+		}
 		this.sensorPosition[sensorId] = point;
 	}
 

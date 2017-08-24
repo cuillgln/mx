@@ -3,13 +3,13 @@ package com.cuillgln.mx.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class WebgisController {
 
 	@RequestMapping("/")
-	public String show(NativeWebRequest request, Model model) {
+	public String index(WebRequest request, Model model) {
 
 		String agent = request.getHeader("user-agent");
 		if (agent.indexOf("MSIE") > 0) {
@@ -20,5 +20,11 @@ public class WebgisController {
 		model.addAttribute("rootpath", request.getContextPath());
 		
 		return "webgis";
+	}
+	
+	@RequestMapping("/info/{id}")
+	public String info(String id) {
+		
+		return "info";
 	}
 }
