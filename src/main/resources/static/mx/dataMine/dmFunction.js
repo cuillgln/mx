@@ -47,10 +47,17 @@ function jcdManage() {
         columns: [[
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'sensorId', title: '测点编号', width: 100, align: 'center', hidden:true},
-            { field: 'sensorName', title: '名称', width: 75, align: 'center'},
-            { field: 'location', title: '安装位置', width: 120, align: 'center' },
-            { field: 'sensorTypeName', title: '类型', width: 75, align: 'center', hidden: true },
+            { field: 'sensorName', title: '传感器名称', width: 75, align: 'center'},
+            { field: 'sensorType', title: '传感器类型', width: 75, align: 'center', hidden: true },
+            { field: 'location', title: '安装地点', width: 120, align: 'center' },
+            { field: 'station', title: '分站地址', width: 120, align: 'center', hidden: true },
+            { field: 'portId', title: '端口序号', width: 120, align: 'center', hidden: true },
+            { field: 'analogFlag', title: '模拟量', width: 75, align: 'center', hidden: true },
+            { field: 'offName', title: '停显示', width: 75, align: 'center', hidden: true },
+            { field: 'onName', title: '开显示', width: 75, align: 'center', hidden: true },
             { field: 'unit', title: '单位', width: 75, align: 'center', hidden: true },
+            { field: 'factor', title: '系数', width: 75, align: 'center', hidden: true },
+            { field: 'baseValue', title: '基值', width: 75, align: 'center', hidden: true },
             { field: 'meteMinValue', title: '量程下限', width: 90, align: 'center', hidden: true },
             { field: 'meteMaxValue', title: '量程上限', width: 90, align: 'center', hidden: true },
             { field: 'alarmMinValue', title: '报警下限', width: 90, align: 'center', hidden: true },
@@ -86,13 +93,20 @@ function jcdManage() {
 
                 //构造对象
                 var opts = {};
+                opts.SysID = curRow["SysID"];
                 opts.systemId = curRow["systemId"];
                 opts.sensorId = curRow["sensorId"];
-                opts.SysID = curRow["SysID"];
-                opts.location = curRow["location"];
+                opts.sensorName = curRow["sensorName"];
                 opts.sensorType = curRow["sensorType"];
-                opts.sensorTypeName = curRow["sensorTypeName"];
+                opts.location = curRow["location"];
+                opts.station = curRow["station"];
+                opts.portId = curRow["portId"];
+                opts.analogFlag = curRow["analogFlag"];
+                opts.offName = curRow["offName"];
+                opts.onName = curRow["onName"];
                 opts.unit = curRow["unit"];
+                opts.factor = curRow["factor"];
+                opts.baseValue = curRow["baseValue"];
                 opts.meteMinValue = curRow["meteMinValue"];
                 opts.meteMaxValue = curRow["meteMaxValue"];
                 opts.alarmMinValue = curRow["alarmMinValue"];
@@ -106,6 +120,7 @@ function jcdManage() {
                 } catch (e) {
                     return;
                 }
+                alert(strOpts);
 
                 var script = "var pickCmd = new mxLib.PickCmd('', null, '" + strOpts + "'); map.startCommand(pickCmd);"
                 //执行拾取命令(命令写法参照说明文档,脚本文件sensorPick.js由view层LoadMxLib加载)

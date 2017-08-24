@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>传感器属性页面</title>
+    <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
+    <script src="mx/mxlib/jquery-1.11.2.min.js"></script>
+    <script src="mx/dataMine/easyui/jquery.easyui.min.js"></script>
+    <script src="mx/dataMine/easyui/datagrid-groupview.js"></script>
+</head>
+<body>
+    <div id="proertyTip"></div>
+    <input type="hidden" id="sensorId" th:value="${sensorId}"/>
+</body>
+<script th:inline="javascript">
+/*<![CDATA[*/
+//监测属性提示
+function jcProperty(sensorId) {
+
+    $('#proertyTip').propertygrid({
+        showGroup: true,
+        fitColumns: true,
+        columns: [[
+            {
+                field: 'name',
+                title: '名称',
+                width: 60,
+                align: 'left'
+            },
+            {
+                field: 'value',
+                title: '值',
+                width: 100,
+                align: 'center'
+            }
+        ]],
+        showHeader: false,
+    });
+
+    //得到属性对象
+    var sensorObj = parent.sensor.sensorMap[sensorId];
+    if ($.isEmptyObject(sensorObj)) {
+        return;
+    }
+
+    //遍历
+    var arr = [];
+    if (sensorObj.hasOwnProperty("sensorName") && sensorObj["sensorName"]) {
+        var sensorIdObj = {};
+        sensorIdObj.name = "传感器名称:";
+        sensorIdObj.value = sensorObj["sensorName"];
+        sensorIdObj.group = "基本属性";
+        sensorIdObj.editor = "text";
+        //添加到数组
+        arr.push(sensorIdObj);
+    }
+    if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
+        var locationObj = {};
+        locationObj.name = "安装位置:";
+        locationObj.value = sensorObj["location"];
+        locationObj.group = "基本属性";
+        locationObj.editor = "text";
+        //添加到数组
+        arr.push(locationObj);
+    }
+    if (sensorObj.hasOwnProperty("station") && sensorObj["station"]) {
+        var stationObj = {};
+        stationObj.name = "分站地址:";
+        stationObj.value = sensorObj["station"];
+        stationObj.group = "基本属性";
+        stationObj.editor = "text";
+        //添加到数组
+        arr.push(stationObj);
+    }
+    if (sensorObj.hasOwnProperty("analogFlag") && sensorObj["analogFlag"]) {
+        var analogFlagObj = {};
+        analogFlagObj.name = "是否模拟量:";
+        analogFlagObj.value = sensorObj["analogFlag"];
+        analogFlagObj.group = "基本属性";
+        analogFlagObj.editor = {
+    		"type":"combobox",
+    		"options":{
+    			 "data":[{"value":1,"text":"是"},{"value":0,"text":"否"}]
+    		}
+    	}
+        //添加到数组
+        arr.push(analogFlagObj);
+    }
+    if (sensorObj.hasOwnProperty("unit") && sensorObj["unit"]) {
+        var unitObj = {};
+        unitObj.name = "单位:";
+        unitObj.value = sensorObj["unit"];
+        unitObj.group = "基本属性";
+        unitObj.editor = "text";
+        //添加到数组
+        arr.push(unitObj);
+    }
+    if (sensorObj.hasOwnProperty("factor") && sensorObj["factor"]) {
+        var factorObj = {};
+        factorObj.name = "系数:";
+        factorObj.value = sensorObj["factor"];
+        factorObj.group = "基本属性";
+        factorObj.editor = "text";
+        //添加到数组
+        arr.push(factorObj);
+    }
+    if (sensorObj.hasOwnProperty("baseValue") && sensorObj["baseValue"]) {
+        var baseValueObj = {};
+        baseValueObj.name = "基值:";
+        baseValueObj.value = sensorObj["baseValue"];
+        baseValueObj.group = "基本属性";
+        baseValueObj.editor = "text";
+        //添加到数组
+        arr.push(baseValueObj);
+    }
+    if (sensorObj.hasOwnProperty("offName") && sensorObj["offName"]) {
+        var offNameObj = {};
+        offNameObj.name = "停显示:";
+        offNameObj.value = sensorObj["offName"];
+        offNameObj.group = "基本属性";
+        offNameObj.editor = "text";
+        //添加到数组
+        arr.push(offNameObj);
+    }
+    if (sensorObj.hasOwnProperty("onName") && sensorObj["onName"]) {
+        var onNameObj = {};
+        onNameObj.name = "开显示:";
+        onNameObj.value = sensorObj["onName"];
+        onNameObj.group = "基本属性";
+        onNameObj.editor = "text";
+        //添加到数组
+        arr.push(onNameObj);
+    }
+
+    //加载数据
+    var json = {};
+    json.total = arr.length;
+    json.rows = arr;
+    $("#proertyTip").propertygrid('loadData', json);
+}
+
+$(function () {
+    //得到测点编号
+    //调用监测属性查询
+    var sensorId = /*[[${sensorId}]]*/ 'sensor_9001';
+    jcProperty(sensorId);
+});
+/*]]>*/
+</script>
+</html>

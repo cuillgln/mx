@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,14 +43,14 @@ public class SensorPositionController {
 	}
 
 	@GetMapping("/sensorposition/{id}")
-	public SensorPosition get(Long id) {
+	public SensorPosition get(@PathVariable Long id) {
 		SensorPosition position = new SensorPosition();
 
 		return position;
 	}
 
 	@PutMapping("/sensorposition/{id}")
-	public SensorPosition put(Long id, SensorPosition position) {
+	public SensorPosition put(@PathVariable Long id, SensorPosition position) {
 
 		return position;
 	}

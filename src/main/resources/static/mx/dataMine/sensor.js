@@ -275,9 +275,6 @@ for ( var key in imgNormalMap) {
 		// 传感器编号
 		var sensorId = marker.sensorId;
 
-		// 数据类型ID
-		var sensorDataID = marker.SensorDataID;
-
 		// 添加点击事件
 		marker
 				.addEventListener(
@@ -288,23 +285,14 @@ for ( var key in imgNormalMap) {
 
 							// 定义信息提示框
 							var bFlag = true;
-							var opts = {};
-							if (sensorDataID == "1") {
-								opts = {
-									width : 200,
-									height : 205,
-									title : "测点定义信息查询"
-								};
-							} else {
-								opts = {
-									width : 200,
-									height : 179,
-									title : "测点定义信息查询"
-								};
-							}
+							var opts = {
+								width : 240,
+								height : 220,
+								title : "测点定义信息查询"
+							};
 
 							// 运用ifame框架
-							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/info/" + 
+							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='/sensorinfo?sensorId=" + 
 							sensorId + "'></iframe>";
 
 							// 弹出信息窗口
@@ -535,35 +523,6 @@ for ( var key in imgNormalMap) {
 			map.removeOverlay(markerDolly);
 			map.removeOverlay(alarmMarker);
 		}, 5000);
-	}
-
-	/**
-	 * 从href中查询相关参数(?sysID=12&sensorId="001A01")
-	 * 
-	 * @param sHref网址
-	 * @param 属性名称
-	 * @return 返回值
-	 */
-	Sensor.prototype.getArgsFromHref = function(sHref, sArgName) {
-		var args = sHref.split("?");
-		var retval = "";
-
-		if (args[0] == sHref) {
-			return retval;
-		}
-
-		var str = args[1];
-		args = str.split("&");
-		for (var i = 0; i < args.length; i++) {
-			str = args[i];
-			var arg = str.split("=");
-			if (arg.length <= 1)
-				continue;
-			if (arg[0] == sArgName)
-				retval = arg[1];
-		}
-
-		return retval;
 	}
 
 })();

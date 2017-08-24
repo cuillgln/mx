@@ -3,6 +3,7 @@ package com.cuillgln.mx.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
@@ -18,13 +19,13 @@ public class WebgisController {
 			model.addAttribute("type", "application/metamap2d");
 		}
 		model.addAttribute("rootpath", request.getContextPath());
-		
+
 		return "webgis";
 	}
-	
-	@RequestMapping("/info/{id}")
-	public String info(String id) {
-		
-		return "info";
+
+	@RequestMapping("/sensorinfo")
+	public String info(@RequestParam("sensorId") String sensorId, Model model) {
+		model.addAttribute("sensorId", sensorId);
+		return "sensorinfo";
 	}
 }
