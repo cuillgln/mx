@@ -7,6 +7,7 @@ linkcss(scriptBaseDir + "dataMine/easyui/themes/metro-blue/easyui.css")
 //脚本
 include(scriptBaseDir + "mxlib/jquery-1.11.2.min.js");
 include(scriptBaseDir + "mxlib/snap.svg-min.js");
+include(scriptBaseDir + "dataMine/json3.min.js");
 include(scriptBaseDir + "dataMine/easyui/jquery.easyui.min.js");
 
 //元图地图库
