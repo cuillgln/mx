@@ -17,7 +17,6 @@ function jcdManage() {
 
     //获得各类数据
     MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
-    MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
     MetaMapX.CurViewEvaluateJavaScript("window.sensor.getData()");
     var jcData = MetaMapX.CurViewEvaluateJavaScript("window.sensor.getSensorInfo()");
     
@@ -175,6 +174,13 @@ function addPanel(name, div) {
  */
 function jcdSave() {
 	MetaMapX.CurViewEvaluateJavaScript("window.sensor.savePosition()");
+}
+
+/**
+ * 监测点位置保存。
+ */
+function pointDistance() {
+	MetaMapX.CurViewEvaluateJavaScript("var distanceCmd = new mxLib.DistanceMeasureCmd('distance', null, '{\"bac\": \"bac\"}'); map.startCommand(distanceCmd);");
 }
 
 /**

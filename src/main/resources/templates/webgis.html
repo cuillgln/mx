@@ -49,7 +49,7 @@ $(function () {
                     tools: [{
                         name: 'jcdSave',
                         text: '监测点保存',
-                        iconCls: 'jcManageLarge',
+                        iconCls: 'jcdSave',
                         iconAlign: 'top',
                         size: 'large'
                     }]
@@ -94,6 +94,9 @@ function addClickEvent() {
                     break;
                 case "jcdSave":
                     jcdSave();
+                    break;
+                case "pointDistance":
+                    pointDistance();
                     break;
                 default:
                     break;
