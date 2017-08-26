@@ -53,13 +53,21 @@ function jcProperty(sensorId) {
 
     //遍历
     var arr = [];
+    if (sensorObj.hasOwnProperty("stationPort") && sensorObj["stationPort"]) {
+        var stationPortObj = {};
+        stationPortObj.name = "端口号:";
+        stationPortObj.value = sensorObj["stationPort"];
+        stationPortObj.group = "基本属性";
+        stationPortObj.editor = "text";
+        //添加到数组
+        arr.push(stationPortObj);
+    }
     if (sensorObj.hasOwnProperty("sensorName") && sensorObj["sensorName"]) {
         var sensorIdObj = {};
         sensorIdObj.name = "传感器名称:";
         sensorIdObj.value = sensorObj["sensorName"];
         sensorIdObj.group = "基本属性";
         sensorIdObj.editor = "text";
-        //添加到数组
         arr.push(sensorIdObj);
     }
     if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
@@ -68,76 +76,63 @@ function jcProperty(sensorId) {
         locationObj.value = sensorObj["location"];
         locationObj.group = "基本属性";
         locationObj.editor = "text";
-        //添加到数组
         arr.push(locationObj);
     }
-    if (sensorObj.hasOwnProperty("station") && sensorObj["station"]) {
-        var stationObj = {};
-        stationObj.name = "分站地址:";
-        stationObj.value = sensorObj["station"];
-        stationObj.group = "基本属性";
-        stationObj.editor = "text";
-        //添加到数组
-        arr.push(stationObj);
-    }
-    if (sensorObj.hasOwnProperty("analogFlag") && sensorObj["analogFlag"]) {
-        var analogFlagObj = {};
-        analogFlagObj.name = "是否模拟量:";
-        analogFlagObj.value = sensorObj["analogFlag"];
-        analogFlagObj.group = "基本属性";
-        analogFlagObj.editor = {
-    		"type":"combobox",
-    		"options":{
-    			 "data":[{"value":1,"text":"是"},{"value":0,"text":"否"}]
-    		}
-    	}
-        //添加到数组
-        arr.push(analogFlagObj);
-    }
-    if (sensorObj.hasOwnProperty("unit") && sensorObj["unit"]) {
-        var unitObj = {};
-        unitObj.name = "单位:";
-        unitObj.value = sensorObj["unit"];
-        unitObj.group = "基本属性";
-        unitObj.editor = "text";
-        //添加到数组
-        arr.push(unitObj);
-    }
-    if (sensorObj.hasOwnProperty("factor") && sensorObj["factor"]) {
-        var factorObj = {};
-        factorObj.name = "系数:";
-        factorObj.value = sensorObj["factor"];
-        factorObj.group = "基本属性";
-        factorObj.editor = "text";
-        //添加到数组
-        arr.push(factorObj);
-    }
-    if (sensorObj.hasOwnProperty("baseValue") && sensorObj["baseValue"]) {
-        var baseValueObj = {};
-        baseValueObj.name = "基值:";
-        baseValueObj.value = sensorObj["baseValue"];
-        baseValueObj.group = "基本属性";
-        baseValueObj.editor = "text";
-        //添加到数组
-        arr.push(baseValueObj);
-    }
-    if (sensorObj.hasOwnProperty("offName") && sensorObj["offName"]) {
+    if (sensorObj["analogFlag"] == 0 && sensorObj.hasOwnProperty("offName")) {
         var offNameObj = {};
         offNameObj.name = "停显示:";
         offNameObj.value = sensorObj["offName"];
         offNameObj.group = "基本属性";
         offNameObj.editor = "text";
-        //添加到数组
         arr.push(offNameObj);
     }
-    if (sensorObj.hasOwnProperty("onName") && sensorObj["onName"]) {
+    if (sensorObj["analogFlag"] == 0 && sensorObj.hasOwnProperty("onName")) {
         var onNameObj = {};
         onNameObj.name = "开显示:";
         onNameObj.value = sensorObj["onName"];
         onNameObj.group = "基本属性";
         onNameObj.editor = "text";
-        //添加到数组
         arr.push(onNameObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("unit")) {
+        var unitObj = {};
+        unitObj.name = "单位:";
+        unitObj.value = sensorObj["unit"];
+        unitObj.group = "基本属性";
+        unitObj.editor = "text";
+        arr.push(unitObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("alarmValueRange")) {
+        var alarmValueRangeObj = {};
+        alarmValueRangeObj.name = "报警值:";
+        alarmValueRangeObj.value = sensorObj["alarmValueRange"];
+        alarmValueRangeObj.group = "基本属性";
+        alarmValueRangeObj.editor = "text";
+        arr.push(alarmValueRangeObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("powerCutValue")) {
+        var powerCutValueObj = {};
+        powerCutValueObj.name = "断电值:";
+        powerCutValueObj.value = sensorObj["powerCutValue"];
+        powerCutValueObj.group = "基本属性";
+        powerCutValueObj.editor = "text";
+        arr.push(powerCutValueObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("powerCutPort")) {
+        var powerCutPortObj = {};
+        powerCutPortObj.name = "断电控制端口:";
+        powerCutPortObj.value = sensorObj["powerCutPort"];
+        powerCutPortObj.group = "基本属性";
+        powerCutPortObj.editor = "text";
+        arr.push(powerCutPortObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("powerCutRange")) {
+        var powerCutRangeObj = {};
+        powerCutRangeObj.name = "断电控制范围:";
+        powerCutRangeObj.value = sensorObj["powerCutRange"];
+        powerCutRangeObj.group = "基本属性";
+        powerCutRangeObj.editor = "text";
+        arr.push(powerCutRangeObj);
     }
 
     //加载数据

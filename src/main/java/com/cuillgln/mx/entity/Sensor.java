@@ -41,8 +41,6 @@ public class Sensor implements Serializable {
 	// [传感器类型]
 	@Column(name = "[传感器类型]")
 	private Integer sensorType;
-	@Transient
-	private String sensorTypeName;
 
 	// [传感器规格型号]
 	@Column(name = "[传感器规格型号]")
@@ -58,6 +56,10 @@ public class Sensor implements Serializable {
 	// [端口序号]
 	@Column(name = "[端口序号]")
 	private Long portId;
+
+	// [分站地址-端口号]
+	@Transient
+	private String stationPort;
 
 	// [是否模拟量]
 	@Column(name = "[是否模拟量]")
@@ -98,6 +100,10 @@ public class Sensor implements Serializable {
 	// [报警下限解除值]
 	@Column(name = "[报警下限解除值]")
 	private BigDecimal alarmClearMinValue;
+
+	// [[报警上限值]/[报警下限值]]
+	@Transient
+	private String alarmValueRange;
 
 	// [是否断电控制]
 	@Column(name = "[是否断电控制]")
@@ -214,14 +220,6 @@ public class Sensor implements Serializable {
 		this.sensorType = sensorType;
 	}
 
-	public String getSensorTypeName() {
-		return sensorTypeName;
-	}
-
-	public void setSensorTypeName(String sensorTypeName) {
-		this.sensorTypeName = sensorTypeName;
-	}
-
 	public String getSensorModel() {
 		return sensorModel;
 	}
@@ -252,6 +250,14 @@ public class Sensor implements Serializable {
 
 	public void setPortId(Long portId) {
 		this.portId = portId;
+	}
+
+	public String getStationPort() {
+		return stationPort;
+	}
+
+	public void setStationPort(String stationPort) {
+		this.stationPort = stationPort;
 	}
 
 	public Integer getAnalogFlag() {
@@ -348,6 +354,14 @@ public class Sensor implements Serializable {
 
 	public void setAlarmClearMinValue(BigDecimal alarmClearMinValue) {
 		this.alarmClearMinValue = alarmClearMinValue;
+	}
+
+	public String getAlarmValueRange() {
+		return alarmValueRange;
+	}
+
+	public void setAlarmValueRange(String alarmValueRange) {
+		this.alarmValueRange = alarmValueRange;
 	}
 
 	public Integer getPowerCutFlag() {

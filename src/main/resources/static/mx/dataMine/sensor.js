@@ -348,7 +348,7 @@ for ( var key in imgNormalMap) {
 							var bFlag = true;
 							var opts = {
 								width : 240,
-								height : 220,
+								height : 230,
 								title : "传感器信息查询"
 							};
 

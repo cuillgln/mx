@@ -45,25 +45,22 @@ function jcdManage() {
         columns: [[
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'sensorId', title: '测点编号', width: 100, align: 'center', hidden:true},
+            { field: 'stationPort', title: '端口号', width: 40, align: 'center'},
             { field: 'sensorName', title: '传感器名称', width: 75, align: 'center'},
-            { field: 'sensorType', title: '传感器类型', width: 75, align: 'center', hidden: true },
+            { field: 'sensorType', title: '传感器类型', width: 75, align: 'center', hidden: true},
             { field: 'location', title: '安装地点', width: 120, align: 'center' },
-            { field: 'station', title: '分站地址', width: 120, align: 'center', hidden: true },
-            { field: 'portId', title: '端口序号', width: 120, align: 'center', hidden: true },
-            { field: 'analogFlag', title: '模拟量', width: 75, align: 'center', hidden: true },
-            { field: 'offName', title: '停显示', width: 75, align: 'center', hidden: true },
-            { field: 'onName', title: '开显示', width: 75, align: 'center', hidden: true },
-            { field: 'unit', title: '单位', width: 75, align: 'center', hidden: true },
-            { field: 'factor', title: '系数', width: 75, align: 'center', hidden: true },
-            { field: 'baseValue', title: '基值', width: 75, align: 'center', hidden: true },
-            { field: 'meteMinValue', title: '量程下限', width: 90, align: 'center', hidden: true },
-            { field: 'meteMaxValue', title: '量程上限', width: 90, align: 'center', hidden: true },
-            { field: 'alarmMinValue', title: '报警下限', width: 90, align: 'center', hidden: true },
-            { field: 'alarmMaxValue', title: '报警上限', width: 90, align: 'center', hidden: true },
-            { field: 'powerCutValue', title: '断电值', width: 90, align: 'center', hidden: true },
-            { field: 'powerResetValue', title: '复电值', width: 90, align: 'center', hidden: true },
-            { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true },
-            { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true },
+            { field: 'analogFlag', title: '模拟量', width: 75, align: 'center', hidden: true},
+            { field: 'offName', title: '停显示', width: 75, align: 'center', hidden: true},
+            { field: 'onName', title: '开显示', width: 75, align: 'center', hidden: true},
+            { field: 'unit', title: '单位', width: 75, align: 'center', hidden: true},
+            { field: 'alarmValueRange', title: '报警值', width: 90, align: 'center', hidden: true},
+            { field: 'alarmMinValue', title: '报警下限', width: 90, align: 'center', hidden: true},
+            { field: 'alarmMaxValue', title: '报警上限', width: 90, align: 'center', hidden: true},
+            { field: 'powerCutValue', title: '断电值', width: 90, align: 'center', hidden: true},
+            { field: 'powerCutPort', title: '断电控制端口', width: 90, align: 'center', hidden: true},
+            { field: 'powerCutRange', title: '断电控制区域', width: 90, align: 'center', hidden: true},
+            { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
+            { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
             {
                 field: 'pick',
                 title: '拾取',
@@ -97,20 +94,17 @@ function jcdManage() {
                 opts.sensorName = curRow["sensorName"];
                 opts.sensorType = curRow["sensorType"];
                 opts.location = curRow["location"];
-                opts.station = curRow["station"];
-                opts.portId = curRow["portId"];
+                opts.stationPort = curRow["stationPort"];
                 opts.analogFlag = curRow["analogFlag"];
                 opts.offName = curRow["offName"];
                 opts.onName = curRow["onName"];
                 opts.unit = curRow["unit"];
-                opts.factor = curRow["factor"];
-                opts.baseValue = curRow["baseValue"];
-                opts.meteMinValue = curRow["meteMinValue"];
-                opts.meteMaxValue = curRow["meteMaxValue"];
+                opts.alarmValueRange = curRow["alarmValueRange"];
                 opts.alarmMinValue = curRow["alarmMinValue"];
                 opts.alarmMaxValue = curRow["alarmMaxValue"];
                 opts.powerCutValue = curRow["powerCutValue"];
-                opts.powerResetValue = curRow["powerResetValue"];
+                opts.powerCutPort = curRow["powerCutPort"];
+                opts.powerCutRange = curRow["powerCutRange"];
                 
                 var strOpts = "";
                 try{
@@ -138,72 +132,69 @@ function jcdManage() {
 }
 
 /**
-* 在accordion中添加面板
-*/
+ * 在accordion中添加面板
+ */
 function addPanel(name, div) {
-    //判断是否已经加载
-    var obj = $("#westPanelData").accordion("getPanel", name);
-    if (!$.isEmptyObject(obj)) {
+	// 判断是否已经加载
+	var obj = $("#westPanelData").accordion("getPanel", name);
+	if (!$.isEmptyObject(obj)) {
 
-        //设置选中的面板
-        $("#westPanelData").accordion("select", name);
-        return;
-    }
-    else {
-        var content = "";
-        switch (name) {
-            case "监测点管理":
-                content = '<div id="' + div + '"></div>';
-                break;
-            case "识别卡管理":
-                content = '<div id="' + div + '"></div>';
-                break;
-            default:
-                break;
-        }
+		// 设置选中的面板
+		$("#westPanelData").accordion("select", name);
+		return;
+	} else {
+		var content = "";
+		switch (name) {
+		case "监测点管理":
+			content = '<div id="' + div + '"></div>';
+			break;
+		case "识别卡管理":
+			content = '<div id="' + div + '"></div>';
+			break;
+		default:
+			break;
+		}
 
-        $('#westPanelData').accordion('add', {
-            iconCls: div,
-            collapsible: true,
-            title: name,
-            content: content,
-            tools: [{
-                iconCls: 'panel-tool-close',
-                handler: function () {
-                    $('#westPanelData').accordion('remove', name);
-                }
-            }]
-        });
-    }
+		$('#westPanelData').accordion('add', {
+			iconCls : div,
+			collapsible : true,
+			title : name,
+			content : content,
+			tools : [ {
+				iconCls : 'panel-tool-close',
+				handler : function() {
+					$('#westPanelData').accordion('remove', name);
+				}
+			} ]
+		});
+	}
 }
 
 /**
  * 监测点位置保存。
- * @returns
  */
 function jcdSave() {
 	MetaMapX.CurViewEvaluateJavaScript("window.sensor.savePosition()");
 }
 
 /**
-* 设置背景
-*/
+ * 设置背景
+ */
 function setViewBkColor() {
-    MetaMapX.SetViewBackColor(0x000000);
+	MetaMapX.SetViewBackColor(0x000000);
 }
 
-
 /**
-* 页面轮播
-*/
+ * 页面轮播
+ */
 function rollView(path) {
-    //第二个参数设置成true,表示新增视图
-    MetaMapX.OpenDwg(path, true, "");
-    //轮播时间，不设置默认5s
-    MetaMapX.SetRollTime(3);
-    //1 网格布局 2轮播
-    MetaMapX.SetLayoutType(2);
-    //开始轮播
-    MetaMapX.StartRollView();
+	// 第二个参数设置成true,表示新增视图
+	MetaMapX.OpenDwg(path, true, "");
+	// 轮播时间，不设置默认5s
+	MetaMapX.SetRollTime(3);
+	// 1 网格布局 2轮播
+	MetaMapX.SetLayoutType(2);
+	// 开始轮播
+	MetaMapX.StartRollView();
 }
 
