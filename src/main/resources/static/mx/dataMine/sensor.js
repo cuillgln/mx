@@ -321,8 +321,8 @@ for ( var key in imgNormalMap) {
 			value += unit;
 		}
 		myRichMarker.value = value;
-		myRichMarker.alarmFlag = 0;
-		this.setValue(sensorId, value, 0);
+		myRichMarker.alarmFlag = 0; // 初始是normal
+		this.setValue(sensorId, value, alarmFlag);
 		
 		// 添加事件响应
 		this.addEvent(myRichMarker);
@@ -429,6 +429,7 @@ for ( var key in imgNormalMap) {
 					srcUrl = srcUrl.replace("alarm", "normal");
 				}
 				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+				marker.alarmFlag = alarmFlag; // 更新marker的alarmFlag
 			}
 		}
 	}
