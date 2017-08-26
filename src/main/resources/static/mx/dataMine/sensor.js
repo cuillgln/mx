@@ -94,8 +94,10 @@ for ( var key in imgNormalMap) {
 				var length = data.length;
 				for (var i = 0; i < length; i++) {
 					var sensorId = data[i].sensorId;
-					var value = data[i].value;
-					self.sensorData[sensorId] = value;
+					var valueObj = {};
+					valueObj.value = data[i].value;
+					valueObj.alarmFlag = data[i].alarmFlag;
+					self.sensorData[sensorId] = valueObj;
 				}
 				self.updateInternal();
 			},
@@ -113,26 +115,22 @@ for ( var key in imgNormalMap) {
 			if ($.isEmptyObject(sensorObj))
 				continue;
 
-			if (sensorObj.hasOwnProperty("sensorType")
-					&& sensorObj.hasOwnProperty("sensorId")) {
+			if (sensorObj.hasOwnProperty("sensorId")) {
 				// 传感器编号
-				var sensorId = sensorObj.sensorId;
-				// 类型编号
-				var sensorTypeID = sensorObj.sensorType;
 				// 单位
+				var sensorId = sensorObj.sensorId;
 				var unit = sensorObj.unit;
 
 				var value = "";
+				var alarmFlag = 0;
 				if (this.sensorData.hasOwnProperty(sensorId)) {
-					value = this.sensorData[sensorId];
+					var valueObj = this.sensorData[sensorId];
+					value = valueObj.value;
+					alarmFlag = valueObj.alarmFlag;
 				}
-				// 如果为温度
-				// if (sensorTypeID == 6) {
-				//		value += 20;
-				// }
 				value += unit;
 				// 修改实时值
-				self.setValue(sensorId, value);
+				self.setValue(sensorId, value, alarmFlag);
 			}
 		}
 	}
@@ -275,24 +273,12 @@ for ( var key in imgNormalMap) {
 			}
 		}
 
-		// 实时值
-		var ssz = this.getValue(sensorId);
-		opts.ssz = ssz;
-		var text = "";
-		if (opts.hasOwnProperty("unit")) {
-			text = opts.ssz + opts.unit;
-		} else {
-			text = opts.ssz;
-		}
-
-		// 构造html
+		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
 				+ strTotalPath
-				+ '">'
-				+ '</div>'
-				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;">'
-				+ text + '</label>';
+				+ '"/></div>'
+				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;"></label>';
 
 		var myRichMarker = new mxLib.RichMarker(html, point, {
 			"anchor" : new mxLib.Size(-18, -27),
@@ -321,6 +307,23 @@ for ( var key in imgNormalMap) {
 		this.sensorMap[sensorId] = myRichMarker;
 		this.updatePoint(sensorId, point);
 
+		// 实时值
+		var valueObj = this.getValue(sensorId);
+		var value = "";
+		var unit = "";
+		var alarmFlag = 0;
+		if (opts.hasOwnProperty("unit")) {
+			unit = opts.unit;
+		}
+		if (valueObj.hasOwnProperty("value") && valueObj.hasOwnProperty("alarmFlag")) {
+			value = valueObj.value;
+			alarmFlag = valueObj.alarmFlag;
+			value += unit;
+		}
+		myRichMarker.value = value;
+		myRichMarker.alarmFlag = 0;
+		this.setValue(sensorId, value, 0);
+		
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}
@@ -403,7 +406,7 @@ for ( var key in imgNormalMap) {
 	 * 取得实时值
 	 */
 	Sensor.prototype.getValue = function(sensorId) {
-		var value = "";
+		var value = {};
 		if (this.sensorData.hasOwnProperty(sensorId)) {
 			value = this.sensorData[sensorId];
 		}
@@ -413,10 +416,20 @@ for ( var key in imgNormalMap) {
 	/**
 	 * 设置测点实时值
 	 */
-	Sensor.prototype.setValue = function(sensorId, value) {
+	Sensor.prototype.setValue = function(sensorId, value, alarmFlag) {
 		var marker = this.sensorMap[sensorId];
 		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
 			$(marker.getDomElement()).children("label").text(value);
+			// 更换报警图片
+			var srcUrl = $(marker.getDomElement()).children("div").children("img").attr("src");
+			if (marker.alarmFlag != alarmFlag) {
+				if (alarmFlag == 1) {
+					srcUrl = srcUrl.replace("normal", "alarm");
+				} else if (alarmFlag == 0) {
+					srcUrl = srcUrl.replace("alarm", "normal");
+				}
+				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+			}
 		}
 	}
 
