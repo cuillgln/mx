@@ -10,9 +10,9 @@
  */
 var imgNormalMap = {};
 //粉尘
-imgNormalMap[0] = "smoke-normal.png";
+imgNormalMap[0] = "dust-normal.png";
 // 甲烷
-imgNormalMap[1] = "gas-normal.png";
+imgNormalMap[1] = "ch4-normal.png";
 // 一氧化碳
 imgNormalMap[2] = "co-normal.png";
 // 温度
@@ -129,6 +129,14 @@ for ( var key in imgNormalMap) {
 					alarmFlag = valueObj.alarmFlag;
 				}
 				value += unit;
+				var analogFlag = sensorObj.analogFlag;
+				if (analogFlag == 0) {
+					if (value == "0") {
+						value = sensorObj.offName;
+					} else {
+						value = sensorObj.onName;
+					}
+				}
 				// 修改实时值
 				self.setValue(sensorId, value, alarmFlag);
 			}
@@ -319,6 +327,14 @@ for ( var key in imgNormalMap) {
 			value = valueObj.value;
 			alarmFlag = valueObj.alarmFlag;
 			value += unit;
+		}
+		var analogFlag = opts.analogFlag;
+		if (analogFlag == 0) {
+			if (value == "0") {
+				value = opts.offName;
+			} else {
+				value = opts.onName;
+			}
 		}
 		myRichMarker.value = value;
 		myRichMarker.alarmFlag = 0; // 初始是normal
