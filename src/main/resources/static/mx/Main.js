@@ -27,8 +27,11 @@ var sensor = new mxLib.Sensor();
 // 加入导航条
 var naviCtrl = new mxLib.NavigationControl();
 naviCtrl.setOffset(new mxLib.Size(3, 32));
-naviCtrl.setAnchor(MX_ANCHOR_BOTTOM_RIGHT);
+naviCtrl.setAnchor(MX_ANCHOR_TOP_RIGHT);
 map.addControl(naviCtrl);
+
+var ovctrl = new mxLib.OverviewMapControl();
+map.addControl(ovctrl);
 
 // 加入标识条
 // var logCtrl = new LogControl();
