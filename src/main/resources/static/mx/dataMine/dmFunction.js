@@ -180,7 +180,7 @@ function jcdSave() {
  * 监测点位置保存。
  */
 function pointDistance() {
-	MetaMapX.CurViewEvaluateJavaScript("var distanceCmd = new mxLib.DistanceMeasureCmd('distance', null, '{\"bac\": \"bac\"}'); map.startCommand(distanceCmd);");
+	MetaMapX.CurViewEvaluateJavaScript("var distanceCmd = new mxLib.DistanceMeasureCmd('distance', null, '{}'); map.startCommand(distanceCmd);");
 }
 
 /**

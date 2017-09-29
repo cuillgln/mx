@@ -12,6 +12,7 @@ include(scriptBaseDir + "dataMine/easyui/jquery.easyui.min.js");
 
 //元图地图库
 include(scriptBaseDir + "mxlib/api.min.js");
+include(scriptBaseDir + "mxlib/measure.js");
 include(scriptBaseDir + "dataMine/sensor.js");
 include(scriptBaseDir + "dataMine/sensorPick.js");
 include(scriptBaseDir + "dataMine/sensorLocate.js");
