@@ -37,9 +37,12 @@ map.addControl(ovctrl);
 // var logCtrl = new LogControl();
 // map.addControl(logCtrl);
 
+// 图层
+var layerCtrl = new LayerControl();
+
 /**
  * @设置定时间隔,每隔每隔5s更新数据
  */
 window.setInterval(function() {
 	sensor.getData();
-}, 2000);
+}, 5000);

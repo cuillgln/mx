@@ -1,16 +1,26 @@
 ﻿
 .jcManageLarge {
-    background:url(../image/36.png);
+    background:url(../image/menu1.png);
     background-repeat:no-repeat;
     background-position:center;
 }
 .jcdSave {
-    background:url(../image/23.png);
+    background:url(../image/menu2.png);
     background-repeat:no-repeat;
     background-position:center;
 }
 .distance {
-    background:url(../image/4.png);
+    background:url(../image/menu3.png);
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.basemap {
+    background:url(../image/menu4.png);
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.layerManage {
+    background:url(../image/menu5.png);
     background-repeat:no-repeat;
     background-position:center;
 }

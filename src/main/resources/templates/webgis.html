@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>数字矿山地图集成平台</title>
+    <title>山东淄博瑞安特GIS信息平台</title>
     <link href="mx/dataMine/css/dmExplit.css" rel="stylesheet" />
     <link href="mx/dataMine/easyui/easyui-ribbon/ribbon.css" rel="stylesheet" />
     <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
@@ -61,6 +61,22 @@ $(function () {
                         iconAlign: 'top',
                         size: 'large'
                     }]
+                },{
+                    tools: [{
+                        name: 'cadLayer',
+                        text: '地图显示否',
+                        iconCls: 'basemap',
+                        iconAlign: 'top',
+                        size: 'large'
+                    }]
+                },{
+                    tools: [{
+                        name: 'layerManage',
+                        text: '图层管理',
+                        iconCls: 'layerManage',
+                        iconAlign: 'top',
+                        size: 'large'
+                    }]
                 }]
         }]
     };
@@ -105,6 +121,12 @@ function addClickEvent() {
                     break;
                 case "pointDistance":
                     pointDistance();
+                    break;
+                case "cadLayer":
+                	cadVisible();
+                    break;
+                case "layerManage":
+                    layerCtrl();
                     break;
                 default:
                     break;

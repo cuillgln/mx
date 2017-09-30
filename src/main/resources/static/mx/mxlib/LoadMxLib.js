@@ -16,6 +16,7 @@ include(scriptBaseDir + "mxlib/measure.js");
 include(scriptBaseDir + "dataMine/sensor.js");
 include(scriptBaseDir + "dataMine/sensorPick.js");
 include(scriptBaseDir + "dataMine/sensorLocate.js");
+include(scriptBaseDir + "dataMine/layer.js");
 include(scriptBaseDir + "dataMine/copyright.js");
 
 //二次开发入口文件 加载完成了dom后

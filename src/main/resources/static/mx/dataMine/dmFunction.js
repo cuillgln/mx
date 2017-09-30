@@ -183,6 +183,25 @@ function pointDistance() {
 	MetaMapX.CurViewEvaluateJavaScript("var distanceCmd = new mxLib.DistanceMeasureCmd('distance', null, '{}'); map.startCommand(distanceCmd);");
 }
 
+var layerSwitch = true;
+/**
+ * 图层
+ * @returns
+ */
+function layerCtrl() {
+	if (layerSwitch) {
+		MetaMapX.CurViewEvaluateJavaScript("map.addControl(layerCtrl);");
+		layerSwitch = false;
+	} else {
+		MetaMapX.CurViewEvaluateJavaScript("map.removeControl(layerCtrl);");
+		layerSwitch = true;
+	}
+}
+
+function cadVisible() {
+	MetaMapX.CurViewEvaluateJavaScript("if (map.getVisble()) {map.setVisible(false);} else {map.setVisible(true);}");
+}
+
 /**
  * 设置背景
  */
