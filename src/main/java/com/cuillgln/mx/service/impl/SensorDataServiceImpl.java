@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cuillgln.mx.constant.MxConstant;
-import com.cuillgln.mx.entity.SensorData;
-import com.cuillgln.mx.repository.SensorDataRepository;
+import com.cuillgln.mx.entity.safetymonitoing.SensorData;
+import com.cuillgln.mx.repository.safetymonitoring.SensorDataRepository;
 import com.cuillgln.mx.service.SensorDataService;
 
 @Service

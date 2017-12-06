@@ -2,7 +2,7 @@ package com.cuillgln.mx.service;
 
 import java.util.List;
 
-import com.cuillgln.mx.entity.Sensor;
+import com.cuillgln.mx.entity.safetymonitoing.Sensor;
 
 public interface SensorService {
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cuillgln.mx.entity.SensorPosition;
+import com.cuillgln.mx.entity.safetymonitoing.SensorPosition;
 import com.cuillgln.mx.service.SensorPositionService;
 
 /**

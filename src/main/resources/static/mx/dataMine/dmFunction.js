@@ -13,7 +13,11 @@ function jcdManage() {
     $('#cc').layout('expand', 'west');
 
     //demo中用easyui库进行前端开发,运用accordion控件添加panel
-    addPanel('监测点管理', 'jcManage');
+    addPanel('传感器管理', 'sensorManage');
+    addPanel('安全监控分站管理', 'safeManage');
+    addPanel('人员定位分站管理', 'workerManage');
+    addPanel('语音广播音响管理', 'broadcastManage');
+    $("#westPanelData").accordion("select", "传感器管理");
 
     //获得各类数据
     MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
@@ -34,7 +38,7 @@ function jcdManage() {
     json.total = jcArr.length;
     json.rows = jcArr;
 
-    $('#jcManage').datagrid({
+    $('#sensorManage').datagrid({
         remoteSort: false,
         singleSelect: true,
         nowrap: false,
@@ -73,7 +77,7 @@ function jcdManage() {
     });
 
     //单击列事件
-    $('#jcManage').datagrid({
+    $('#sensorManage').datagrid({
         onDblClickRow: function (index, row) {
             var sensorId = row.sensorId;
             //执行定位脚本
@@ -81,7 +85,7 @@ function jcdManage() {
         },
         onClickCell: function (index, field, value) {
             if (field == "pick") {
-                var curRow = $('#jcManage').datagrid('getData').rows[index];
+                var curRow = $('#sensorManage').datagrid('getData').rows[index];
                 if ($.isEmptyObject(curRow))
                     return;
 
@@ -120,10 +124,10 @@ function jcdManage() {
     });
 
     //加载数据
-    $('#jcManage').datagrid('loadData', json);
+    $('#sensorManage').datagrid('loadData', json);
 
     //移除
-    $('#jcManage').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
+    $('#sensorManage').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
     
     // 在图上加载传感器信息
     var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "'); map.startCommand(locateCmd);"
@@ -142,17 +146,7 @@ function addPanel(name, div) {
 		$("#westPanelData").accordion("select", name);
 		return;
 	} else {
-		var content = "";
-		switch (name) {
-		case "监测点管理":
-			content = '<div id="' + div + '"></div>';
-			break;
-		case "识别卡管理":
-			content = '<div id="' + div + '"></div>';
-			break;
-		default:
-			break;
-		}
+		var content = '<div id="' + div + '"></div>';
 
 		$('#westPanelData').accordion('add', {
 			iconCls : div,

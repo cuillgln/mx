@@ -1,4 +1,4 @@
-package com.cuillgln.mx.entity;
+package com.cuillgln.mx.entity.safetymonitoing;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -171,6 +171,45 @@ public class Sensor implements Serializable {
 	// [上传屏蔽否4]
 	@Column(name = "[上传屏蔽否4]")
 	private Integer uploadMask4;
+
+	// [是否分级报警]
+	@Column(name = "[是否分级报警]")
+	private Integer alarmLevelFlag;
+	// [分级联动字串]
+	@Column(name = "[分级联动字串]")
+	private String alarmLevelString;
+
+	// [分级上限1]
+	@Column(name = "[分级上限1]")
+	private BigDecimal alarmLevelMax1;
+	// [分级上限2]
+	@Column(name = "[分级上限2]")
+	private BigDecimal alarmLevelMax2;
+	// [分级上限3]
+	@Column(name = "[分级上限3]")
+	private BigDecimal alarmLevelMax3;
+	// [分级上限4]
+	@Column(name = "[分级上限4]")
+	private BigDecimal alarmLevelMax4;
+	// [分级下限1]
+	@Column(name = "[分级下限1]")
+	private BigDecimal alarmLevelMin1;
+	// [分级下限2]
+	@Column(name = "[分级下限2]")
+	private BigDecimal alarmLevelMin2;
+	// [分级下限3]
+	@Column(name = "[分级下限3]")
+	private BigDecimal alarmLevelMin3;
+	// [分级下限4]
+	@Column(name = "[分级下限4]")
+	private BigDecimal alarmLevelMin4;
+
+	@Transient
+	private String alarmLevelRange;
+
+	// [是否应急联动]
+	@Column(name = "[是否应急联动]")
+	private Integer emergencyFlag;
 
 	public Long getSystemId() {
 		return systemId;
@@ -530,6 +569,102 @@ public class Sensor implements Serializable {
 
 	public void setUploadMask4(Integer uploadMask4) {
 		this.uploadMask4 = uploadMask4;
+	}
+
+	public Integer getAlarmLevelFlag() {
+		return alarmLevelFlag;
+	}
+
+	public void setAlarmLevelFlag(Integer alarmLevelFlag) {
+		this.alarmLevelFlag = alarmLevelFlag;
+	}
+
+	public String getAlarmLevelString() {
+		return alarmLevelString;
+	}
+
+	public void setAlarmLevelString(String alarmLevelString) {
+		this.alarmLevelString = alarmLevelString;
+	}
+
+	public BigDecimal getAlarmLevelMax1() {
+		return alarmLevelMax1;
+	}
+
+	public void setAlarmLevelMax1(BigDecimal alarmLevelMax1) {
+		this.alarmLevelMax1 = alarmLevelMax1;
+	}
+
+	public BigDecimal getAlarmLevelMax2() {
+		return alarmLevelMax2;
+	}
+
+	public void setAlarmLevelMax2(BigDecimal alarmLevelMax2) {
+		this.alarmLevelMax2 = alarmLevelMax2;
+	}
+
+	public BigDecimal getAlarmLevelMax3() {
+		return alarmLevelMax3;
+	}
+
+	public void setAlarmLevelMax3(BigDecimal alarmLevelMax3) {
+		this.alarmLevelMax3 = alarmLevelMax3;
+	}
+
+	public BigDecimal getAlarmLevelMax4() {
+		return alarmLevelMax4;
+	}
+
+	public void setAlarmLevelMax4(BigDecimal alarmLevelMax4) {
+		this.alarmLevelMax4 = alarmLevelMax4;
+	}
+
+	public BigDecimal getAlarmLevelMin1() {
+		return alarmLevelMin1;
+	}
+
+	public void setAlarmLevelMin1(BigDecimal alarmLevelMin1) {
+		this.alarmLevelMin1 = alarmLevelMin1;
+	}
+
+	public BigDecimal getAlarmLevelMin2() {
+		return alarmLevelMin2;
+	}
+
+	public void setAlarmLevelMin2(BigDecimal alarmLevelMin2) {
+		this.alarmLevelMin2 = alarmLevelMin2;
+	}
+
+	public BigDecimal getAlarmLevelMin3() {
+		return alarmLevelMin3;
+	}
+
+	public void setAlarmLevelMin3(BigDecimal alarmLevelMin3) {
+		this.alarmLevelMin3 = alarmLevelMin3;
+	}
+
+	public BigDecimal getAlarmLevelMin4() {
+		return alarmLevelMin4;
+	}
+
+	public void setAlarmLevelMin4(BigDecimal alarmLevelMin4) {
+		this.alarmLevelMin4 = alarmLevelMin4;
+	}
+
+	public String getAlarmLevelRange() {
+		return alarmLevelRange;
+	}
+
+	public void setAlarmLevelRange(String alarmLevelRange) {
+		this.alarmLevelRange = alarmLevelRange;
+	}
+
+	public Integer getEmergencyFlag() {
+		return emergencyFlag;
+	}
+
+	public void setEmergencyFlag(Integer emergencyFlag) {
+		this.emergencyFlag = emergencyFlag;
 	}
 
 }

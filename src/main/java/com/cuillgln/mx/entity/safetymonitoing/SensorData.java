@@ -1,4 +1,4 @@
-package com.cuillgln.mx.entity;
+package com.cuillgln.mx.entity.safetymonitoing;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
