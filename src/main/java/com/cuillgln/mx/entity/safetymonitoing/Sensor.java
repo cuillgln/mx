@@ -155,9 +155,6 @@ public class Sensor implements Serializable {
 	// [断电区域]
 	@Column(name = "[断电区域]")
 	private String powerCutRange;
-	// [安装地点编号]
-	@Column(name = "[安装地点编号]")
-	private Integer locationNo;
 
 	// [上传屏蔽否]
 	@Column(name = "[上传屏蔽否]")
@@ -529,14 +526,6 @@ public class Sensor implements Serializable {
 
 	public void setPowerCutRange(String powerCutRange) {
 		this.powerCutRange = powerCutRange;
-	}
-
-	public Integer getLocationNo() {
-		return locationNo;
-	}
-
-	public void setLocationNo(Integer locationNo) {
-		this.locationNo = locationNo;
 	}
 
 	public Integer getUploadMask() {
