@@ -35,7 +35,7 @@ public class SafetyMonitoringStation implements Serializable {
 	private Timestamp createTime;
 	// [运行状态]
 	@Column(name = "[运行状态]")
-	private Integer runningState;
+	private String runningState;
 	// [掉电次数统计]
 	@Column(name = "[掉电次数统计]")
 	private Long powerCutCount;
@@ -127,11 +127,11 @@ public class SafetyMonitoringStation implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Integer getRunningState() {
+	public String getRunningState() {
 		return runningState;
 	}
 
-	public void setRunningState(Integer runningState) {
+	public void setRunningState(String runningState) {
 		this.runningState = runningState;
 	}
 

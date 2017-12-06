@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cuillgln.mx.entity.staffpositioning.StaffPositioningStation;
-import com.cuillgln.mx.service.StaffPositioningStationService;
+import com.cuillgln.mx.entity.audiobroadcasting.AudioBroadcastingStation;
+import com.cuillgln.mx.service.AudioBroadcastingStationService;
 
 @RestController
-public class StaffPositioningStationController {
+public class AudioBroadcastingStationController {
 
 	@Autowired
-	private StaffPositioningStationService service;
+	private AudioBroadcastingStationService service;
 
-	@RequestMapping(value = "/staffpositioningstation", method = RequestMethod.GET)
-	public List<StaffPositioningStation> index() {
+	@RequestMapping(value = "/audiobroadcastingstation", method = RequestMethod.GET)
+	public List<AudioBroadcastingStation> index() {
 		return service.list();
 	}
 }

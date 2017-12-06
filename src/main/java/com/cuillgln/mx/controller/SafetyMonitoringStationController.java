@@ -1,21 +1,23 @@
 package com.cuillgln.mx.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cuillgln.mx.entity.safetymonitoing.SafetyMonitoringStation;
+import com.cuillgln.mx.service.SafetyMonitoringStationService;
 
 @RestController
 public class SafetyMonitoringStationController {
 
-	@RequestMapping(value = "/monitoringstation", method = RequestMethod.GET)
-	public List<SafetyMonitoringStation> index() {
-		List<SafetyMonitoringStation> list = new ArrayList<>();
+	@Autowired
+	private SafetyMonitoringStationService service;
 
-		return list;
+	@RequestMapping(value = "/safetymonitoringstation", method = RequestMethod.GET)
+	public List<SafetyMonitoringStation> index() {
+		return service.list();
 	}
 }
