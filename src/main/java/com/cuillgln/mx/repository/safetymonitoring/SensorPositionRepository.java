@@ -8,7 +8,7 @@ import com.cuillgln.mx.entity.safetymonitoing.SensorPosition;
 @Repository
 public interface SensorPositionRepository extends CrudRepository<SensorPosition, Long> {
 
-	Iterable<SensorPosition> findByRemovedFlag(int removedFlag);
+	Iterable<SensorPosition> findByTypeAndRemovedFlag(int type, int removedFlag);
 	
 	SensorPosition findByIdAndType(long id, int type);
 }

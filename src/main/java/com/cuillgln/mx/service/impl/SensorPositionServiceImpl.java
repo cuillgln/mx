@@ -19,7 +19,8 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 
 	@Override
 	public List<SensorPosition> list(int type) {
-		Iterable<SensorPosition> itr = sensorPositionRepository.findByRemovedFlag(MxConstant.REMOVED_FLAG_NO);
+		Iterable<SensorPosition> itr = sensorPositionRepository.findByTypeAndRemovedFlag(type,
+				MxConstant.REMOVED_FLAG_NO);
 		List<SensorPosition> result = new ArrayList<>();
 		for (SensorPosition sensorPosition : itr) {
 			result.add(fillup(sensorPosition));
@@ -63,19 +64,19 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 		}
 		switch (sensorPosition.getType()) {
 		case SensorPosition.TYPE_SENSOR:
-			sensorPosition.setSensorId("sensor_" + sensorPosition.getId());
+			sensorPosition.setSensorId(MxConstant.SENSOR_PREFIX + sensorPosition.getId());
 			break;
 		case SensorPosition.TYPE_SAFETY_MONITORING_STATION:
-			sensorPosition.setSensorId("sms_" + sensorPosition.getId());
+			sensorPosition.setSensorId(MxConstant.SAFETY_MONITORING_STATION_PREFIX + sensorPosition.getId());
 			break;
 		case SensorPosition.TYPE_STAFF_POSITIONING_STATION:
-			sensorPosition.setSensorId("sps_" + sensorPosition.getId());
+			sensorPosition.setSensorId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + sensorPosition.getId());
 			break;
 		case SensorPosition.TYPE_AUDIO_BROADCASTING_STATION:
-			sensorPosition.setSensorId("abs_" + sensorPosition.getId());
+			sensorPosition.setSensorId(MxConstant.AUDIO_BROADCASTING_STATION_PREFIX + sensorPosition.getId());
 			break;
 		default:
-			sensorPosition.setSensorId("sensor_" + sensorPosition.getId());
+			sensorPosition.setSensorId(MxConstant.SENSOR_PREFIX + sensorPosition.getId());
 			break;
 		}
 		return sensorPosition;

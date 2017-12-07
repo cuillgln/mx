@@ -221,8 +221,77 @@ for ( var key in imgNormalMap) {
 					var sensor = data[i];
 					var sensorId = sensor.sensorId;
 					var point = new mxLib.Point(sensor.x, sensor.y);
-					point.systemId = sensor.systemId;
+					point.systemId = sensor.id;
 					self.sensorPosition[sensorId] = point;
+				}
+			},
+			error : function(msg) {
+
+			}
+		});
+		$.ajax({
+			url : contextPath + "/sensorposition/list/2",
+			type : "GET",
+			async : true,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if ($.isEmptyObject(data)) {
+					return;
+				}
+				var length = data.length;
+				for (var i = 0; i < length; i++) {
+					var sensor = data[i];
+					var sensorId = sensor.sensorId;
+					var point = new mxLib.Point(sensor.x, sensor.y);
+					point.systemId = sensor.id;
+					self.smsPosition[sensorId] = point;
+				}
+			},
+			error : function(msg) {
+
+			}
+		});
+		$.ajax({
+			url : contextPath + "/sensorposition/list/3",
+			type : "GET",
+			async : true,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if ($.isEmptyObject(data)) {
+					return;
+				}
+				var length = data.length;
+				for (var i = 0; i < length; i++) {
+					var sensor = data[i];
+					var sensorId = sensor.sensorId;
+					var point = new mxLib.Point(sensor.x, sensor.y);
+					point.systemId = sensor.id;
+					self.spsPosition[sensorId] = point;
+				}
+			},
+			error : function(msg) {
+
+			}
+		});
+		$.ajax({
+			url : contextPath + "/sensorposition/list/4",
+			type : "GET",
+			async : true,
+			cache : false,
+			dataType : "json",
+			success : function(data) {
+				if ($.isEmptyObject(data)) {
+					return;
+				}
+				var length = data.length;
+				for (var i = 0; i < length; i++) {
+					var sensor = data[i];
+					var sensorId = sensor.sensorId;
+					var point = new mxLib.Point(sensor.x, sensor.y);
+					point.systemId = sensor.id;
+					self.absPosition[sensorId] = point;
 				}
 			},
 			error : function(msg) {
@@ -236,7 +305,7 @@ for ( var key in imgNormalMap) {
 	 */
 	Sensor.prototype.savePosition = function() {
 		var data = [];
-		for ( var sensorId in this.sensorPosition) {
+		for (var sensorId in this.sensorPosition) {
 			var point = this.sensorPosition[sensorId];
 			var position = {};
 			position.sensorId = sensorId;
@@ -254,10 +323,94 @@ for ( var key in imgNormalMap) {
 				contentType : "application/json",
 				data : JSON.stringify(data),
 				dataType : "json",
-				success : function(data) {
+				success : function() {
+					// alert("保存成功！");
+				},
+				error : function() {
+
+				}
+			});
+		}
+		
+		var smsdata = [];
+		for (var sensorId in this.smsPosition) {
+			var point = this.smsPosition[sensorId];
+			var position = {};
+			position.sensorId = sensorId;
+			position.id = point.systemId;
+			position.x = point.x;
+			position.y = point.y;
+			smsdata.push(position);
+		}
+		if (smsdata.length > 0) {
+			$.ajax({
+				url : contextPath + "/sensorposition/update/2",
+				type : "POST",
+				async : true,
+				cache : false,
+				contentType : "application/json",
+				data : JSON.stringify(smsdata),
+				dataType : "json",
+				success : function() {
+					// alert("保存成功！");
+				},
+				error : function() {
+
+				}
+			});
+		}
+		
+		var spsdata = [];
+		for (var sensorId in this.spsPosition) {
+			var point = this.spsPosition[sensorId];
+			var position = {};
+			position.sensorId = sensorId;
+			position.id = point.systemId;
+			position.x = point.x;
+			position.y = point.y;
+			spsdata.push(position);
+		}
+		if (spsdata.length > 0) {
+			$.ajax({
+				url : contextPath + "/sensorposition/update/3",
+				type : "POST",
+				async : true,
+				cache : false,
+				contentType : "application/json",
+				data : JSON.stringify(spsdata),
+				dataType : "json",
+				success : function() {
 					alert("保存成功！");
 				},
-				error : function(data) {
+				error : function() {
+
+				}
+			});
+		}
+		
+		var absdata = [];
+		for (var sensorId in this.absPosition) {
+			var point = this.absPosition[sensorId];
+			var position = {};
+			position.sensorId = sensorId;
+			position.id = point.systemId;
+			position.x = point.x;
+			position.y = point.y;
+			absdata.push(position);
+		}
+		if (absdata.length > 0) {
+			$.ajax({
+				url : contextPath + "/sensorposition/update/4",
+				type : "POST",
+				async : true,
+				cache : false,
+				contentType : "application/json",
+				data : JSON.stringify(absdata),
+				dataType : "json",
+				success : function() {
+					alert("保存成功！");
+				},
+				error : function() {
 
 				}
 			});
@@ -386,7 +539,7 @@ for ( var key in imgNormalMap) {
 
 		// 添加到map
 		this.sensorMap[sensorId] = myRichMarker;
-		this.updatePoint(sensorId, point);
+		this.updateSensorPoint(sensorId, point);
 
 		// 实时值
 		var valueObj = this.getValue(sensorId);
@@ -465,8 +618,9 @@ for ( var key in imgNormalMap) {
 		}
 		// 添加到map
 		this.smsMap[stationId] = myRichMarker;
+		this.updateSmsPoint(stationId, point);
 		// 添加事件响应
-		this.addEvent(myRichMarker);
+		// this.addEvent(myRichMarker);
 	}
 	
 	Sensor.prototype.addSpsInternal = function(opts) {
@@ -517,8 +671,9 @@ for ( var key in imgNormalMap) {
 		}
 		// 添加到map
 		this.spsMap[stationId] = myRichMarker;
+		this.updateSpsPoint(stationId, point);
 		// 添加事件响应
-		this.addEvent(myRichMarker);
+		// this.addEvent(myRichMarker);
 	}
 	
 	Sensor.prototype.addAbsInternal = function(opts) {
@@ -568,9 +723,10 @@ for ( var key in imgNormalMap) {
 			map.addOverlay(myRichMarker);
 		}
 		// 添加到map
-		this.spsMap[stationId] = myRichMarker;
+		this.absMap[stationId] = myRichMarker;
+		this.updateAbsPoint(stationId, point);
 		// 添加事件响应
-		this.addEvent(myRichMarker);
+		// this.addEvent(myRichMarker);
 	}
 	
 	
@@ -633,7 +789,7 @@ for ( var key in imgNormalMap) {
 					marker.addEventListener("onmouseup", function(e) {
 						// 更新坐标位置
 						var point = e.point;
-						self.updatePoint(sensorId, point);
+						self.updateSensorPoint(sensorId, point);
 						marker.disableDragging();
 					});
 				}
@@ -687,12 +843,36 @@ for ( var key in imgNormalMap) {
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.updatePoint = function(sensorId, point) {
+	Sensor.prototype.updateSensorPoint = function(sensorId, point) {
 		if (this.sensorPosition.hasOwnProperty(sensorId)) {
 			var oldPoint = this.sensorPosition[sensorId];
 			point.systemId = oldPoint.systemId;
 		}
 		this.sensorPosition[sensorId] = point;
+	}
+	
+	Sensor.prototype.updateSmsPoint = function(sensorId, point) {
+		if (this.smsPosition.hasOwnProperty(sensorId)) {
+			var oldPoint = this.smsPosition[sensorId];
+			point.systemId = oldPoint.systemId;
+		}
+		this.smsPosition[sensorId] = point;
+	}
+	
+	Sensor.prototype.updateSpsPoint = function(sensorId, point) {
+		if (this.spsPosition.hasOwnProperty(sensorId)) {
+			var oldPoint = this.spsPosition[sensorId];
+			point.systemId = oldPoint.systemId;
+		}
+		this.spsPosition[sensorId] = point;
+	}
+	
+	Sensor.prototype.updateAbsPoint = function(sensorId, point) {
+		if (this.absPosition.hasOwnProperty(sensorId)) {
+			var oldPoint = this.absPosition[sensorId];
+			point.systemId = oldPoint.systemId;
+		}
+		this.absPosition[sensorId] = point;
 	}
 
 	/**
