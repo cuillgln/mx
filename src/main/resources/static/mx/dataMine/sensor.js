@@ -712,7 +712,7 @@ for ( var key in imgNormalMap) {
 		}
 
 		// 查看是否存在指定对象
-		var marker = this.spsMap[stationId];
+		var marker = this.absMap[stationId];
 		if ($.isEmptyObject(marker)) {
 			// 如果测点没有对象则添加到图形中
 			map.addOverlay(myRichMarker);
@@ -882,12 +882,35 @@ for ( var key in imgNormalMap) {
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.getPoint = function(sensorId) {
-		if ($.isEmptyObject(this.sensorPosition))
-			return null;
-
-		if (this.sensorPosition.hasOwnProperty(sensorId)) {
-			return this.sensorPosition[sensorId];
+	Sensor.prototype.getPoint = function(sensorId, type) {
+		if (type == 1) {
+			if ($.isEmptyObject(this.sensorPosition)) {
+				return null;
+			}
+			if (this.sensorPosition.hasOwnProperty(sensorId)) {
+				return this.sensorPosition[sensorId];
+			}
+		} else if (type == 2) {
+			if ($.isEmptyObject(this.smsPosition)) {
+				return null;
+			}
+			if (this.smsPosition.hasOwnProperty(sensorId)) {
+				return this.smsPosition[sensorId];
+			}
+		} else if (type == 3) {
+			if ($.isEmptyObject(this.spsPosition)) {
+				return null;
+			}
+			if (this.spsPosition.hasOwnProperty(sensorId)) {
+				return this.spsPosition[sensorId];
+			}
+		} else if (type == 4) {
+			if ($.isEmptyObject(this.absPosition)) {
+				return null;
+			}
+			if (this.absPosition.hasOwnProperty(sensorId)) {
+				return this.absPosition[sensorId];
+			}
 		}
 	}
 

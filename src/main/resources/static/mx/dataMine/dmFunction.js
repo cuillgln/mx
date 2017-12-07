@@ -131,7 +131,7 @@ function loadSensorPanel(sensorData) {
     json.total = jcArr.length;
     json.rows = jcArr;
     // 在图上加载传感器信息
-    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "'); map.startCommand(locateCmd);"
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 1); map.startCommand(locateCmd);"
     MetaMapX.CurViewEvaluateJavaScript(script);
 
     $('#sensorManage').datagrid({
@@ -245,7 +245,9 @@ function loadSmStationPanel(smStationData) {
     var json = {};
     json.total = jcArr.length;
     json.rows = jcArr;
-
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 2); map.startCommand(locateCmd);"
+    MetaMapX.CurViewEvaluateJavaScript(script);
+    
     $('#smManage').datagrid({
         remoteSort: false,
         singleSelect: true,
@@ -302,8 +304,8 @@ function loadSmStationPanel(smStationData) {
                 opts.runningState = curRow["runningState"];
                 opts.powerCutFlag = curRow["powerCutFlag"];
                 opts.ch4LockFlag = curRow["ch4LockFlag"];
-                // opts.portName = curRow["portName"];
-                // opts.feedMonitor = curRow["feedMonitor"];
+                opts.portName = curRow["portName"];
+                opts.feedMonitor = curRow["feedMonitor"];
                 opts.deviceType = 2;
                 
                 var strOpts = "";
@@ -339,7 +341,10 @@ function loadSpStationPanel(spStationData) {
     var json = {};
     json.total = jcArr.length;
     json.rows = jcArr;
-
+    // 在图上加载传感器信息
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 3); map.startCommand(locateCmd);"
+    MetaMapX.CurViewEvaluateJavaScript(script);
+    
     $('#spManage').datagrid({
         remoteSort: false,
         singleSelect: true,
@@ -423,6 +428,8 @@ function loadAbStationPanel(abStationData) {
     var json = {};
     json.total = jcArr.length;
     json.rows = jcArr;
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 4); map.startCommand(locateCmd);"
+    MetaMapX.CurViewEvaluateJavaScript(script);
 
     $('#abManage').datagrid({
         remoteSort: false,

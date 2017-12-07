@@ -28,7 +28,16 @@ public class SafetyMonitoringStationServiceImpl implements SafetyMonitoringStati
 	}
 
 	private SafetyMonitoringStation fillup(SafetyMonitoringStation st) {
-		st.setStationId(MxConstant.SAFETY_MONITORING_STATION_PREFIX + st.getStation());
+		st.setStationId(MxConstant.SAFETY_MONITORING_STATION_PREFIX + st.getSystemId());
+		if (st.getPortName() != null) {
+			st.setPortName(st.getPortName().replaceAll("\b", "\\\\b"));
+		}
+		if (st.getFeedMonitor() != null) {
+			st.setFeedMonitor(st.getFeedMonitor().replaceAll("\b", "\\\\b"));
+		}
+		
+		
+		
 		return st;
 	}
 }

@@ -28,7 +28,7 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 	}
 
 	private StaffPositioningStation fillup(StaffPositioningStation st) {
-		st.setStationId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + st.getStation());
+		st.setStationId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + st.getSystemId());
 		return st;
 	}
 }

@@ -2,9 +2,9 @@
  * Sensor定位命令
  */
 var LocateCmd =
-mxLib.LocateCmd = function LocateCmd(name, parentCmd, opts) {
+mxLib.LocateCmd = function LocateCmd(name, parentCmd, opts, type) {
     mxLib.Command.prototype.constructor.call(this, name, parentCmd, opts);
-
+    this.type = type;
     //如果为字符串
     if (typeof (opts) == "string") {
         try{
@@ -25,21 +25,24 @@ LocateCmd.prototype.start = function (map) {
     var data = this.opts.rows;
     for (var i = 0; i < total; i++) {
     	var sensor = data[i];
-    	var sensorId = sensor.sensorId;
-    	// TODO 此处需要修改deviceType
-    	sensor.deviceType = 1;
-    	var point = window.sensor.getPoint(sensorId);
+    	if (this.type == 1) {
+    		var sensorId = sensor.sensorId;
+    	} else {
+    		var sensorId = sensor.stationId;
+    	}
+    	var point = window.sensor.getPoint(sensorId, this.type);
     	if ($.isEmptyObject(point)) {
     		continue;
     	}
     	sensor.x = point.x;
     	sensor.y = point.y;
-    	sensor.systemId = point.systemId;
+    	// sensor.systemId = point.systemId;
     	
     	// 判断x/y
     	var x = sensor.x;
         var y = sensor.y;
         if ($.isNumeric(x) && $.isNumeric(y)) {
+        	sensor.deviceType = this.type;
         	window.sensor.addSensor(sensor);
         }
     }

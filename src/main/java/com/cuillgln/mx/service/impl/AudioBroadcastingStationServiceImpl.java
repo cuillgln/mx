@@ -28,7 +28,7 @@ public class AudioBroadcastingStationServiceImpl implements AudioBroadcastingSta
 	}
 
 	private AudioBroadcastingStation fillup(AudioBroadcastingStation st) {
-		st.setStationId(MxConstant.AUDIO_BROADCASTING_STATION_PREFIX + st.getStation());
+		st.setStationId(MxConstant.AUDIO_BROADCASTING_STATION_PREFIX + st.getSystemId());
 		return st;
 	}
 }
