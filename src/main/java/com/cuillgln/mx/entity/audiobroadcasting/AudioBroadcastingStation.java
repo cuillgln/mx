@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "[t_GB_fenzhan]")
@@ -16,6 +17,10 @@ public class AudioBroadcastingStation implements Serializable {
 	@Id
 	@Column(name = "[systemid]")
 	private Long systemId;
+
+	@Transient
+	private String stationId;
+
 	@Column(name = "[id]")
 	private Long station;
 	@Column(name = "[name]")
@@ -43,6 +48,14 @@ public class AudioBroadcastingStation implements Serializable {
 
 	public void setSystemId(Long systemId) {
 		this.systemId = systemId;
+	}
+
+	public String getStationId() {
+		return stationId;
+	}
+
+	public void setStationId(String stationId) {
+		this.stationId = stationId;
 	}
 
 	public Long getStation() {

@@ -22,9 +22,13 @@ public class SafetyMonitoringStationServiceImpl implements SafetyMonitoringStati
 		Iterable<SafetyMonitoringStation> stations = repository.findByValidFlag(MxConstant.VALID_FLAG_YES);
 		List<SafetyMonitoringStation> list = new ArrayList<>();
 		for (SafetyMonitoringStation st : stations) {
-			list.add(st);
+			list.add(fillup(st));
 		}
 		return list;
 	}
 
+	private SafetyMonitoringStation fillup(SafetyMonitoringStation st) {
+		st.setStationId(MxConstant.SAFETY_MONITORING_STATION_PREFIX + st.getStation());
+		return st;
+	}
 }

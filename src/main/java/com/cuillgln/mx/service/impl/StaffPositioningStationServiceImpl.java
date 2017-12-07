@@ -22,9 +22,13 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 		Iterable<StaffPositioningStation> stations = repository.findByValidFlag(MxConstant.VALID_FLAG_YES);
 		List<StaffPositioningStation> list = new ArrayList<>();
 		for (StaffPositioningStation st : stations) {
-			list.add(st);
+			list.add(fillup(st));
 		}
 		return list;
 	}
 
+	private StaffPositioningStation fillup(StaffPositioningStation st) {
+		st.setStationId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + st.getStation());
+		return st;
+	}
 }

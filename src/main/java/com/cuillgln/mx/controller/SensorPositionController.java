@@ -25,14 +25,14 @@ public class SensorPositionController {
 	@Autowired
 	private SensorPositionService sensorPositionService;
 
-	@GetMapping("/sensorposition")
-	public List<SensorPosition> list() {
-		return sensorPositionService.list();
+	@GetMapping("/sensorposition/list/{type}")
+	public List<SensorPosition> list(@PathVariable int type) {
+		return sensorPositionService.list(type);
 	}
 
-	@PostMapping("/sensorposition/update")
-	public String update(@RequestBody List<SensorPosition> positionList) {
-		sensorPositionService.save(positionList);
+	@PostMapping("/sensorposition/update/{type}")
+	public String update(@PathVariable int type, @RequestBody List<SensorPosition> positionList) {
+		sensorPositionService.save(positionList, type);
 		return "{\"result\":\"success\"}";
 	}
 

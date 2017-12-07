@@ -43,6 +43,10 @@ public class SensorServiceImpl implements SensorService {
 		sensor.setSensorId(MxConstant.SENSOR_PREFIX + sensor.getSystemId());
 		sensor.setStationPort(sensor.getStation() + "-" + sensor.getPortId());
 		sensor.setAlarmValueRange(sensor.getAlarmMaxValue() + "/" + sensor.getAlarmMinValue());
+		sensor.setAlarmLevelRange("[" + sensor.getAlarmLevelMax1() + "," + sensor.getAlarmLevelMax2() + ","
+				+ sensor.getAlarmLevelMax3() + "," + sensor.getAlarmLevelMax4() + "]/[" + sensor.getAlarmLevelMin1()
+				+ "," + sensor.getAlarmLevelMin2() + "," + sensor.getAlarmLevelMin3() + "," + sensor.getAlarmLevelMin4()
+				+ "]");
 		return sensor;
 	}
 }

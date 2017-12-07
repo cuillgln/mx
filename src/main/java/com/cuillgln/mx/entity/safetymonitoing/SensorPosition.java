@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -16,10 +18,23 @@ import javax.persistence.Transient;
 @Table(name = "[端口位置表]")
 public class SensorPosition implements Serializable {
 	private static final long serialVersionUID = -4515230339355165807L;
+
+	public static final int TYPE_SENSOR = 1;
+	public static final int TYPE_SAFETY_MONITORING_STATION = 2;
+	public static final int TYPE_STAFF_POSITIONING_STATION = 3;
+	public static final int TYPE_AUDIO_BROADCASTING_STATION = 4;
+
 	// [系统序号]
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "[系统序号]")
 	private Long systemId;
+
+	@Column(name = "[设备号]")
+	private Long id;
+
+	@Column(name = "[设备类型]")
+	private Integer type;
 
 	@Transient
 	private String sensorId;
@@ -61,6 +76,22 @@ public class SensorPosition implements Serializable {
 
 	public void setSystemId(Long systemId) {
 		this.systemId = systemId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public String getSensorId() {

@@ -18,7 +18,7 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 	private SensorPositionRepository sensorPositionRepository;
 
 	@Override
-	public List<SensorPosition> list() {
+	public List<SensorPosition> list(int type) {
 		Iterable<SensorPosition> itr = sensorPositionRepository.findByRemovedFlag(MxConstant.REMOVED_FLAG_NO);
 		List<SensorPosition> result = new ArrayList<>();
 		for (SensorPosition sensorPosition : itr) {
@@ -28,12 +28,13 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 	}
 
 	@Override
-	public void save(List<SensorPosition> positions) {
+	public void save(List<SensorPosition> positions, int type) {
 		for (SensorPosition sp : positions) {
-			SensorPosition already = sensorPositionRepository.findOne(sp.getSystemId());
+			SensorPosition already = sensorPositionRepository.findByIdAndType(sp.getId(), type);
 			if (already == null) {
 				already = sp;
 			}
+			already.setType(type);
 			already.setX(sp.getX());
 			already.setY(sp.getY());
 			already.setZ(sp.getZ());
@@ -48,7 +49,7 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 	@Override
 	public void remove(List<SensorPosition> positions) {
 		for (SensorPosition sp : positions) {
-			SensorPosition already = sensorPositionRepository.findOne(sp.getSystemId());
+			SensorPosition already = sensorPositionRepository.findByIdAndType(sp.getId(), sp.getType());
 			if (already != null) {
 				already.setRemovedFlag(MxConstant.REMOVED_FLAG_YES);
 				sensorPositionRepository.save(already);
@@ -60,7 +61,23 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 		if (sensorPosition == null) {
 			return null;
 		}
-		sensorPosition.setSensorId(MxConstant.SENSOR_PREFIX + sensorPosition.getSystemId());
+		switch (sensorPosition.getType()) {
+		case SensorPosition.TYPE_SENSOR:
+			sensorPosition.setSensorId("sensor_" + sensorPosition.getId());
+			break;
+		case SensorPosition.TYPE_SAFETY_MONITORING_STATION:
+			sensorPosition.setSensorId("sms_" + sensorPosition.getId());
+			break;
+		case SensorPosition.TYPE_STAFF_POSITIONING_STATION:
+			sensorPosition.setSensorId("sps_" + sensorPosition.getId());
+			break;
+		case SensorPosition.TYPE_AUDIO_BROADCASTING_STATION:
+			sensorPosition.setSensorId("abs_" + sensorPosition.getId());
+			break;
+		default:
+			sensorPosition.setSensorId("sensor_" + sensorPosition.getId());
+			break;
+		}
 		return sensorPosition;
 	}
 }

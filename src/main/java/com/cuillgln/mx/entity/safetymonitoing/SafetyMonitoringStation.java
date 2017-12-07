@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "[站点配置表]")
@@ -18,6 +19,10 @@ public class SafetyMonitoringStation implements Serializable {
 	@Id
 	@Column(name = "[序号]")
 	private Long systemId;
+
+	@Transient
+	private String stationId;
+
 	// [有效否]
 	@Column(name = "[有效否]")
 	private Integer validFlag;
@@ -85,6 +90,14 @@ public class SafetyMonitoringStation implements Serializable {
 
 	public void setSystemId(Long systemId) {
 		this.systemId = systemId;
+	}
+
+	public String getStationId() {
+		return stationId;
+	}
+
+	public void setStationId(String stationId) {
+		this.stationId = stationId;
 	}
 
 	public Integer getValidFlag() {

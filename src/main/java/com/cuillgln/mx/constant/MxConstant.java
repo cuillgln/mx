@@ -10,11 +10,10 @@ import com.cuillgln.util.StringUtil;
 
 public class MxConstant {
 
-	/**
-	 * map 存放value/label
-	 */
-
 	public static final String SENSOR_PREFIX = "sensor_";
+	public static final String SAFETY_MONITORING_STATION_PREFIX = "smstation_";
+	public static final String STAFF_POSITIONING_STATION_PREFIX = "spstation_";
+	public static final String AUDIO_BROADCASTING_STATION_PREFIX = "abstation_";
 
 	/**
 	 * 有效标志

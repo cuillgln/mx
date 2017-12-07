@@ -76,6 +76,57 @@ for ( var key in imgNormalMap) {
 		}
 	}
 	
+	Sensor.prototype.getSafetyMonitoringStation = function() {
+		var arr = [];
+		$.ajax({
+			url : contextPath + "/safetymonitoringstation",
+			type : "GET",
+			async : false,
+			dataType : "json",
+			success : function(data) {
+				arr = data;
+			}
+		});
+		// 如果数组大于0
+		if (arr.length > 0) {
+			return arr;
+		}
+	}
+	
+	Sensor.prototype.getStaffPositioningStation = function() {
+		var arr = [];
+		$.ajax({
+			url : contextPath + "/staffpositioningstation",
+			type : "GET",
+			async : false,
+			dataType : "json",
+			success : function(data) {
+				arr = data;
+			}
+		});
+		// 如果数组大于0
+		if (arr.length > 0) {
+			return arr;
+		}
+	}
+	
+	Sensor.prototype.getAudioBroadcastingStation = function() {
+		var arr = [];
+		$.ajax({
+			url : contextPath + "/audiobroadcastingstation",
+			type : "GET",
+			async : false,
+			dataType : "json",
+			success : function(data) {
+				arr = data;
+			}
+		});
+		// 如果数组大于0
+		if (arr.length > 0) {
+			return arr;
+		}
+	}
+	
 	/**
 	 * 更新数据（定时器更新）
 	 */
@@ -146,10 +197,10 @@ for ( var key in imgNormalMap) {
 	/**
 	 * 加载传感器位置
 	 */
-	Sensor.prototype.getPosition = function() {
+	Sensor.prototype.getPosition = function(type) {
 		var self = this;
 		$.ajax({
-			url : contextPath + "/sensorposition",
+			url : contextPath + "/sensorposition/list/1",
 			type : "GET",
 			async : true,
 			cache : false,
@@ -182,14 +233,14 @@ for ( var key in imgNormalMap) {
 			var point = this.sensorPosition[sensorId];
 			var position = {};
 			position.sensorId = sensorId;
-			position.systemId = point.systemId;
+			position.id = point.systemId;
 			position.x = point.x;
 			position.y = point.y;
 			data.push(position);
 		}
 		if (data.length > 0) {
 			$.ajax({
-				url : contextPath + "/sensorposition/update",
+				url : contextPath + "/sensorposition/update/1",
 				type : "POST",
 				async : true,
 				cache : false,
@@ -211,7 +262,7 @@ for ( var key in imgNormalMap) {
 			var point = this.removedSensorPosition[sensorId];
 			var position = {};
 			position.sensorId = sensorId;
-			position.systemId = point.systemId;
+			position.id = point.systemId;
 			position.x = point.x;
 			position.y = point.y;
 			removedData.push(position);
