@@ -210,6 +210,7 @@ function loadSensorPanel(sensorData) {
                 opts.alarmLevelFlag = curRow["alarmLevelFlag"];
                 opts.alarmLevelRange = curRow["alarmLevelRange"];
                 opts.alarmLevelString = curRow["alarmLevelString"];
+                opts.deviceType = 1;
                 
                 var strOpts = "";
                 try{
@@ -301,8 +302,9 @@ function loadSmStationPanel(smStationData) {
                 opts.runningState = curRow["runningState"];
                 opts.powerCutFlag = curRow["powerCutFlag"];
                 opts.ch4LockFlag = curRow["ch4LockFlag"];
-                opts.portName = curRow["portName"];
-                opts.feedMonitor = curRow["feedMonitor"];
+                // opts.portName = curRow["portName"];
+                // opts.feedMonitor = curRow["feedMonitor"];
+                opts.deviceType = 2;
                 
                 var strOpts = "";
                 try{
@@ -386,6 +388,7 @@ function loadSpStationPanel(spStationData) {
                 opts.station = curRow["station"];
                 opts.stationName = curRow["stationName"];
                 opts.location = curRow["location"];
+                opts.deviceType = 3;
                 
                 var strOpts = "";
                 try{
@@ -471,6 +474,7 @@ function loadAbStationPanel(abStationData) {
                 opts.stationName = curRow["stationName"];
                 opts.location = curRow["location"];
                 opts.type = curRow["type"];
+                opts.deviceType = 4;
 
                 var strOpts = "";
                 try{

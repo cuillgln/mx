@@ -54,6 +54,13 @@ for ( var key in imgNormalMap) {
 		this.sensorData = {};
 		this.sensorPosition = {};
 		this.removedSensorPosition = {};
+		// 分站
+		this.smsMap = {};
+		this.smsPosition = {};		
+		this.spsMap = {};
+		this.spsPosition = {};
+		this.absMap = {};
+		this.absPosition = {};
 	}
 
 	/**
@@ -197,7 +204,7 @@ for ( var key in imgNormalMap) {
 	/**
 	 * 加载传感器位置
 	 */
-	Sensor.prototype.getPosition = function(type) {
+	Sensor.prototype.getPosition = function() {
 		var self = this;
 		$.ajax({
 			url : contextPath + "/sensorposition/list/1",
@@ -301,7 +308,22 @@ for ( var key in imgNormalMap) {
 		if ($.isEmptyObject(opts)) {
 			return;
 		}
+		if (!opts.hasOwnProperty("deviceType")) {
+			return;
+		}
+		var deviceType = opts.deviceType;
+		if (deviceType == 1) {
+			this.addSensorInternal(opts);
+		} else if (deviceType == 2) {
+			this.addSmsInternal(opts);
+		} else if (deviceType == 3) {
+			this.addSpsInternal(opts);
+		} else if (deviceType == 4) {
+			this.addAbsInternal(opts);
+		}
+	}
 
+	Sensor.prototype.addSensorInternal = function (opts) {
 		// 如果opts没有下列属性则返回
 		if (!opts.hasOwnProperty("sensorId")
 				|| !opts.hasOwnProperty("sensorType"))
@@ -394,7 +416,164 @@ for ( var key in imgNormalMap) {
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}
+	
+	Sensor.prototype.addSmsInternal = function(opts) {
+		// 如果opts没有下列属性则返回
+		if (!opts.hasOwnProperty("stationId"))
+			return;
 
+		// 获取测点ID 坐标x/y
+		var stationId = opts.stationId;
+		var x = opts.x;
+		var y = opts.y;
+		if (!($.isNumeric(x)) || !($.isNumeric(y))) {
+			return;
+		}
+		var point = new mxLib.Point(x, y);
+		point.systemId = opts.systemId;
+
+		var strBasePath = scriptBaseDir + "dataMine/image/";
+		var strTotalPath = strBasePath + "default-normal.png";
+		// 构造html 无实时值
+		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
+				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
+				+ strTotalPath
+				+ '"/></div>'
+				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;"></label>';
+
+		var myRichMarker = new mxLib.RichMarker(html, point, {
+			"anchor" : new mxLib.Size(-18, -27),
+			"enableDragging" : false
+		});
+
+		// 给覆盖物对象赋属性
+		for ( var key in opts) {
+			var value = opts[key];
+			myRichMarker[key] = value;
+		}
+
+		// 查看是否存在指定对象
+		var marker = this.smsMap[stationId];
+		if ($.isEmptyObject(marker)) {
+			// 如果测点没有对象则添加到图形中
+			map.addOverlay(myRichMarker);
+		} else {
+			// 删除原先的对象
+			map.removeOverlay(marker);
+			// 添加到图形中
+			map.addOverlay(myRichMarker);
+		}
+		// 添加到map
+		this.smsMap[stationId] = myRichMarker;
+		// 添加事件响应
+		this.addEvent(myRichMarker);
+	}
+	
+	Sensor.prototype.addSpsInternal = function(opts) {
+		// 如果opts没有下列属性则返回
+		if (!opts.hasOwnProperty("stationId"))
+			return;
+
+		// 获取测点ID 坐标x/y
+		var stationId = opts.stationId;
+		var x = opts.x;
+		var y = opts.y;
+		if (!($.isNumeric(x)) || !($.isNumeric(y))) {
+			return;
+		}
+		var point = new mxLib.Point(x, y);
+		point.systemId = opts.systemId;
+
+		var strBasePath = scriptBaseDir + "dataMine/image/";
+		var strTotalPath = strBasePath + "default-normal.png";
+		// 构造html 无实时值
+		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
+				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
+				+ strTotalPath
+				+ '"/></div>'
+				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;"></label>';
+
+		var myRichMarker = new mxLib.RichMarker(html, point, {
+			"anchor" : new mxLib.Size(-18, -27),
+			"enableDragging" : false
+		});
+
+		// 给覆盖物对象赋属性
+		for ( var key in opts) {
+			var value = opts[key];
+			myRichMarker[key] = value;
+		}
+
+		// 查看是否存在指定对象
+		var marker = this.spsMap[stationId];
+		if ($.isEmptyObject(marker)) {
+			// 如果测点没有对象则添加到图形中
+			map.addOverlay(myRichMarker);
+		} else {
+			// 删除原先的对象
+			map.removeOverlay(marker);
+			// 添加到图形中
+			map.addOverlay(myRichMarker);
+		}
+		// 添加到map
+		this.spsMap[stationId] = myRichMarker;
+		// 添加事件响应
+		this.addEvent(myRichMarker);
+	}
+	
+	Sensor.prototype.addAbsInternal = function(opts) {
+		// 如果opts没有下列属性则返回
+		if (!opts.hasOwnProperty("stationId"))
+			return;
+
+		// 获取测点ID 坐标x/y
+		var stationId = opts.stationId;
+		var x = opts.x;
+		var y = opts.y;
+		if (!($.isNumeric(x)) || !($.isNumeric(y))) {
+			return;
+		}
+		var point = new mxLib.Point(x, y);
+		point.systemId = opts.systemId;
+
+		var strBasePath = scriptBaseDir + "dataMine/image/";
+		var strTotalPath = strBasePath + "default-normal.png";
+		// 构造html 无实时值
+		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
+				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
+				+ strTotalPath
+				+ '"/></div>'
+				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;"></label>';
+
+		var myRichMarker = new mxLib.RichMarker(html, point, {
+			"anchor" : new mxLib.Size(-18, -27),
+			"enableDragging" : false
+		});
+
+		// 给覆盖物对象赋属性
+		for ( var key in opts) {
+			var value = opts[key];
+			myRichMarker[key] = value;
+		}
+
+		// 查看是否存在指定对象
+		var marker = this.spsMap[stationId];
+		if ($.isEmptyObject(marker)) {
+			// 如果测点没有对象则添加到图形中
+			map.addOverlay(myRichMarker);
+		} else {
+			// 删除原先的对象
+			map.removeOverlay(marker);
+			// 添加到图形中
+			map.addOverlay(myRichMarker);
+		}
+		// 添加到map
+		this.spsMap[stationId] = myRichMarker;
+		// 添加事件响应
+		this.addEvent(myRichMarker);
+	}
+	
+	
 	/**
 	 * 给所有测点添加事件
 	 */

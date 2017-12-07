@@ -26,7 +26,8 @@ LocateCmd.prototype.start = function (map) {
     for (var i = 0; i < total; i++) {
     	var sensor = data[i];
     	var sensorId = sensor.sensorId;
-    	// TODO 此处将坐标
+    	// TODO 此处需要修改deviceType
+    	sensor.deviceType = 1;
     	var point = window.sensor.getPoint(sensorId);
     	if ($.isEmptyObject(point)) {
     		continue;

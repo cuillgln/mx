@@ -40,13 +40,7 @@ PickCmd.prototype.start = function (map) {
     var strBasePath = scriptBaseDir + "dataMine/image/";
 
     //根据类型判断需要哪一张图片
-    var strTotalPath = "";
-    var typeId = this.opts.sensorType;
-    if (!$.isEmptyObject(imgNormalMap)) {
-        //获取测点对应的类型id
-        var value = imgNormalMap[typeId];
-        strTotalPath = strBasePath + value;
-    }
+    var strTotalPath = strBasePath + "default-normal.png";
 
     //构造html
     var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
