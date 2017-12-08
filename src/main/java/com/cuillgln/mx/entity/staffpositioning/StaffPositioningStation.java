@@ -41,6 +41,16 @@ public class StaffPositioningStation implements Serializable {
 	@Column(name = "[remark]")
 	private String remark;
 
+	// 实时值
+	@Transient
+	private String value;
+	// 报警状态
+	@Transient
+	private Integer alarmFlag;
+	// 周围人员人数
+	@Transient
+	private Integer staffCount;
+	// 周围人员详细
 	@Transient
 	private String staff;
 
@@ -132,6 +142,30 @@ public class StaffPositioningStation implements Serializable {
 		this.remark = remark;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public Integer getAlarmFlag() {
+		return alarmFlag;
+	}
+
+	public void setAlarmFlag(Integer alarmFlag) {
+		this.alarmFlag = alarmFlag;
+	}
+
+	public Integer getStaffCount() {
+		return staffCount;
+	}
+
+	public void setStaffCount(Integer staffCount) {
+		this.staffCount = staffCount;
+	}
+
 	public String getStaff() {
 		return staff;
 	}
@@ -139,4 +173,5 @@ public class StaffPositioningStation implements Serializable {
 	public void setStaff(String staff) {
 		this.staff = staff;
 	}
+
 }

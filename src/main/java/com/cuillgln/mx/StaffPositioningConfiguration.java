@@ -8,6 +8,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import com.cuillgln.mx.entity.staffpositioning.StaffPositioningStation;
@@ -29,4 +30,8 @@ public class StaffPositioningConfiguration {
 				.persistenceUnit("kj289Unit").build();
 	}
 
+	@Bean
+	public JdbcTemplate kj289JdbcTemplate() {
+		return new JdbcTemplate(kj289DataSource());
+	}
 }

@@ -84,6 +84,13 @@ public class SafetyMonitoringStation implements Serializable {
 	@Column(name = "[commid]")
 	private String commId;
 
+	// 实时值
+	@Transient
+	private String value;
+	// 报警状态
+	@Transient
+	private Integer alarmFlag;
+
 	public Long getSystemId() {
 		return systemId;
 	}
@@ -258,5 +265,21 @@ public class SafetyMonitoringStation implements Serializable {
 
 	public void setCommId(String commId) {
 		this.commId = commId;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public Integer getAlarmFlag() {
+		return alarmFlag;
+	}
+
+	public void setAlarmFlag(Integer alarmFlag) {
+		this.alarmFlag = alarmFlag;
 	}
 }

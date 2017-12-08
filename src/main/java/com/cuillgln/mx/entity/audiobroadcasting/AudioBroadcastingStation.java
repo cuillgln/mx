@@ -42,6 +42,13 @@ public class AudioBroadcastingStation implements Serializable {
 	@Column(name = "[remark]")
 	private String remark;
 
+	// 实时值
+	@Transient
+	private String value;
+	// 报警状态
+	@Transient
+	private Integer alarmFlag;
+
 	public Long getSystemId() {
 		return systemId;
 	}
@@ -136,6 +143,22 @@ public class AudioBroadcastingStation implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public Integer getAlarmFlag() {
+		return alarmFlag;
+	}
+
+	public void setAlarmFlag(Integer alarmFlag) {
+		this.alarmFlag = alarmFlag;
 	}
 
 }

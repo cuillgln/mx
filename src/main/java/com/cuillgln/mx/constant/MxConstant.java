@@ -15,6 +15,10 @@ public class MxConstant {
 	public static final String STAFF_POSITIONING_STATION_PREFIX = "spstation_";
 	public static final String AUDIO_BROADCASTING_STATION_PREFIX = "abstation_";
 
+	public static final String STATION_COMMUNICATION_OK = "通讯正常";
+	
+	public static final String STATION_COMMUNICATION_BREAK = "通讯中断";
+	
 	/**
 	 * 有效标志
 	 */
