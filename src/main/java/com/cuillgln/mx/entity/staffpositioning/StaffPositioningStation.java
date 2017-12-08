@@ -41,6 +41,9 @@ public class StaffPositioningStation implements Serializable {
 	@Column(name = "[remark]")
 	private String remark;
 
+	@Transient
+	private String staff;
+
 	public Long getSystemId() {
 		return systemId;
 	}
@@ -127,5 +130,13 @@ public class StaffPositioningStation implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getStaff() {
+		return staff;
+	}
+
+	public void setStaff(String staff) {
+		this.staff = staff;
 	}
 }

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>传感器属性页面</title>
+    <title>详细页面</title>
     <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
     <script src="mx/dataMine/json3.min.js" type="text/javascript"></script>
     <script src="mx/mxlib/jquery-1.11.2.min.js" type="text/javascript"></script>
@@ -12,6 +12,7 @@
 <body>
     <div id="proertyTip"></div>
     <input type="hidden" id="sensorId" th:value="${sensorId}"/>
+    <input type="hidden" id="deviceType" th:value="${deviceType}"/>
 </body>
 <script th:inline="javascript">
 /*<![CDATA[*/
@@ -19,11 +20,12 @@ $(function () {
     //得到测点编号
     //调用监测属性查询
     var sensorId = /*[[${sensorId}]]*/ 'sensor_9001';
-    jcProperty(sensorId);
+    var deviceType = /*[[${deviceType}]]*/ '1';
+    jcProperty(sensorId, deviceType);
 });
 
 //监测属性提示
-function jcProperty(sensorId) {
+function jcProperty(sensorId, deviceType) {
 
     $('#proertyTip').propertygrid({
         showGroup: true,
@@ -45,7 +47,27 @@ function jcProperty(sensorId) {
         showHeader: false,
     });
 
-    //得到属性对象
+    switch (deviceType) {
+    case '1':
+    	sensorInfo(sensorId);
+        break;
+    case '2':
+    	smsInfo(sensorId);
+        break;
+    case '3':
+    	spsInfo(sensorId);
+        break;
+    case '4':
+    	absInfo(sensorId);
+        break;
+    default:
+        break;
+    }
+    
+}
+
+function sensorInfo(sensorId) {
+	//得到属性对象
     var sensorObj = parent.sensor.sensorMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
@@ -134,6 +156,30 @@ function jcProperty(sensorId) {
         powerCutRangeObj.editor = "text";
         arr.push(powerCutRangeObj);
     }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("alarmLevelFlag")) {
+        var alarmLevelFlagObj = {};
+        alarmLevelFlagObj.name = "是否分级报警:";
+        alarmLevelFlagObj.value = sensorObj["alarmLevelFlag"];
+        alarmLevelFlagObj.group = "基本属性";
+        alarmLevelFlagObj.editor = "text";
+        arr.push(alarmLevelFlagObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("alarmLevelRange")) {
+        var alarmLevelRangeObj = {};
+        alarmLevelRangeObj.name = "分级报警设置:";
+        alarmLevelRangeObj.value = sensorObj["alarmLevelRange"];
+        alarmLevelRangeObj.group = "基本属性";
+        alarmLevelRangeObj.editor = "text";
+        arr.push(alarmLevelRangeObj);
+    }
+    if (sensorObj["analogFlag"] == 1 && sensorObj.hasOwnProperty("alarmLevelString")) {
+        var alarmLevelStringObj = {};
+        alarmLevelStringObj.name = "分级报警字串:";
+        alarmLevelStringObj.value = sensorObj["alarmLevelString"];
+        alarmLevelStringObj.group = "基本属性";
+        alarmLevelStringObj.editor = "text";
+        arr.push(alarmLevelStringObj);
+    }
 
     //加载数据
     var json = {};
@@ -142,6 +188,187 @@ function jcProperty(sensorId) {
     $("#proertyTip").propertygrid('loadData', json);
 }
 
+function smsInfo(sensorId) {
+    //得到属性对象
+    var sensorObj = parent.sensor.smsMap[sensorId];
+    if ($.isEmptyObject(sensorObj)) {
+        return;
+    }
+
+    //遍历
+    var arr = [];
+    if (sensorObj.hasOwnProperty("station") && sensorObj["station"]) {
+        var stationObj = {};
+        stationObj.name = "地址:";
+        stationObj.value = sensorObj["station"];
+        stationObj.group = "基本属性";
+        stationObj.editor = "text";
+        //添加到数组
+        arr.push(stationObj);
+    }
+    if (sensorObj.hasOwnProperty("stationName") && sensorObj["stationName"]) {
+        var stationNameObj = {};
+        stationNameObj.name = "名称:";
+        stationNameObj.value = sensorObj["stationName"];
+        stationNameObj.group = "基本属性";
+        stationNameObj.editor = "text";
+        arr.push(stationNameObj);
+    }
+    if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
+        var locationObj = {};
+        locationObj.name = "安装地点:";
+        locationObj.value = sensorObj["location"];
+        locationObj.group = "基本属性";
+        locationObj.editor = "text";
+        arr.push(locationObj);
+    }
+    if (sensorObj.hasOwnProperty("runningState") && sensorObj["runningState"]) {
+        var runningStateObj = {};
+        runningStateObj.name = "运行状态:";
+        runningStateObj.value = sensorObj["runningState"];
+        runningStateObj.group = "基本属性";
+        runningStateObj.editor = "text";
+        arr.push(runningStateObj);
+    }
+    if (sensorObj.hasOwnProperty("powerCutFlag") && sensorObj["powerCutFlag"]) {
+        var powerCutFlagObj = {};
+        powerCutFlagObj.name = "就地断电:";
+        powerCutFlagObj.value = sensorObj["powerCutFlag"];
+        powerCutFlagObj.group = "基本属性";
+        powerCutFlagObj.editor = "text";
+        arr.push(powerCutFlagObj);
+    }
+    if (sensorObj.hasOwnProperty("ch4LockFlag") && sensorObj["ch4LockFlag"]) {
+        var ch4LockFlagObj = {};
+        ch4LockFlagObj.name = "风电瓦斯闭锁:";
+        ch4LockFlagObj.value = sensorObj["ch4LockFlag"];
+        ch4LockFlagObj.group = "基本属性";
+        ch4LockFlagObj.editor = "text";
+        arr.push(ch4LockFlagObj);
+    }
+    if (sensorObj.hasOwnProperty("portName") && sensorObj["portName"]) {
+        var portNameObj = {};
+        portNameObj.name = "出口端口名称:";
+        portNameObj.value = sensorObj["portName"];
+        portNameObj.group = "基本属性";
+        portNameObj.editor = "text";
+        arr.push(portNameObj);
+    }
+    if (sensorObj.hasOwnProperty("feedMonitor") && sensorObj["feedMonitor"]) {
+        var feedMonitorObj = {};
+        feedMonitorObj.name = "溃电关联监测:";
+        feedMonitorObj.value = sensorObj["feedMonitor"];
+        feedMonitorObj.group = "基本属性";
+        feedMonitorObj.editor = "text";
+        arr.push(feedMonitorObj);
+    }
+
+    //加载数据
+    var json = {};
+    json.total = arr.length;
+    json.rows = arr;
+    $("#proertyTip").propertygrid('loadData', json);
+}
+
+function spsInfo(sensorId) {
+    //得到属性对象
+    var sensorObj = parent.sensor.spsMap[sensorId];
+    if ($.isEmptyObject(sensorObj)) {
+        return;
+    }
+
+    //遍历
+    var arr = [];
+    if (sensorObj.hasOwnProperty("station") && sensorObj["station"]) {
+        var stationObj = {};
+        stationObj.name = "地址:";
+        stationObj.value = sensorObj["station"];
+        stationObj.group = "基本属性";
+        stationObj.editor = "text";
+        //添加到数组
+        arr.push(stationObj);
+    }
+    if (sensorObj.hasOwnProperty("stationName") && sensorObj["stationName"]) {
+        var stationNameObj = {};
+        stationNameObj.name = "名称:";
+        stationNameObj.value = sensorObj["stationName"];
+        stationNameObj.group = "基本属性";
+        stationNameObj.editor = "text";
+        arr.push(stationNameObj);
+    }
+    if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
+        var locationObj = {};
+        locationObj.name = "安装地点:";
+        locationObj.value = sensorObj["location"];
+        locationObj.group = "基本属性";
+        locationObj.editor = "text";
+        arr.push(locationObj);
+    }
+    if (sensorObj.hasOwnProperty("staff") && sensorObj["staff"]) {
+        var staffObj = {};
+        staffObj.name = "周围人员:";
+        staffObj.value = sensorObj["staff"];
+        staffObj.group = "基本属性";
+        staffObj.editor = "text";
+        arr.push(staffObj);
+    }
+
+    //加载数据
+    var json = {};
+    json.total = arr.length;
+    json.rows = arr;
+    $("#proertyTip").propertygrid('loadData', json);
+}
+
+function absInfo(sensorId) {
+    //得到属性对象
+    var sensorObj = parent.sensor.absMap[sensorId];
+    if ($.isEmptyObject(sensorObj)) {
+        return;
+    }
+
+    //遍历
+    var arr = [];
+    if (sensorObj.hasOwnProperty("station") && sensorObj["station"]) {
+        var stationObj = {};
+        stationObj.name = "地址:";
+        stationObj.value = sensorObj["station"];
+        stationObj.group = "基本属性";
+        stationObj.editor = "text";
+        //添加到数组
+        arr.push(stationObj);
+    }
+    if (sensorObj.hasOwnProperty("stationName") && sensorObj["stationName"]) {
+        var stationNameObj = {};
+        stationNameObj.name = "名称:";
+        stationNameObj.value = sensorObj["stationName"];
+        stationNameObj.group = "基本属性";
+        stationNameObj.editor = "text";
+        arr.push(stationNameObj);
+    }
+    if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
+        var locationObj = {};
+        locationObj.name = "安装地点:";
+        locationObj.value = sensorObj["location"];
+        locationObj.group = "基本属性";
+        locationObj.editor = "text";
+        arr.push(locationObj);
+    }
+    if (sensorObj.hasOwnProperty("type") && sensorObj["type"]) {
+        var typeObj = {};
+        typeObj.name = "状态:";
+        typeObj.value = sensorObj["type"];
+        typeObj.group = "基本属性";
+        typeObj.editor = "text";
+        arr.push(typeObj);
+    }
+
+    //加载数据
+    var json = {};
+    json.total = arr.length;
+    json.rows = arr;
+    $("#proertyTip").propertygrid('loadData', json);
+}
 /*]]>*/
 </script>
 </html>

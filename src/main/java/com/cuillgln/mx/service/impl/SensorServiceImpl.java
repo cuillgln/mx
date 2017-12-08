@@ -10,6 +10,7 @@ import com.cuillgln.mx.constant.MxConstant;
 import com.cuillgln.mx.entity.safetymonitoing.Sensor;
 import com.cuillgln.mx.repository.safetymonitoring.SensorRepository;
 import com.cuillgln.mx.service.SensorService;
+import com.cuillgln.util.StringUtil;
 
 @Service
 public class SensorServiceImpl implements SensorService {
@@ -42,11 +43,16 @@ public class SensorServiceImpl implements SensorService {
 		}
 		sensor.setSensorId(MxConstant.SENSOR_PREFIX + sensor.getSystemId());
 		sensor.setStationPort(sensor.getStation() + "-" + sensor.getPortId());
-		sensor.setAlarmValueRange(sensor.getAlarmMaxValue() + "/" + sensor.getAlarmMinValue());
-		sensor.setAlarmLevelRange("[" + sensor.getAlarmLevelMax1() + "," + sensor.getAlarmLevelMax2() + ","
-				+ sensor.getAlarmLevelMax3() + "," + sensor.getAlarmLevelMax4() + "]/[" + sensor.getAlarmLevelMin1()
-				+ "," + sensor.getAlarmLevelMin2() + "," + sensor.getAlarmLevelMin3() + "," + sensor.getAlarmLevelMin4()
-				+ "]");
+		sensor.setAlarmValueRange(StringUtil.filterNull(sensor.getAlarmMaxValue()) + "/"
+				+ StringUtil.filterNull(sensor.getAlarmMinValue()));
+		sensor.setAlarmLevelRange("[" + StringUtil.filterNull(sensor.getAlarmLevelMax1()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMax2()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMax3()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMax4()) + "]/["
+				+ StringUtil.filterNull(sensor.getAlarmLevelMin1()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMin2()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMin3()) + ","
+				+ StringUtil.filterNull(sensor.getAlarmLevelMin4()) + "]");
 		return sensor;
 	}
 }

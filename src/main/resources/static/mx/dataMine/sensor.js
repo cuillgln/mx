@@ -423,6 +423,7 @@ for ( var key in imgNormalMap) {
 			var position = {};
 			position.sensorId = sensorId;
 			position.id = point.systemId;
+			position.type = point.deviceType;
 			position.x = point.x;
 			position.y = point.y;
 			removedData.push(position);
@@ -465,14 +466,21 @@ for ( var key in imgNormalMap) {
 			return;
 		}
 		var deviceType = opts.deviceType;
-		if (deviceType == 1) {
+		switch (deviceType) {
+		case 1:
 			this.addSensorInternal(opts);
-		} else if (deviceType == 2) {
+			break;
+		case 2:
 			this.addSmsInternal(opts);
-		} else if (deviceType == 3) {
+			break;
+		case 3:
 			this.addSpsInternal(opts);
-		} else if (deviceType == 4) {
+			break;
+		case 4:
 			this.addAbsInternal(opts);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -567,7 +575,7 @@ for ( var key in imgNormalMap) {
 		this.setValue(sensorId, value, alarmFlag);
 		
 		// 添加事件响应
-		this.addEvent(myRichMarker);
+		this.addEvent(myRichMarker, 1);
 	}
 	
 	Sensor.prototype.addSmsInternal = function(opts) {
@@ -620,7 +628,7 @@ for ( var key in imgNormalMap) {
 		this.smsMap[stationId] = myRichMarker;
 		this.updateSmsPoint(stationId, point);
 		// 添加事件响应
-		// this.addEvent(myRichMarker);
+		this.addEvent(myRichMarker, 2);
 	}
 	
 	Sensor.prototype.addSpsInternal = function(opts) {
@@ -673,7 +681,7 @@ for ( var key in imgNormalMap) {
 		this.spsMap[stationId] = myRichMarker;
 		this.updateSpsPoint(stationId, point);
 		// 添加事件响应
-		// this.addEvent(myRichMarker);
+		this.addEvent(myRichMarker, 3);
 	}
 	
 	Sensor.prototype.addAbsInternal = function(opts) {
@@ -726,20 +734,24 @@ for ( var key in imgNormalMap) {
 		this.absMap[stationId] = myRichMarker;
 		this.updateAbsPoint(stationId, point);
 		// 添加事件响应
-		// this.addEvent(myRichMarker);
+		this.addEvent(myRichMarker, 4);
 	}
 	
 	
 	/**
 	 * 给所有测点添加事件
 	 */
-	Sensor.prototype.addEvent = function(marker) {
+	Sensor.prototype.addEvent = function(marker, type) {
 		if ($.isEmptyObject(marker)) {
 			return;
 		}
 
 		// 传感器编号
-		var sensorId = marker.sensorId;
+		if (type == 1) {
+			var sensorId = marker.sensorId;
+		} else {
+			var sensorId = marker.stationId;
+		}
 
 		// 添加点击事件
 		marker
@@ -754,10 +766,10 @@ for ( var key in imgNormalMap) {
 							var opts = {
 								width : 240,
 								height : 230,
-								title : "传感器信息查询"
+								title : "详细信息"
 							};
 
-							var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + sensorId;
+							var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + sensorId + "&deviceType=" + type;
 							// 运用ifame框架
 							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='"
 								+ sensorInfoUrl + "'></iframe>";
@@ -771,27 +783,67 @@ for ( var key in imgNormalMap) {
 		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir
 				+ "dataMine/image/del.gif", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
-				var marker = self.sensorMap[sensorId];
-				if (!$.isEmptyObject(marker)
-						&& marker instanceof mxLib.RichMarker) {
-					map.removeOverlay(marker);
-					window.sensor.removePoint(sensorId);
-				}
+				window.sensor.removePoint(sensorId, type);
 			}
 		});
 		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir
 				+ "dataMine/image/edit.png", "", function(e) {
 			if (!$.isEmptyObject(window.sensor)) {
-				var marker = self.sensorMap[sensorId];
-				if (!$.isEmptyObject(marker)
-						&& marker instanceof mxLib.RichMarker) {
-					marker.enableDragging();
-					marker.addEventListener("onmouseup", function(e) {
-						// 更新坐标位置
-						var point = e.point;
-						self.updateSensorPoint(sensorId, point);
-						marker.disableDragging();
-					});
+				switch (type) {
+				case 1:
+					var marker = self.sensorMap[sensorId];
+					if (!$.isEmptyObject(marker)
+							&& marker instanceof mxLib.RichMarker) {
+						marker.enableDragging();
+						marker.addEventListener("onmouseup", function(e) {
+							// 更新坐标位置
+							var point = e.point;
+							self.updateSensorPoint(sensorId, point);
+							marker.disableDragging();
+						});
+					}
+					break;
+				case 2:
+					var marker = self.smsMap[sensorId];
+					if (!$.isEmptyObject(marker)
+							&& marker instanceof mxLib.RichMarker) {
+						marker.enableDragging();
+						marker.addEventListener("onmouseup", function(e) {
+							// 更新坐标位置
+							var point = e.point;
+							self.updateSmsPoint(sensorId, point);
+							marker.disableDragging();
+						});
+					}
+					break;
+				case 3:
+					var marker = self.spsMap[sensorId];
+					if (!$.isEmptyObject(marker)
+							&& marker instanceof mxLib.RichMarker) {
+						marker.enableDragging();
+						marker.addEventListener("onmouseup", function(e) {
+							// 更新坐标位置
+							var point = e.point;
+							self.updateSpsPoint(sensorId, point);
+							marker.disableDragging();
+						});
+					}
+					break;
+				case 4:
+					var marker = self.absMap[sensorId];
+					if (!$.isEmptyObject(marker)
+							&& marker instanceof mxLib.RichMarker) {
+						marker.enableDragging();
+						marker.addEventListener("onmouseup", function(e) {
+							// 更新坐标位置
+							var point = e.point;
+							self.updateAbsPoint(sensorId, point);
+							marker.disableDragging();
+						});
+					}
+					break;
+				default:
+					break;
 				}
 			}
 		});
@@ -883,34 +935,41 @@ for ( var key in imgNormalMap) {
 	 * @return 返回json格式的数据项
 	 */
 	Sensor.prototype.getPoint = function(sensorId, type) {
-		if (type == 1) {
+		switch (type) {
+		case 1:
 			if ($.isEmptyObject(this.sensorPosition)) {
 				return null;
 			}
 			if (this.sensorPosition.hasOwnProperty(sensorId)) {
 				return this.sensorPosition[sensorId];
 			}
-		} else if (type == 2) {
+			break;
+		case 2:
 			if ($.isEmptyObject(this.smsPosition)) {
 				return null;
 			}
 			if (this.smsPosition.hasOwnProperty(sensorId)) {
 				return this.smsPosition[sensorId];
 			}
-		} else if (type == 3) {
+			break;
+		case 3:
 			if ($.isEmptyObject(this.spsPosition)) {
 				return null;
 			}
 			if (this.spsPosition.hasOwnProperty(sensorId)) {
 				return this.spsPosition[sensorId];
 			}
-		} else if (type == 4) {
+			break;
+		case 4:
 			if ($.isEmptyObject(this.absPosition)) {
 				return null;
 			}
 			if (this.absPosition.hasOwnProperty(sensorId)) {
 				return this.absPosition[sensorId];
 			}
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -921,13 +980,70 @@ for ( var key in imgNormalMap) {
 	 * @param point点坐标
 	 * @return 返回json格式的数据项
 	 */
-	Sensor.prototype.removePoint = function(sensorId) {
-		if ($.isEmptyObject(this.sensorPosition))
-			return null;
-
-		if (this.sensorPosition.hasOwnProperty(sensorId)) {
-			this.removedSensorPosition[sensorId] = this.sensorPosition[sensorId];
-			delete this.sensorPosition[sensorId];
+	Sensor.prototype.removePoint = function(sensorId, type) {
+		switch (type) {
+		case 1:	
+			var marker = this.sensorMap[sensorId];
+			if (!$.isEmptyObject(marker)
+					&& marker instanceof mxLib.RichMarker) {
+				map.removeOverlay(marker);
+				if ($.isEmptyObject(this.sensorPosition))
+					return null;
+				
+				if (this.sensorPosition.hasOwnProperty(sensorId)) {
+					this.removedSensorPosition[sensorId] = this.sensorPosition[sensorId];
+					this.removedSensorPosition[sensorId].deviceType = 1;
+					delete this.sensorPosition[sensorId];
+				}
+			}
+			break;
+		case 2:	
+			var marker = this.smsMap[sensorId];
+			if (!$.isEmptyObject(marker)
+					&& marker instanceof mxLib.RichMarker) {
+				map.removeOverlay(marker);
+				if ($.isEmptyObject(this.smsPosition))
+					return null;
+				
+				if (this.smsPosition.hasOwnProperty(sensorId)) {
+					this.removedSensorPosition[sensorId] = this.smsPosition[sensorId];
+					this.removedSensorPosition[sensorId].deviceType = 2;
+					delete this.smsPosition[sensorId];
+				}
+			}
+			break;
+		case 3:	
+			var marker = this.spsMap[sensorId];
+			if (!$.isEmptyObject(marker)
+					&& marker instanceof mxLib.RichMarker) {
+				map.removeOverlay(marker);
+				if ($.isEmptyObject(this.spsPosition))
+					return null;
+				
+				if (this.spsPosition.hasOwnProperty(sensorId)) {
+					this.removedSensorPosition[sensorId] = this.spsPosition[sensorId];
+					this.removedSensorPosition[sensorId].deviceType = 3;
+					delete this.spsPosition[sensorId];
+				}
+			}
+			break;
+		case 4:	
+			var marker = this.absMap[sensorId];
+			if (!$.isEmptyObject(marker)
+					&& marker instanceof mxLib.RichMarker) {
+				map.removeOverlay(marker);
+				if ($.isEmptyObject(this.absPosition))
+					return null;
+				
+				if (this.absPosition.hasOwnProperty(sensorId)) {
+					this.removedSensorPosition[sensorId] = this.absPosition[sensorId];
+					this.removedSensorPosition[sensorId].deviceType = 4;
+					delete this.absPosition[sensorId];
+				}
+			}
+			break;
+		default:
+			break;
 		}
 	}
 

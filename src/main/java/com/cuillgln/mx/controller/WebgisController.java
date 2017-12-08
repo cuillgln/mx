@@ -27,8 +27,9 @@ public class WebgisController {
 	}
 
 	@RequestMapping("/sensorinfo")
-	public String info(@RequestParam("sensorId") String sensorId, Model model) {
+	public String info(@RequestParam("sensorId") String sensorId, @RequestParam("deviceType") String deviceType, Model model) {
 		model.addAttribute("sensorId", sensorId);
+		model.addAttribute("deviceType", deviceType);
 		return "sensorinfo";
 	}
 }
