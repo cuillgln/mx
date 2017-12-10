@@ -357,7 +357,9 @@ function loadSpStationPanel(spStationData) {
             { field: 'stationId', title: '分站ID', width: 100, align: 'center', hidden:true},
             { field: 'station', title: '分站地址', width: 40, align: 'center'},
             { field: 'stationName', title: '分站名称', width: 75, align: 'center'},
-            { field: 'location', title: '安装地点', width: 120, align: 'center' },
+            { field: 'location', title: '安装地点', width: 120, align: 'center'},
+            { field: 'staffCount', title: '周围人员数', width: 120, align: 'center', hidden: true},
+            { field: 'staff', title: '周围人员', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
             { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
             {
@@ -393,6 +395,8 @@ function loadSpStationPanel(spStationData) {
                 opts.station = curRow["station"];
                 opts.stationName = curRow["stationName"];
                 opts.location = curRow["location"];
+                opts.staffCount = curRow["staffCount"];
+                opts.staff = curRow["staff"];
                 opts.deviceType = 3;
                 
                 var strOpts = "";

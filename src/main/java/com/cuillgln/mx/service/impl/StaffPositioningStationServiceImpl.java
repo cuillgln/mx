@@ -47,7 +47,7 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 	private StaffPositioningStation fillup(StaffPositioningStation st) {
 		st.setStationId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + st.getSystemId());
 		st.setValue(st.getRemark());
-		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_OK.equals(st.getRemark()) ? 0 : 1);
+		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_BREAK.equals(st.getRemark()) ? 1 : 0);
 		return st;
 	}
 
@@ -87,7 +87,7 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 		for (StaffPosition sp : spList) {
 			if (ssMap.containsKey(sp.getStationSystemId())) {
 				ssMap.put(sp.getStationSystemId(),
-						ssMap.get(sp.getStationSystemId()) + sp.getName() + "(" + sp.getRfId() + ")");
+						ssMap.get(sp.getStationSystemId()) + "," + sp.getName() + "(" + sp.getRfId() + ")");
 			} else {
 				ssMap.put(sp.getStationSystemId(), sp.getName() + "(" + sp.getRfId() + ")");
 			}

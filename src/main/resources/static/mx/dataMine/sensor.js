@@ -56,11 +56,14 @@ for ( var key in imgNormalMap) {
 		this.removedSensorPosition = {};
 		// 分站
 		this.smsMap = {};
-		this.smsPosition = {};		
+		this.smsPosition = {};
+		this.smsData = {};
 		this.spsMap = {};
 		this.spsPosition = {};
+		this.spsData = {};
 		this.absMap = {};
 		this.absPosition = {};
+		this.absData = {};
 	}
 
 	/**
@@ -84,6 +87,7 @@ for ( var key in imgNormalMap) {
 	}
 	
 	Sensor.prototype.getSafetyMonitoringStation = function() {
+		var self = this;
 		var arr = [];
 		$.ajax({
 			url : contextPath + "/safetymonitoringstation",
@@ -92,6 +96,14 @@ for ( var key in imgNormalMap) {
 			dataType : "json",
 			success : function(data) {
 				arr = data;
+				for (var i = 0; i < data.length; i++) {
+					var stationId = data[i].stationId;
+					var valueObj = {};
+					valueObj.value = data[i].value;
+					valueObj.alarmFlag = data[i].alarmFlag;
+					self.smsData[stationId] = valueObj;
+				}
+				self.updateSmsInternal();
 			}
 		});
 		// 如果数组大于0
@@ -101,6 +113,7 @@ for ( var key in imgNormalMap) {
 	}
 	
 	Sensor.prototype.getStaffPositioningStation = function() {
+		var self = this;
 		var arr = [];
 		$.ajax({
 			url : contextPath + "/staffpositioningstation",
@@ -109,6 +122,14 @@ for ( var key in imgNormalMap) {
 			dataType : "json",
 			success : function(data) {
 				arr = data;
+				for (var i = 0; i < data.length; i++) {
+					var stationId = data[i].stationId;
+					var valueObj = {};
+					valueObj.value = data[i].value;
+					valueObj.alarmFlag = data[i].alarmFlag;
+					self.spsData[stationId] = valueObj;
+				}
+				self.updateSpsInternal();
 			}
 		});
 		// 如果数组大于0
@@ -118,6 +139,7 @@ for ( var key in imgNormalMap) {
 	}
 	
 	Sensor.prototype.getAudioBroadcastingStation = function() {
+		var self = this;
 		var arr = [];
 		$.ajax({
 			url : contextPath + "/audiobroadcastingstation",
@@ -126,6 +148,14 @@ for ( var key in imgNormalMap) {
 			dataType : "json",
 			success : function(data) {
 				arr = data;
+				for (var i = 0; i < data.length; i++) {
+					var stationId = data[i].stationId;
+					var valueObj = {};
+					valueObj.value = data[i].value;
+					valueObj.alarmFlag = data[i].alarmFlag;
+					self.absData[stationId] = valueObj;
+				}
+				self.updateAbsInternal();
 			}
 		});
 		// 如果数组大于0
@@ -163,6 +193,10 @@ for ( var key in imgNormalMap) {
 
 			}
 		});
+		
+		this.getSafetyMonitoringStation();
+		this.getStaffPositioningStation();
+		this.getAudioBroadcastingStation();
 	}
 	
 	// 设置实时值
@@ -197,6 +231,78 @@ for ( var key in imgNormalMap) {
 				}
 				// 修改实时值
 				self.setValue(sensorId, value, alarmFlag);
+			}
+		}
+	}
+	
+	// 设置实时值
+	Sensor.prototype.updateSmsInternal = function() {
+		var self = this;
+		for ( var i in self.smsMap) {
+			var stationObj = self.smsMap[i];
+			if ($.isEmptyObject(stationObj))
+				continue;
+
+			if (stationObj.hasOwnProperty("stationId")) {
+				var stationId = stationObj.stationId;
+
+				var value = "";
+				var alarmFlag = 0;
+				if (this.smsData.hasOwnProperty(stationId)) {
+					var valueObj = this.smsData[stationId];
+					value = valueObj.value;
+					alarmFlag = valueObj.alarmFlag;
+				}
+				// 修改实时值
+				self.setValueSms(stationId, value, alarmFlag);
+			}
+		}
+	}
+	
+	// 设置实时值
+	Sensor.prototype.updateSpsInternal = function() {
+		var self = this;
+		for ( var i in self.spsMap) {
+			var stationObj = self.spsMap[i];
+			if ($.isEmptyObject(stationObj))
+				continue;
+
+			if (stationObj.hasOwnProperty("stationId")) {
+				var stationId = stationObj.stationId;
+
+				var value = "";
+				var alarmFlag = 0;
+				if (this.spsData.hasOwnProperty(stationId)) {
+					var valueObj = this.spsData[stationId];
+					value = valueObj.value;
+					alarmFlag = valueObj.alarmFlag;
+				}
+				// 修改实时值
+				self.setValueSps(stationId, value, alarmFlag);
+			}
+		}
+	}
+	
+	// 设置实时值
+	Sensor.prototype.updateAbsInternal = function() {
+		var self = this;
+		for ( var i in self.absMap) {
+			var stationObj = self.absMap[i];
+			if ($.isEmptyObject(stationObj))
+				continue;
+
+			if (stationObj.hasOwnProperty("stationId")) {
+				var stationId = stationObj.stationId;
+
+				var value = "";
+				var alarmFlag = 0;
+				if (this.absData.hasOwnProperty(stationId)) {
+					var valueObj = this.absData[stationId];
+					value = valueObj.value;
+					alarmFlag = valueObj.alarmFlag;
+				}
+				// 修改实时值
+				self.setValueAbs(stationId, value, alarmFlag);
 			}
 		}
 	}
@@ -627,6 +733,9 @@ for ( var key in imgNormalMap) {
 		// 添加到map
 		this.smsMap[stationId] = myRichMarker;
 		this.updateSmsPoint(stationId, point);
+		
+		myRichMarker.alarmFlag = 0; // 初始是normal
+		this.setValueSms(stationId, "通讯正常", 0);
 		// 添加事件响应
 		this.addEvent(myRichMarker, 2);
 	}
@@ -680,6 +789,8 @@ for ( var key in imgNormalMap) {
 		// 添加到map
 		this.spsMap[stationId] = myRichMarker;
 		this.updateSpsPoint(stationId, point);
+		myRichMarker.alarmFlag = 0; // 初始是normal
+		this.setValueSps(stationId, "通讯正常", 0);
 		// 添加事件响应
 		this.addEvent(myRichMarker, 3);
 	}
@@ -733,6 +844,8 @@ for ( var key in imgNormalMap) {
 		// 添加到map
 		this.absMap[stationId] = myRichMarker;
 		this.updateAbsPoint(stationId, point);
+		myRichMarker.alarmFlag = 0; // 初始是normal
+		this.setValueAbs(stationId, "通讯正常", 0);
 		// 添加事件响应
 		this.addEvent(myRichMarker, 4);
 	}
@@ -888,6 +1001,60 @@ for ( var key in imgNormalMap) {
 		}
 	}
 
+	Sensor.prototype.setValueSms = function(stationId, value, alarmFlag) {
+		var marker = this.smsMap[stationId];
+		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
+			$(marker.getDomElement()).children("label").text(value);
+			// 更换报警图片
+			var srcUrl = $(marker.getDomElement()).children("div").children("img").attr("src");
+			if (marker.alarmFlag != alarmFlag) {
+				if (alarmFlag == 1) {
+					srcUrl = srcUrl.replace("normal", "alarm");
+				} else if (alarmFlag == 0) {
+					srcUrl = srcUrl.replace("alarm", "normal");
+				}
+				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+				marker.alarmFlag = alarmFlag; // 更新marker的alarmFlag
+			}
+		}
+	}
+	
+	Sensor.prototype.setValueSps = function(stationId, value, alarmFlag) {
+		var marker = this.spsMap[stationId];
+		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
+			$(marker.getDomElement()).children("label").text(value);
+			// 更换报警图片
+			var srcUrl = $(marker.getDomElement()).children("div").children("img").attr("src");
+			if (marker.alarmFlag != alarmFlag) {
+				if (alarmFlag == 1) {
+					srcUrl = srcUrl.replace("normal", "alarm");
+				} else if (alarmFlag == 0) {
+					srcUrl = srcUrl.replace("alarm", "normal");
+				}
+				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+				marker.alarmFlag = alarmFlag; // 更新marker的alarmFlag
+			}
+		}
+	}
+	
+	Sensor.prototype.setValueAbs = function(stationId, value, alarmFlag) {
+		var marker = this.absMap[stationId];
+		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
+			$(marker.getDomElement()).children("label").text(value);
+			// 更换报警图片
+			var srcUrl = $(marker.getDomElement()).children("div").children("img").attr("src");
+			if (marker.alarmFlag != alarmFlag) {
+				if (alarmFlag == 1) {
+					srcUrl = srcUrl.replace("normal", "alarm");
+				} else if (alarmFlag == 0) {
+					srcUrl = srcUrl.replace("alarm", "normal");
+				}
+				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+				marker.alarmFlag = alarmFlag; // 更新marker的alarmFlag
+			}
+		}
+	}
+	
 	/**
 	 * 更新坐标
 	 * 

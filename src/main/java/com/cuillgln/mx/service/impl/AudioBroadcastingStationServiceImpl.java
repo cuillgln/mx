@@ -30,7 +30,7 @@ public class AudioBroadcastingStationServiceImpl implements AudioBroadcastingSta
 	private AudioBroadcastingStation fillup(AudioBroadcastingStation st) {
 		st.setStationId(MxConstant.AUDIO_BROADCASTING_STATION_PREFIX + st.getSystemId());
 		st.setValue(st.getRemark());
-		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_OK.equals(st.getRemark()) ? 0 : 1);
+		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_BREAK.equals(st.getRemark()) ? 1 : 0);
 		return st;
 	}
 }

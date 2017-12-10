@@ -36,7 +36,7 @@ public class SafetyMonitoringStationServiceImpl implements SafetyMonitoringStati
 			st.setFeedMonitor(st.getFeedMonitor().replaceAll("\b", "\\\\b"));
 		}
 		st.setValue(st.getRunningState());
-		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_OK.equals(st.getRunningState()) ? 0 : 1);
+		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_BREAK.equals(st.getRunningState()) ? 1 : 0);
 		return st;
 	}
 }
