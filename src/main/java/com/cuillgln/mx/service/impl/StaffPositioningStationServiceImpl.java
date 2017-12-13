@@ -3,6 +3,8 @@ package com.cuillgln.mx.service.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import com.cuillgln.mx.constant.MxConstant;
+import com.cuillgln.mx.entity.staffpositioning.StaffLocation;
 import com.cuillgln.mx.entity.staffpositioning.StaffPosition;
 import com.cuillgln.mx.entity.staffpositioning.StaffPositioningStation;
 import com.cuillgln.mx.entity.staffpositioning.StationStaffCount;
@@ -46,7 +49,8 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 
 	private StaffPositioningStation fillup(StaffPositioningStation st) {
 		st.setStationId(MxConstant.STAFF_POSITIONING_STATION_PREFIX + st.getSystemId());
-		st.setValue(st.getRemark());
+		// st.setValue(st.getRemark());
+		st.setValue("周围" + st.getStaffCount() + "人");
 		st.setAlarmFlag(MxConstant.STATION_COMMUNICATION_BREAK.equals(st.getRemark()) ? 1 : 0);
 		return st;
 	}
@@ -94,6 +98,31 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 		}
 
 		return ssMap;
+	}
+
+	@Override
+	public List<StaffLocation> queryHistory(Long rfId, Date begin, Date end) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(begin);
+		int year = c.get(Calendar.YEAR);
+
+		String sql = "select [RFID], [name], [fzAdd], [dt_arrive] from [v_guiji" + year + "] where [RFID] = ?"
+				+ " and [dt_arrive] >= ? and [dt_arrive] <= ? order by [dt_arrive] asc";
+		List<StaffLocation> slList = jdbcTemplate.query(sql, new Object[] { rfId, begin, end },
+				new RowMapper<StaffLocation>() {
+
+					@Override
+					public StaffLocation mapRow(ResultSet rs, int rowNum) throws SQLException {
+						StaffLocation sl = new StaffLocation();
+						sl.setRfId(rs.getLong(1));
+						sl.setName(rs.getString(2));
+						sl.setStationSystemId(rs.getLong(3));
+						sl.setArriveTime(rs.getTimestamp(4));
+						return sl;
+					}
+				});
+
+		return slList;
 	}
 
 }

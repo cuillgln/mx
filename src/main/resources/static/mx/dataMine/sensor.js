@@ -699,8 +699,8 @@ for ( var key in imgNormalMap) {
 		var point = new mxLib.Point(x, y);
 		point.systemId = opts.systemId;
 
-		var strBasePath = scriptBaseDir + "dataMine/image/";
-		var strTotalPath = strBasePath + "default-normal.png";
+		var strBasePath = scriptBaseDir + "dataMine/image/sms/";
+		var strTotalPath = strBasePath + "sms-normal.jpg";
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
@@ -755,8 +755,8 @@ for ( var key in imgNormalMap) {
 		var point = new mxLib.Point(x, y);
 		point.systemId = opts.systemId;
 
-		var strBasePath = scriptBaseDir + "dataMine/image/";
-		var strTotalPath = strBasePath + "default-normal.png";
+		var strBasePath = scriptBaseDir + "dataMine/image/sps/";
+		var strTotalPath = strBasePath + "sps-normal.jpg";
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
@@ -810,8 +810,8 @@ for ( var key in imgNormalMap) {
 		var point = new mxLib.Point(x, y);
 		point.systemId = opts.systemId;
 
-		var strBasePath = scriptBaseDir + "dataMine/image/";
-		var strTotalPath = strBasePath + "default-normal.png";
+		var strBasePath = scriptBaseDir + "dataMine/image/abs/";
+		var strTotalPath = strBasePath + "abs-normal.jpg";
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'

@@ -32,4 +32,10 @@ public class WebgisController {
 		model.addAttribute("deviceType", deviceType);
 		return "sensorinfo";
 	}
+	
+	@RequestMapping("/history")
+	public String history(Model model) {
+		model.addAttribute("baseMap", baseMap);		
+		return "history";
+	}
 }

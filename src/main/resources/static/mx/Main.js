@@ -19,10 +19,17 @@ mxLib.View.setExtData(MV_ATTR_DBCLICKNOPANMAP, true);
  */
 var contextPath = MvHost.GetData("contextPath");
 
+//画布图层
+var canvasLayer = new mxLib.CanvasLayer();
+map.addOverlay(canvasLayer);
+
 /**
  * @数据对象,负责数据相关操作
  */
 var sensor = new mxLib.Sensor();
+
+// 历史轨迹
+var history = new mxLib.History();
 
 // 加入导航条
 var naviCtrl = new mxLib.NavigationControl();

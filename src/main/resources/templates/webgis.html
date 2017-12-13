@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>山东淄博瑞安特GIS信息平台</title>
     <link href="mx/dataMine/css/dmExplit.css" rel="stylesheet" />
     <link href="mx/dataMine/easyui/easyui-ribbon/ribbon.css" rel="stylesheet" />
@@ -83,8 +83,8 @@ $(function () {
             groups: [
                 {
                     tools: [{
-                        name: 'jcdManage',
-                        text: '传感器管理',
+                        name: 'historyPath',
+                        text: '轨迹查询',
                         iconCls: 'jcManageLarge',
                         iconAlign: 'top',
                         size: 'large'
@@ -121,6 +121,14 @@ function openDwg() {
     MetaMapX.OpenDwg(strPath, false, "");
 }
 
+function openUrl() {
+	var strFullPath = decodeURI(window.document.location.href);
+    var index = strFullPath.lastIndexOf("/");
+    var webUrl = strFullPath.substring(0, index);
+    var url = webUrl + "/history";
+	MetaMapX.OpenUrl(url, false, "");
+}
+
 function addClickEvent() {
     $('#menuArea').ribbon({
         onClick: function (name, target) {
@@ -140,6 +148,9 @@ function addClickEvent() {
                 case "layerManage":
                     layerCtrl();
                     break;
+                case "historyPath":
+                	historyPath();
+                	break;
                 default:
                     break;
             }
