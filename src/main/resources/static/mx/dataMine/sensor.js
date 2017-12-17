@@ -1,42 +1,4 @@
-﻿/**
- * @fileoverview 元图数据类,对外开放。
- *
- * @author Metamap Map Api Group
- */
-
-/**
- * @正常时候测点显示的图片路径
- * 
- */
-var imgNormalMap = {};
-//粉尘
-imgNormalMap[0] = "dust-normal.png";
-// 甲烷
-imgNormalMap[1] = "ch4-normal.png";
-// 一氧化碳
-imgNormalMap[2] = "co-normal.png";
-// 温度
-imgNormalMap[6] = "temparture-normal.png";
-// 二氧化碳
-imgNormalMap[16] = "co2-normal.png";
-// 氧气
-imgNormalMap[17] = "o2-normal.png";
-// 开关
-imgNormalMap[100] = "switch-normal.png";
-
-/**
- * @报警时候测点显示的图片路径
- */
-var imgAlarmMap = {};
-for ( var key in imgNormalMap) {
-	// 获取正常图片路径
-	var normalImg = imgNormalMap[key];
-	// 字符串替换
-	var alarmImg = normalImg.replace("normal", "alarm");
-	// 添加到map
-	imgAlarmMap[key] = alarmImg;
-}
-
+﻿
 /**
  * @namespace 所有library类均放在mxLib命名空间下
  */
@@ -430,7 +392,6 @@ for ( var key in imgNormalMap) {
 				data : JSON.stringify(data),
 				dataType : "json",
 				success : function() {
-					// alert("保存成功！");
 				},
 				error : function() {
 
@@ -458,7 +419,6 @@ for ( var key in imgNormalMap) {
 				data : JSON.stringify(smsdata),
 				dataType : "json",
 				success : function() {
-					// alert("保存成功！");
 				},
 				error : function() {
 
@@ -486,7 +446,6 @@ for ( var key in imgNormalMap) {
 				data : JSON.stringify(spsdata),
 				dataType : "json",
 				success : function() {
-					alert("保存成功！");
 				},
 				error : function() {
 
@@ -606,20 +565,10 @@ for ( var key in imgNormalMap) {
 		var point = new mxLib.Point(x, y);
 		point.systemId = opts.systemId;
 
-		// 根据类型判断图片基本路径
-		// 根据类测点型判断需要哪一张图片
+		// 根据测点名称确定张图片
 		var typeId = opts.sensorType;
 		var strBasePath = scriptBaseDir + "dataMine/image/";
-		var strTotalPath = "";
-		if (!$.isEmptyObject(imgNormalMap)) {
-			// 获取测点对应的类型id
-			var imagName = imgNormalMap[typeId];
-			if (!$.isEmptyObject(imagName)) {
-				strTotalPath = strBasePath + imagName;
-			} else {
-				strTotalPath = strBasePath + "";
-			}
-		}
+		var strTotalPath = strBasePath + typeId + "-normal.png";
 
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
