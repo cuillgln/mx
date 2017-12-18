@@ -2,6 +2,8 @@ package com.cuillgln.mx.entity.staffpositioning;
 
 import java.util.Date;
 
+import com.cuillgln.mx.entity.safetymonitoing.Point;
+
 public class StaffLocation {
 
 	private Long rfId;

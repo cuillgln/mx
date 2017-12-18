@@ -160,14 +160,6 @@ function historyPath() {
     });
 }
 
-function openUrl() {
-	var strFullPath = decodeURI(window.document.location.href);
-    var index = strFullPath.lastIndexOf("/");
-    var webUrl = strFullPath.substring(0, index);
-    var url = webUrl + "/history";
-	MetaMapX.OpenUrl(url, false, "");
-}
-
 function loadSensorPanel(sensorData) {
 	if (sensorData == "" || sensorData == null){
 		return;
@@ -556,4 +548,12 @@ function loadAbStationPanel(abStationData) {
     //加载数据
     $('#abManage').datagrid('loadData', json);
     $('#abManage').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
+}
+
+function stationPath() {
+	MetaMapX.CurViewEvaluateJavaScript("station.addPath('4', '5');");
+}
+
+function stationPathSave() {
+	MetaMapX.CurViewEvaluateJavaScript("station.savePath();");
 }

@@ -1,4 +1,4 @@
-function LayerControl() {
+var LayerControl = mxLib.LayerControl = function LayerControl() {
 	this.defaultAnchor = MX_ANCHOR_TOP_LEFT;
 	this.defaultOffset = new mxLib.Size(1, 1);
 }
@@ -10,14 +10,14 @@ LayerControl.prototype.initialize = function(map) {
 	for (var i = 1; i <= 4; i++) {
 		// <p id="layerName" ><checkedbox/><span>layerName</span></p>
 		var layerDiv = document.createElement("p");
-		layerDiv.style.margin="2px";
+		layerDiv.style.margin = "2px";
 		layerDiv.setAttribute("id", "overlay_" + i);
 		var checkbox = document.createElement("input");
 		checkbox.setAttribute("type", "checkbox");
 		checkbox.setAttribute("checked", "checked");
 		layerDiv.appendChild(checkbox);
 		var span = document.createElement("span");
-		switch(i) {
+		switch (i) {
 		case 1:
 			span.appendChild(document.createTextNode("传感器层"));
 			layerDiv.onclick = function(e) {
@@ -83,7 +83,7 @@ LayerControl.prototype.initialize = function(map) {
 	for (var i = 0; i < layers.length; i++) {
 		// <p id="layerName" ><checkedbox/><span>layerName</span></p>
 		var layerDiv = document.createElement("p");
-		layerDiv.style.margin="2px";
+		layerDiv.style.margin = "2px";
 		var layerName = layers[i].layerName;
 		layerDiv.setAttribute("id", layerName);
 		var checkbox = document.createElement("input");
@@ -123,7 +123,7 @@ function setLayerInvisible(map, layerName) {
 }
 
 function setOverlayVisible(i) {
-	switch(i) {
+	switch (i) {
 	case 1:
 		for ( var i in window.sensor.sensorMap) {
 			var marker = window.sensor.sensorMap[i];
@@ -151,7 +151,7 @@ function setOverlayVisible(i) {
 	}
 }
 function setOverlayInvisible(i) {
-	switch(i) {
+	switch (i) {
 	case 1:
 		for ( var i in window.sensor.sensorMap) {
 			var marker = window.sensor.sensorMap[i];

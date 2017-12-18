@@ -1,4 +1,4 @@
-package com.cuillgln.mx.entity.staffpositioning;
+package com.cuillgln.mx.entity.safetymonitoing;
 
 import java.math.BigDecimal;
 
@@ -6,6 +6,9 @@ public class Point {
 
 	private BigDecimal x;
 	private BigDecimal y;
+
+	public Point() {
+	}
 
 	public Point(BigDecimal x, BigDecimal y) {
 		this.x = x;
@@ -18,6 +21,11 @@ public class Point {
 
 	public BigDecimal getY() {
 		return y;
+	}
+
+	@Override
+	public String toString() {
+		return "Point [x=" + x + ", y=" + y + "]";
 	}
 
 }

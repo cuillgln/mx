@@ -19,7 +19,6 @@ mxLib.View.setExtData(MV_ATTR_DBCLICKNOPANMAP, true);
  */
 var contextPath = MvHost.GetData("contextPath");
 
-//画布图层
 var canvasLayer = new mxLib.CanvasLayer();
 map.addOverlay(canvasLayer);
 
@@ -31,21 +30,21 @@ var sensor = new mxLib.Sensor();
 // 历史轨迹
 var history = new mxLib.History();
 
+// 分站
+var station = new mxLib.Station();
+
 // 加入导航条
 var naviCtrl = new mxLib.NavigationControl();
 naviCtrl.setOffset(new mxLib.Size(3, 32));
 naviCtrl.setAnchor(MX_ANCHOR_TOP_RIGHT);
 map.addControl(naviCtrl);
 
+// 加入缩略图
 var ovctrl = new mxLib.OverviewMapControl();
 map.addControl(ovctrl);
 
-// 加入标识条
-// var logCtrl = new LogControl();
-// map.addControl(logCtrl);
-
 // 图层
-var layerCtrl = new LayerControl();
+var layerCtrl = new mxLib.LayerControl();
 
 map.addEventListener("mousemove", function() {
 	var point = mxLib.Util.getEventPoint(map, event);
@@ -54,6 +53,6 @@ map.addEventListener("mousemove", function() {
 /**
  * @设置定时间隔,每隔每隔5s更新数据
  */
-window.setInterval(function() {
+/*window.setInterval(function() {
 	sensor.getData();
-}, 5000);
+}, 5000);*/

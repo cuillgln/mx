@@ -11,4 +11,5 @@ public interface StaffPositioningStationService {
 	public List<StaffPositioningStation> list();
 
 	public List<StaffLocation> queryHistory(Long rfId, Date begin, Date end);
+
 }

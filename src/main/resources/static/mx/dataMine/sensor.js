@@ -566,6 +566,7 @@
 		point.systemId = opts.systemId;
 
 		// 根据测点名称确定张图片
+//		var typeId = opts.sensorName;
 		var typeId = opts.sensorType;
 		var strBasePath = scriptBaseDir + "dataMine/image/";
 		var strTotalPath = strBasePath + typeId + "-normal.png";

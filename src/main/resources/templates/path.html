@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>山东淄博瑞安特GIS信息平台</title>
+    <title>分站路径维护</title>
     <link href="mx/dataMine/css/dmExplit.css" rel="stylesheet" />
     <link href="mx/dataMine/easyui/easyui-ribbon/ribbon.css" rel="stylesheet" />
     <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
@@ -39,61 +39,17 @@ $(function () {
             groups: [
                 {
                     tools: [{
-                        name: 'jcdManage',
-                        text: '传感器管理',
-                        iconCls: 'jcManageLarge',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
-                        name: 'jcdSave',
-                        text: '监测点保存',
-                        iconCls: 'jcdSave',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
-                        name: 'pointDistance',
-                        text: '测距',
-                        iconCls: 'distance',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
-                        name: 'cadLayer',
-                        text: '地图显示否',
-                        iconCls: 'basemap',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
-                        name: 'layerManage',
-                        text: '图层管理',
-                        iconCls: 'layerManage',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                }]
-        },{
-            title: '轨迹回放',
-            groups: [
-                {
-                    tools: [{
-                        name: 'historyPath',
-                        text: '轨迹查询',
-                        iconCls: 'jcManageLarge',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
                         name: 'stationPath',
-                        text: '分站路径维护',
+                        text: '人员定位分站',
                         iconCls: 'jcManageLarge',
+                        iconAlign: 'top',
+                        size: 'large'
+                    }]
+                },{
+                    tools: [{
+                        name: 'stationPathSave',
+                        text: '路径保存',
+                        iconCls: 'jcdSave',
                         iconAlign: 'top',
                         size: 'large'
                     }]
@@ -107,29 +63,15 @@ $(function () {
 	
 	addClickEvent();
 	//打开图形
-	openDwg();
+	openUrl();
 });
 
-function openDwg() {
-    var strFullPath = decodeURI(window.document.location.href);
-    var index = strFullPath.lastIndexOf("/");
-    var webUrl = strFullPath.substring(0, index);
-
-    //设置网站根目录
-    //设置元图脚本API路径，相对于根目录地址
-    //打开图形，第二个参数表示是否新增View，第三个参数表示view名称
-    MetaMapX.SetWebRootPath(webUrl + "/");
-    MetaMapX.SetMapScriptPath("mx/");
-	//新增空白view,目的为了传入扩展数据
+function openUrl() {
+    //新增空白view,目的为了传入扩展数据
     //设置扩展数据,view层通过MvHost.GetData("mineId")来取出扩展数据
     MetaMapX.AddView("mmap");
     MetaMapX.CurViewSetData("contextPath", contextPath);
-    
-    var strPath = webUrl + "/" + /*[[${baseMap}]]*/ "dwg/d.dwg";
-    MetaMapX.OpenDwg(strPath, false, "");
-}
-
-function openUrl() {
+	
 	var strFullPath = decodeURI(window.document.location.href);
     var index = strFullPath.lastIndexOf("/");
     var webUrl = strFullPath.substring(0, index);
@@ -141,24 +83,12 @@ function addClickEvent() {
     $('#menuArea').ribbon({
         onClick: function (name, target) {
             switch (name) {
-                case "jcdManage":
-                    jcdManage();
+                case "stationPath":
+                	stationPath();
                     break;
-                case "jcdSave":
-                    jcdSave();
+                case "stationPathSave":
+                	stationPathSave();
                     break;
-                case "pointDistance":
-                    pointDistance();
-                    break;
-                case "cadLayer":
-                	cadVisible();
-                    break;
-                case "layerManage":
-                    layerCtrl();
-                    break;
-                case "historyPath":
-                	historyPath();
-                	break;
                 default:
                     break;
             }
