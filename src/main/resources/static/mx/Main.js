@@ -53,9 +53,3 @@ map.addEventListener("mousemove", function() {
 	var point = mxLib.Util.getEventPoint(map, event);
 	mxLib.Util.toastInfo("X: " + point.x + ", Y: " + point.y);
 });
-/**
- * @设置定时间隔,每隔每隔5s更新数据
- */
-/*window.setInterval(function() {
-	sensor.getData();
-}, 5000);*/
