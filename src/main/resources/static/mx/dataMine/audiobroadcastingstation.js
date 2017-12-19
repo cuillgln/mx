@@ -1,18 +1,18 @@
-﻿(function() {
-	var Sensor = mxLib.Sensor = function() {
-		this.markerMap = {}; // sensorId -> RichMarker
-		this.positionMap = {}; // sensorId -> Point
-		this.valueMap = {}; // sensorId -> Realtime Value
-		this.removedMap = {}; // sensorId -> Point 删除的位置点
+(function() {
+	var AudioBroadcastingStation = mxLib.AudioBroadcastingStation = function() {
+		this.markerMap = {}; // stationId -> RichMarker
+		this.positionMap = {}; // stationId -> Point
+		this.valueMap = {}; // stationId -> Realtime Value
+		this.removedMap = {}; // stationId -> Point 删除的位置点
 	}
 	
 	/**
 	 * 加载位置
 	 */
-	Sensor.prototype.getPosition = function() {
+	AudioBroadcastingStation.prototype.getPosition = function() {
 		var self = this;
 		$.ajax({
-			url : contextPath + "/sensorposition/list/1",
+			url : contextPath + "/sensorposition/list/4",
 			type : "GET",
 			async : true,
 			cache : false,
@@ -24,10 +24,10 @@
 				var length = data.length;
 				for (var i = 0; i < length; i++) {
 					var station = data[i];
-					var sensorId = station.sensorId;
+					var stationId = station.sensorId;
 					var point = new mxLib.Point(station.x, station.y);
 					point.systemId = station.id;
-					self.positionMap[sensorId] = point;
+					self.positionMap[stationId] = point;
 				}
 			},
 			error : function(msg) {
@@ -39,12 +39,12 @@
 	/**
 	 * 保存传感器位置
 	 */
-	Sensor.prototype.savePosition = function() {
+	AudioBroadcastingStation.prototype.savePosition = function() {
 		var positionData = [];
-		for (var sensorId in this.positionMap) {
-			var point = this.positionMap[sensorId];
+		for (var stationId in this.positionMap) {
+			var point = this.positionMap[stationId];
 			var position = {};
-			position.sensorId = sensorId;
+			position.sensorId = stationId;
 			position.id = point.systemId;
 			position.x = point.x;
 			position.y = point.y;
@@ -52,7 +52,7 @@
 		}
 		if (positionData.length > 0) {
 			$.ajax({
-				url : contextPath + "/sensorposition/update/1",
+				url : contextPath + "/sensorposition/update/4",
 				type : "POST",
 				async : true,
 				cache : false,
@@ -69,12 +69,12 @@
 
 		// 删除的点
 		var removedData = [];
-		for ( var sensorId in this.removedMap) {
-			var point = this.removedMap[sensorId];
+		for ( var stationId in this.removedMap) {
+			var point = this.removedMap[stationId];
 			var position = {};
-			position.sensorId = sensorId;
+			position.sensorId = stationId;
 			position.id = point.systemId;
-			position.type = 1;
+			position.type = 4;
 			position.x = point.x;
 			position.y = point.y;
 			removedData.push(position);
@@ -96,16 +96,24 @@
 		}
 	}
 	
-	Sensor.prototype.getSensor = function() {
+	AudioBroadcastingStation.prototype.getStation = function() {
 		var self = this;
 		var arr = [];
 		$.ajax({
-			url : contextPath + "/sensor",
+			url : contextPath + "/audiobroadcastingstation",
 			type : "GET",
 			async : false,
 			dataType : "json",
 			success : function(data) {
 				arr = data;
+				for (var i = 0; i < data.length; i++) {
+					var stationId = data[i].stationId;
+					var valueObj = {};
+					valueObj.value = data[i].value;
+					valueObj.alarmFlag = data[i].alarmFlag;
+					self.valueMap[stationId] = valueObj;
+				}
+				self.updateInternal();
 			}
 		});
 		// 如果数组大于0
@@ -114,75 +122,33 @@
 		}
 	}
 	
-	/**
-	 * 更新数据（定时器更新）
-	 */
-	Sensor.prototype.getSensorValue = function() {
-		var self = this;
-		$.ajax({
-			url : contextPath + "/sensordata",
-			type : "GET",
-			async : true,
-			cache : false,
-			dataType : "json",
-			success : function(data) {
-				if ($.isEmptyObject(data)) {
-					return;
-				}
-				var length = data.length;
-				for (var i = 0; i < length; i++) {
-					var sensorId = data[i].sensorId;
-					var valueObj = {};
-					valueObj.value = data[i].value;
-					valueObj.alarmFlag = data[i].alarmFlag;
-					self.valueMap[sensorId] = valueObj;
-				}
-				self.updateInternal();
-			},
-			error : function(msg) {
-
-			}
-		});
-	}
 	
 	// 设置实时值
-	Sensor.prototype.updateInternal = function() {
+	AudioBroadcastingStation.prototype.updateInternal = function() {
 		var self = this;
 		for ( var i in self.markerMap) {
-			var sensorObj = self.markerMap[i];
-			if ($.isEmptyObject(sensorObj))
+			var stationObj = self.markerMap[i];
+			if ($.isEmptyObject(stationObj))
 				continue;
 
-			if (sensorObj.hasOwnProperty("sensorId")) {
-				// 传感器编号
-				// 单位
-				var sensorId = sensorObj.sensorId;
-				var unit = sensorObj.unit;
+			if (stationObj.hasOwnProperty("stationId")) {
+				var stationId = stationObj.stationId;
 
 				var value = "";
 				var alarmFlag = 0;
-				if (this.valueMap.hasOwnProperty(sensorId)) {
-					var valueObj = this.valueMap[sensorId];
+				if (this.valueMap.hasOwnProperty(stationId)) {
+					var valueObj = this.valueMap[stationId];
 					value = valueObj.value;
 					alarmFlag = valueObj.alarmFlag;
 				}
-				value += unit;
-				var analogFlag = sensorObj.analogFlag;
-				if (analogFlag == 0) {
-					if (value == "0") {
-						value = sensorObj.offName;
-					} else {
-						value = sensorObj.onName;
-					}
-				}
 				// 修改实时值
-				self.setValue(sensorId, value, alarmFlag);
+				self.setValue(stationId, value, alarmFlag);
 			}
 		}
 	}
 	
-	Sensor.prototype.setValue = function(sensorId, value, alarmFlag) {
-		var marker = this.markerMap[sensorId];
+	AudioBroadcastingStation.prototype.setValue = function(stationId, value, alarmFlag) {
+		var marker = this.markerMap[stationId];
 		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
 			$(marker.getDomElement()).children("label").text(value);
 			// 更换报警图片
@@ -199,7 +165,7 @@
 		}
 	}
 	
-	Sensor.prototype.addMarker = function(opts) {
+	AudioBroadcastingStation.prototype.addMarker = function(opts) {
 		if ((typeof opts) == "string") {
 			try {
 				opts = $.parseJSON(opts);
@@ -213,12 +179,11 @@
 		}
 
 		// 如果opts没有下列属性则返回
-		if (!opts.hasOwnProperty("sensorId")
-				|| !opts.hasOwnProperty("sensorType"))
+		if (!opts.hasOwnProperty("stationId"))
 			return;
 
 		// 获取测点ID 坐标x/y
-		var sensorId = opts.sensorId;
+		var stationId = opts.stationId;
 		var x = opts.x;
 		var y = opts.y;
 		if (!($.isNumeric(x)) || !($.isNumeric(y))) {
@@ -227,12 +192,8 @@
 		var point = new mxLib.Point(x, y);
 		point.systemId = opts.systemId;
 
-		// 根据测点名称确定张图片
-//		var typeId = opts.sensorName;
-		var typeId = opts.sensorType;
-		var strBasePath = scriptBaseDir + "dataMine/image/";
-		var strTotalPath = strBasePath + typeId + "-normal.png";
-
+		var strBasePath = scriptBaseDir + "dataMine/image/abs/";
+		var strTotalPath = strBasePath + "abs-normal.jpg";
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
@@ -252,74 +213,49 @@
 		}
 
 		// 查看是否存在指定对象
-		var marker = this.markerMap[sensorId];
+		var marker = this.markerMap[stationId];
 		if ($.isEmptyObject(marker)) {
 			// 如果测点没有对象则添加到图形中
 			map.addOverlay(myRichMarker);
 		} else {
-			// 删除原先的对象
+			// 删除原先的对象, 添加到图形中
 			map.removeOverlay(marker);
-			// 添加到图形中
 			map.addOverlay(myRichMarker);
 		}
-
 		// 添加到map
-		this.markerMap[sensorId] = myRichMarker;
-		this.updatePoint(sensorId, point);
-
-		// 实时值
-		var valueObj = this.getValue(sensorId);
-		var value = "";
-		var unit = "";
-		var alarmFlag = 0;
-		if (opts.hasOwnProperty("unit")) {
-			unit = opts.unit;
-		}
-		if (valueObj.hasOwnProperty("value") && valueObj.hasOwnProperty("alarmFlag")) {
-			value = valueObj.value;
-			alarmFlag = valueObj.alarmFlag;
-			value += unit;
-		}
-		var analogFlag = opts.analogFlag;
-		if (analogFlag == 0) {
-			if (value == "0") {
-				value = opts.offName;
-			} else {
-				value = opts.onName;
-			}
-		}
-		myRichMarker.value = value;
-		myRichMarker.alarmFlag = 0; // 初始是normal
-		this.setValue(sensorId, value, alarmFlag);
+		this.markerMap[stationId] = myRichMarker;
+		this.updatePoint(stationId, point);
 		
+		myRichMarker.alarmFlag = 0; // 初始是normal
+		this.setValue(stationId, "通讯正常", 0);
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}
 	
-	Sensor.prototype.updatePoint = function(sensorId, point) {
-		if (this.positionMap.hasOwnProperty(sensorId)) {
-			var oldPoint = this.positionMap[sensorId];
+	AudioBroadcastingStation.prototype.updatePoint = function(stationId, point) {
+		if (this.positionMap.hasOwnProperty(stationId)) {
+			var oldPoint = this.positionMap[stationId];
 			point.systemId = oldPoint.systemId;
 		}
-		this.positionMap[sensorId] = point;
+		this.positionMap[stationId] = point;
 	}
-
-	Sensor.prototype.removePoint = function(sensorId) {
-		var marker = this.markerMap[sensorId];
+	
+	AudioBroadcastingStation.prototype.removePoint = function(stationId) {
+		var marker = this.markerMap[stationId];
 		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
 			map.removeOverlay(marker);
 			if ($.isEmptyObject(this.positionMap)) {
 				return;
 			}
 			
-			if (this.positionMap.hasOwnProperty(sensorId)) {
-				this.removedMap[sensorId] = this.positionMap[sensorId];
-				delete this.positionMap[sensorId];
+			if (this.positionMap.hasOwnProperty(stationId)) {
+				this.removedMap[stationId] = this.positionMap[stationId];
+				delete this.positionMap[stationId];
 			}
 		}
 	}
 	
-	Sensor.prototype.getPoint = function(sensorId) {
+	AudioBroadcastingStation.prototype.getPoint = function(sensorId) {
 		if ($.isEmptyObject(this.positionMap)) {
 			return null;
 		}
@@ -328,20 +264,12 @@
 		}
 	}
 	
-	Sensor.prototype.getValue = function(sensorId) {
-		var value = {};
-		if (this.valueMap.hasOwnProperty(sensorId)) {
-			value = this.valueMap[sensorId];
-		}
-		return value;
-	}
-	
-	Sensor.prototype.addEvent = function(marker) {
+	AudioBroadcastingStation.prototype.addEvent = function(marker) {
 		if ($.isEmptyObject(marker)) {
 			return;
 		}
 		
-		var sensorId = marker.sensorId;
+		var stationId = marker.stationId;
 		// 添加点击事件
 		marker.addEventListener("click", function() {
 			// 信息窗口坐标
@@ -356,7 +284,7 @@
 			};
 
 			// 运用ifame框架
-			var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + sensorId + "&deviceType=1";
+			var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + stationId + "&deviceType=4";
 			var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='"
 				+ sensorInfoUrl + "'></iframe>";
 			// 弹出信息窗口
@@ -366,15 +294,15 @@
 
 		var self = this;
 		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir + "dataMine/image/del.gif", "", function(e) {
-				self.removePoint(sensorId);
+				self.removePoint(stationId);
 			});
 		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir + "dataMine/image/edit.png", "", function(e) {
-				var marker = self.markerMap[sensorId];
+				var marker = self.markerMap[stationId];
 				if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
 					marker.enableDragging();
 					marker.addEventListener("onmouseup", function(e) {
 						// 更新坐标位置
-						self.updatePoint(sensorId, e.point);
+						self.updatePoint(stationId, e.point);
 						marker.disableDragging();
 					});
 				}
@@ -389,11 +317,11 @@
 	}
 	
 	// 定位
-	Sensor.prototype.dolly = function(sensorId) {
-		if (sensorId == "")
+	AudioBroadcastingStation.prototype.dolly = function(stationId) {
+		if (stationId == "")
 			return;
 
-		var marker = this.markerMap[sensorId];
+		var marker = this.markerMap[stationId];
 		if ($.isEmptyObject(marker))
 			return;
 

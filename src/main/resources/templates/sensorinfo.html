@@ -69,7 +69,7 @@ function jcProperty(sensorId, deviceType) {
 
 function sensorInfo(sensorId) {
 	//得到属性对象
-    var sensorObj = parent.sensor.sensorMap[sensorId];
+    var sensorObj = parent.sensor.markerMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
     }
@@ -191,7 +191,7 @@ function sensorInfo(sensorId) {
 
 function smsInfo(sensorId) {
     //得到属性对象
-    var sensorObj = parent.sensor.smsMap[sensorId];
+    var sensorObj = parent.smstation.markerMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
     }
@@ -273,7 +273,7 @@ function smsInfo(sensorId) {
 
 function spsInfo(sensorId) {
     //得到属性对象
-    var sensorObj = parent.sensor.spsMap[sensorId];
+    var sensorObj = parent.spstation.markerMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
     }
@@ -323,7 +323,7 @@ function spsInfo(sensorId) {
 
 function absInfo(sensorId) {
     //得到属性对象
-    var sensorObj = parent.sensor.absMap[sensorId];
+    var sensorObj = parent.abstation.markerMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
     }

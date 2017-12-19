@@ -14,12 +14,13 @@
     <script src="mx/dataMine/easyui/easyui-ribbon/jquery.ribbon.js" type="text/javascript"></script>
     <script src="mx/dataMine/easyui/datagrid-groupview.js" type="text/javascript"></script>
     <script src="mx/dataMine/dmFunction.js" type="text/javascript"></script>
+    <script src="mx/dataMine/webgis.js" type="text/javascript"></script>
 </head>
 <body id="cc" class="easyui-layout" data-options="fit:true">
     <div id="menuArea" data-options="region:'north',plain:false" style="height: 104px;"></div>
     <div data-options="region:'west', title:'数据管理', iconCls:'dataManage'" style="width: 300px; height: auto">
-        <div id="westPanelData" class="easyui-accordion" data-options="fit:true,border:false">
-        </div>
+      <div id="westPanelData" class="easyui-accordion" data-options="fit:true,border:false">
+      </div>
     </div>
     <div data-options="region:'center'" style="overflow: hidden;">
         <object th:classid="${classid}" th:type="${type}" id="MetaMapX" codebase="" width="100%" height="100%"></object>
@@ -127,10 +128,24 @@ function addClickEvent() {
         onClick: function (name, target) {
             switch (name) {
                 case "jcdManage":
-                    jcdManage();
+                	$('#cc').layout('expand', 'west');
+                	//demo中用easyui库进行前端开发,运用accordion控件添加panel
+				    addPanel('传感器管理', 'sensor');
+				    addPanel('安全监控分站管理', 'sms');
+				    addPanel('人员定位分站管理', 'sps');
+				    addPanel('语音广播音响管理', 'abs');
+				    $("#westPanelData").accordion("select", "传感器管理");
+                	loadSensor();
+                	loadSmstation();
+                	loadSpstation();
+                	loadAbstation();
+                	$("#westPanelData").accordion("select", "传感器管理");
                     break;
                 case "jcdSave":
-                    jcdSave();
+                	sensorSave();
+                	smstationSave();
+                	spstationSave();
+                	abstationSave();
                     break;
                 case "pointDistance":
                     pointDistance();

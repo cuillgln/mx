@@ -26,6 +26,9 @@ map.addOverlay(canvasLayer);
  * @数据对象,负责数据相关操作
  */
 var sensor = new mxLib.Sensor();
+var smstation = new mxLib.SafetyMonitoringStation();
+var spstation = new mxLib.StaffPositioningStation();
+var abstation = new mxLib.AudioBroadcastingStation();
 
 // 历史轨迹
 var history = new mxLib.History();

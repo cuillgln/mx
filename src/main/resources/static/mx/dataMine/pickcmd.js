@@ -106,7 +106,21 @@ PickCmd.prototype.leftMouseup = function (e, data) {
     this.opts.y = this.point.y;
 
     //添加到测点
-    window.sensor.addSensor(this.opts);
+    var deviceType = this.opts.deviceType;
+    switch (deviceType) {
+	case 2:
+		window.smstation.addMarker(this.opts);
+		break;
+	case 3:
+		window.spstation.addMarker(this.opts);
+		break;
+	case 4:
+		window.abstation.addMarker(this.opts);
+		break;
+	default:
+		window.sensor.addMarker(this.opts);
+		break;
+	}
 }
 /**
 * 抽象方法，结束命令
