@@ -120,46 +120,6 @@ function rollView(path) {
 	MetaMapX.StartRollView();
 }
 
-function historyPath() {
-	var panels = $("#westPanelData").accordion("panels");
-	for (i = panels.length - 1; i >= 0; i--) {
-		$("#westPanelData").accordion("remove", i);
-	}
-    //展开
-    $('#cc').layout('expand', 'west');
-    //demo中用easyui库进行前端开发,运用accordion控件添加panel
-    addPanel('轨迹查询', 'historyPath');
-    
-    var form = '<form id="form1"><div><label for="rfId" width="80">RFID:</label><input id="rfId" type="text" name="rfId"/></div><div><label for="begin">开始时间:</label><input id="begin" type="text" name="begin"></div><div><label for="end">结束时间:</label><input id="end" type="text" name="end" ></div><div><a id="btn" >查询轨迹</a><div></form>';
-    $('#historyPath').append(form);
-    
-    $('#rfId').textbox({
-    	required:true
-    });
-    $('#begin').datebox({
-        required:true
-    });
-    $('#end').datebox({
-        required:true
-    });
-    
-    $('#btn').linkbutton({
-        iconCls: 'icon-search'
-    });
-    
-    $('#btn').bind('click', function(){
-        var valid = $("#form1").form("validate");
-        if (!valid) {
-        	alert("请录入RFID、开始时间和结束时间！");
-        	return;
-        }
-        var rfId = $("#rfId").textbox('getValue');
-        var begin = $("#begin").datebox('getValue');
-        var end = $("#end").datebox('getValue');
-        MetaMapX.CurViewEvaluateJavaScript("window.history.getPathData('" + rfId + "', '" + begin + "', '" + end + "');");
-    });
-}
-
 function loadSensorPanel(sensorData) {
 	if (sensorData == "" || sensorData == null){
 		return;
@@ -548,12 +508,4 @@ function loadAbStationPanel(abStationData) {
     //加载数据
     $('#abManage').datagrid('loadData', json);
     $('#abManage').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
-}
-
-function stationPath() {
-	MetaMapX.CurViewEvaluateJavaScript("station.addPath('4', '5');");
-}
-
-function stationPathSave() {
-	MetaMapX.CurViewEvaluateJavaScript("station.savePath();");
 }

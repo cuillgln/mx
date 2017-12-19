@@ -78,26 +78,6 @@ $(function () {
                         size: 'large'
                     }]
                 }]
-        },{
-            title: '轨迹回放',
-            groups: [
-                {
-                    tools: [{
-                        name: 'historyPath',
-                        text: '轨迹查询',
-                        iconCls: 'jcManageLarge',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                },{
-                    tools: [{
-                        name: 'stationPath',
-                        text: '分站路径维护',
-                        iconCls: 'jcManageLarge',
-                        iconAlign: 'top',
-                        size: 'large'
-                    }]
-                }]
         }]
     };
 	//嵌入ribbon菜单(easyui ribbon)
@@ -130,6 +110,11 @@ function openDwg() {
 }
 
 function openUrl() {
+	//新增空白view,目的为了传入扩展数据
+    //设置扩展数据,view层通过MvHost.GetData("contextPath")来取出扩展数据
+    MetaMapX.AddView("mmap");
+    MetaMapX.CurViewSetData("contextPath", contextPath);
+    
 	var strFullPath = decodeURI(window.document.location.href);
     var index = strFullPath.lastIndexOf("/");
     var webUrl = strFullPath.substring(0, index);
@@ -156,9 +141,6 @@ function addClickEvent() {
                 case "layerManage":
                     layerCtrl();
                     break;
-                case "historyPath":
-                	historyPath();
-                	break;
                 default:
                     break;
             }

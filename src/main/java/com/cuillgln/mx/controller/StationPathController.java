@@ -18,7 +18,7 @@ public class StationPathController {
 	@Autowired
 	private StationPathService stationPathService;
 
-	@RequestMapping(value = "/path/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/stationpath/save", method = RequestMethod.POST)
 	public String savePath(@RequestParam("start") long startStation, @RequestParam("stop") long stopStation,
 			HttpEntity<List<Point>> pointsEntity) {
 		stationPathService.save(startStation, stopStation, pointsEntity.getBody());

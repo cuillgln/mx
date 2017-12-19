@@ -26,7 +26,7 @@ public class WebgisController {
 		return "webgis";
 	}
 	
-	@RequestMapping("/path")
+	@RequestMapping("/stationpath")
 	public String stationPath(WebRequest request, Model model) {
 
 		String agent = request.getHeader("user-agent");
@@ -36,7 +36,20 @@ public class WebgisController {
 			model.addAttribute("type", "application/metamap2d");
 		}
 		model.addAttribute("baseMap", baseMap);
-		return "path";
+		return "stationpath";
+	}
+	
+	@RequestMapping("/history")
+	public String history(WebRequest request, Model model) {
+
+		String agent = request.getHeader("user-agent");
+		if (agent.indexOf("MSIE") > 0) {
+			model.addAttribute("classid", "clsid:8ACFF379-3E78-4E73-B75E-ECD908072A02");
+		} else {
+			model.addAttribute("type", "application/metamap2d");
+		}
+		model.addAttribute("baseMap", baseMap);
+		return "history";
 	}
 
 	@RequestMapping("/sensorinfo")

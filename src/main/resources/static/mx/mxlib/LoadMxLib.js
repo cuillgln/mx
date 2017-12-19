@@ -21,7 +21,7 @@ include(scriptBaseDir + "dataMine/sensorLocate.js");
 include(scriptBaseDir + "dataMine/layer.js");
 include(scriptBaseDir + "dataMine/copyright.js");
 include(scriptBaseDir + "dataMine/history.js");
-include(scriptBaseDir + "dataMine/station.js");
+include(scriptBaseDir + "dataMine/stationpath.js");
 
 //二次开发入口文件 加载完成了dom后
 domLoadedInclude(scriptBaseDir + "Main.js");

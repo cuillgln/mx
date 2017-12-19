@@ -2,18 +2,18 @@
 	/**
 	 * @exports Data as mxLib.Data
 	 */
-	var Station =
+	var StationPath =
 	/**
 	 * Data类的构造函数 sensor传感器对象
 	 */
-	mxLib.Station = function() {
+	mxLib.StationPath = function() {
 		this.drawCmd = null;
 		this.startStation = null;
 		this.stopStation = null;
 	}
 
 	// 路径
-	Station.prototype.addPath = function(startStation, stopStation) {
+	StationPath.prototype.addPath = function(startStation, stopStation) {
 		map.clearOverlays();
 		this.startStation = startStation;
 		this.stopStation = stopStation;
@@ -22,12 +22,12 @@
 	}
 
 	// 路径
-	Station.prototype.savePath = function() {
+	StationPath.prototype.savePath = function() {
 		if (this.drawCmd && this.drawCmd.points.length > 0) {
 			this.drawCmd.points.pop();
 			this.drawCmd.points.pop();
 			$.ajax({
-				url : contextPath + "/path/save?start=" + this.startStation
+				url : contextPath + "/stationpath/save?start=" + this.startStation
 						+ "&stop=" + this.stopStation,
 				type : "POST",
 				async : true,
@@ -46,7 +46,7 @@
 	}
 
 	// 路径
-	Station.prototype.delPath = function(startStation, stopStation) {
+	StationPath.prototype.delPath = function(startStation, stopStation) {
 
 	}
 

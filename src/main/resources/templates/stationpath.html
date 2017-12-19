@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>分站路径维护</title>
+    <link href="mx/dataMine/css/dmExplit.css" rel="stylesheet" />
+    <link href="mx/dataMine/easyui/easyui-ribbon/ribbon.css" rel="stylesheet" />
+    <link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
+    <link href="mx/dataMine/easyui/themes/icon.css" rel="stylesheet" />
+    <script src="mx/dataMine/json3.min.js" type="text/javascript"></script>
+    <script src="mx/mxlib/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="mx/dataMine/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="mx/dataMine/easyui/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="mx/dataMine/easyui/easyui-ribbon/jquery.ribbon.js" type="text/javascript"></script>
+    <script src="mx/dataMine/easyui/datagrid-groupview.js" type="text/javascript"></script>
+</head>
+<body id="cc" class="easyui-layout" data-options="fit:true">
+    <div id="menuArea" data-options="region:'north',plain:false" style="height: 104px;"></div>
+    <div data-options="region:'west', collapsible: false" style="width: 300px; height: auto">
+    <div class="easyui-panel" title="分站路径维护" style="width:100%;max-width:400px;padding:30px 60px;">
+        <form id="ff" method="post">
+            <div style="margin-bottom:20px">
+                <label for="startStation">起始分站:</label>
+                <input id="startStation" class="easyui-numberspinner" name="startStation" style="width:100%;" data-options="required: true"/>
+            </div>
+            <div style="margin-bottom:20px">
+                <label for="stopStation">终止分站:</label>
+                <input id="stopStation" class="easyui-numberspinner" name="stopStation" style="width:100%;" data-options="required: true"/>
+            </div>
+        </form>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addPath()" style="width:80px">设置路径</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="savePath()" style="width:80px">保存路径</a>
+        </div>
+    </div>
+    </div>
+    <div data-options="region:'center'" style="overflow: hidden;">
+        <object th:classid="${classid}" th:type="${type}" id="MetaMapX" codebase="" width="100%" height="100%"></object>
+    </div>
+</body>
+<script th:inline="javascript">
+/*<![CDATA[*/
+var contextPath = /*[[${#httpServletRequest.getContextPath()}]]*/ '';           
+$(function () {
+	//打开图形
+	openUrl();
+});
+
+function openUrl() {
+    //新增空白view,目的为了传入扩展数据
+    //设置扩展数据,view层通过MvHost.GetData("contextPath")来取出扩展数据
+    MetaMapX.AddView("mmap");
+    MetaMapX.CurViewSetData("contextPath", contextPath);
+	
+	var strFullPath = decodeURI(window.document.location.href);
+    var index = strFullPath.lastIndexOf("/");
+    var webUrl = strFullPath.substring(0, index);
+    var url = webUrl + "/dwg";
+	MetaMapX.OpenUrl(url, false, "");
+}
+
+
+function addPath() {
+	var isValid = $("#ff").form("validate");
+	var startStation = $("#startStation").val();
+	var stopStation = $("#stopStation").val();
+	if (!isValid) {
+		alert("请输入起始分站和终止分站!");
+		return;
+	}
+	if (startStation == stopStation) {
+		alert("起始分站号和终止分站号不能相同!");
+        return;
+	}
+	MetaMapX.CurViewEvaluateJavaScript("stationpath.addPath('" + startStation + "', '" + stopStation + "');");
+}
+
+function savePath() {
+	MetaMapX.CurViewEvaluateJavaScript("stationpath.savePath();");
+}
+/*]]>*/
+</script>
+</html>

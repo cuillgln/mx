@@ -31,7 +31,7 @@ var sensor = new mxLib.Sensor();
 var history = new mxLib.History();
 
 // 分站
-var station = new mxLib.Station();
+var stationpath = new mxLib.StationPath();
 
 // 加入导航条
 var naviCtrl = new mxLib.NavigationControl();
