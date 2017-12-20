@@ -11,6 +11,7 @@
 </head>
 <body>
     <div id="proertyTip"></div>
+    <div><input id="staff" class="easyui-textbox" multiline="true" style="width:100%;height:140px"/></div>
     <input type="hidden" id="sensorId" th:value="${sensorId}"/>
     <input type="hidden" id="deviceType" th:value="${deviceType}"/>
 </body>
@@ -29,8 +30,7 @@ function jcProperty(sensorId, deviceType) {
 
     $('#proertyTip').propertygrid({
         showGroup: true,
-        fitColumns: true,
-        autoRowHeight: true,
+        showHeader: false,
         columns: [[
             {
                 field: 'name',
@@ -44,8 +44,7 @@ function jcProperty(sensorId, deviceType) {
                 width: 100,
                 align: 'center'
             }
-        ]],
-        showHeader: false,
+        ]]
     });
 
     switch (deviceType) {
@@ -306,12 +305,7 @@ function spsInfo(sensorId) {
         arr.push(locationObj);
     }
     if (sensorObj.hasOwnProperty("staff") && sensorObj["staff"]) {
-        var staffObj = {};
-        staffObj.name = "周围人员:";
-        staffObj.value = sensorObj["staff"];
-        staffObj.group = "基本属性";
-        staffObj.editor = {type: "textarea"};
-        arr.push(staffObj);
+    	$("#staff").textbox("setValue", sensorObj["staff"]);
     }
 
     //加载数据

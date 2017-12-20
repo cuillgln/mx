@@ -125,26 +125,26 @@ function setLayerInvisible(map, layerName) {
 function setOverlayVisible(i) {
 	switch (i) {
 	case 1:
-		for ( var i in window.sensor.sensorMap) {
-			var marker = window.sensor.sensorMap[i];
+		for ( var i in window.sensor.markerMap) {
+			var marker = window.sensor.markerMap[i];
 			marker.show();
 		}
 		break;
 	case 2:
-		for ( var i in window.sensor.smsMap) {
-			var marker = window.sensor.smsMap[i];
+		for ( var i in window.smstation.markerMap) {
+			var marker = window.smstation.markerMap[i];
 			marker.show();
 		}
 		break;
 	case 3:
-		for ( var i in window.sensor.spsMap) {
-			var marker = window.sensor.spsMap[i];
+		for ( var i in window.spstation.markerMap) {
+			var marker = window.spstation.markerMap[i];
 			marker.show();
 		}
 		break;
 	case 4:
-		for ( var i in window.sensor.absMap) {
-			var marker = window.sensor.absMap[i];
+		for ( var i in window.abstation.markerMap) {
+			var marker = window.abstation.markerMap[i];
 			marker.show();
 		}
 		break;
@@ -153,26 +153,26 @@ function setOverlayVisible(i) {
 function setOverlayInvisible(i) {
 	switch (i) {
 	case 1:
-		for ( var i in window.sensor.sensorMap) {
-			var marker = window.sensor.sensorMap[i];
+		for ( var i in window.sensor.markerMap) {
+			var marker = window.sensor.markerMap[i];
 			marker.hide();
 		}
 		break;
 	case 2:
-		for ( var i in window.sensor.smsMap) {
-			var marker = window.sensor.smsMap[i];
+		for ( var i in window.smstation.markerMap) {
+			var marker = window.smstation.markerMap[i];
 			marker.hide();
 		}
 		break;
 	case 3:
-		for ( var i in window.sensor.spsMap) {
-			var marker = window.sensor.spsMap[i];
+		for ( var i in window.spstation.markerMap) {
+			var marker = window.spstation.markerMap[i];
 			marker.hide();
 		}
 		break;
 	case 4:
-		for ( var i in window.sensor.absMap) {
-			var marker = window.sensor.absMap[i];
+		for ( var i in window.abstation.markerMap) {
+			var marker = window.abstation.markerMap[i];
 			marker.hide();
 		}
 		break;

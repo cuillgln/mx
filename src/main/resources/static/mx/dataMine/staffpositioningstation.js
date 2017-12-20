@@ -113,6 +113,12 @@
 					valueObj.value = data[i].value;
 					valueObj.alarmFlag = data[i].alarmFlag;
 					self.valueMap[stationId] = valueObj;
+					// 周围人员
+					var marker = self.markerMap[stationId];
+					if (marker) {
+						marker.staff = data[i].staff;
+						marker.staffCount = data[i].staffCount;
+					}
 				}
 				self.updateInternal();
 			}
