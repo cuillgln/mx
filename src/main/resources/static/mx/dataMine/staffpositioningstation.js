@@ -4,6 +4,7 @@
 		this.positionMap = {}; // stationId -> Point
 		this.valueMap = {}; // stationId -> Realtime Value
 		this.removedMap = {}; // stationId -> Point 删除的位置点
+		this.timeTask = null;
 	}
 	
 	/**
@@ -365,4 +366,13 @@
 			map.removeOverlay(alarmMarker);
 		}, 5000);
 	}
+	
+	StaffPositioningStation.prototype.autoRefresh = function() {
+		window.clearInterval(this.timeTask);
+		var self = this;
+		this.timeTask = window.setInterval(function() {
+			self.getStation();
+		}, 5000);
+	}
+	
 })();

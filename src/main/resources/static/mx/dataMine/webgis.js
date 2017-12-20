@@ -4,6 +4,7 @@ function sensorSave() {
 
 function loadSensor() {
 	MetaMapX.CurViewEvaluateJavaScript("window.sensor.getPosition()");
+	MetaMapX.CurViewEvaluateJavaScript("window.sensor.autoRefresh()");
 	var sensor = MetaMapX.CurViewEvaluateJavaScript("window.sensor.getSensor()");
 	
 	if (sensor == "" || sensor == null){
@@ -125,6 +126,7 @@ function smstationSave() {
 
 function loadSmstation() {
 	MetaMapX.CurViewEvaluateJavaScript("window.smstation.getPosition()");
+	MetaMapX.CurViewEvaluateJavaScript("window.smstation.autoRefresh()");
 	var station = MetaMapX.CurViewEvaluateJavaScript("window.smstation.getStation()");
 	
 	if (station == "" || station == null){
@@ -228,6 +230,7 @@ function spstationSave() {
 
 function loadSpstation() {
 	MetaMapX.CurViewEvaluateJavaScript("window.spstation.getPosition()");
+	MetaMapX.CurViewEvaluateJavaScript("window.spstation.autoRefresh()");
 	var station = MetaMapX.CurViewEvaluateJavaScript("window.spstation.getStation()");
 	
 	if (station == "" || station == null){
@@ -326,6 +329,7 @@ function abstationSave() {
 
 function loadAbstation() {
 	MetaMapX.CurViewEvaluateJavaScript("window.abstation.getPosition()");
+	MetaMapX.CurViewEvaluateJavaScript("window.abstation.autoRefresh()");
 	var station = MetaMapX.CurViewEvaluateJavaScript("window.abstation.getStation()");
 	
 	if (station == "" || station == null){

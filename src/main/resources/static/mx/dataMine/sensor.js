@@ -4,8 +4,9 @@
 		this.positionMap = {}; // sensorId -> Point
 		this.valueMap = {}; // sensorId -> Realtime Value
 		this.removedMap = {}; // sensorId -> Point 删除的位置点
+		this.timeTask = null;
 	}
-	
+
 	/**
 	 * 加载位置
 	 */
@@ -35,13 +36,13 @@
 			}
 		});
 	}
-	
+
 	/**
 	 * 保存传感器位置
 	 */
 	Sensor.prototype.savePosition = function() {
 		var positionData = [];
-		for (var sensorId in this.positionMap) {
+		for ( var sensorId in this.positionMap) {
 			var point = this.positionMap[sensorId];
 			var position = {};
 			position.sensorId = sensorId;
@@ -95,7 +96,7 @@
 			});
 		}
 	}
-	
+
 	Sensor.prototype.getSensor = function() {
 		var self = this;
 		var arr = [];
@@ -113,7 +114,7 @@
 			return arr;
 		}
 	}
-	
+
 	/**
 	 * 更新数据（定时器更新）
 	 */
@@ -144,7 +145,7 @@
 			}
 		});
 	}
-	
+
 	// 设置实时值
 	Sensor.prototype.updateInternal = function() {
 		var self = this;
@@ -180,25 +181,27 @@
 			}
 		}
 	}
-	
+
 	Sensor.prototype.setValue = function(sensorId, value, alarmFlag) {
 		var marker = this.markerMap[sensorId];
 		if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
 			$(marker.getDomElement()).children("label").text(value);
 			// 更换报警图片
-			var srcUrl = $(marker.getDomElement()).children("div").children("img").attr("src");
+			var srcUrl = $(marker.getDomElement()).children("div").children(
+					"img").attr("src");
 			if (marker.alarmFlag != alarmFlag) {
 				if (alarmFlag == 1) {
 					srcUrl = srcUrl.replace("normal", "alarm");
 				} else if (alarmFlag == 0) {
 					srcUrl = srcUrl.replace("alarm", "normal");
 				}
-				$(marker.getDomElement()).children("div").children("img").attr("src", srcUrl);
+				$(marker.getDomElement()).children("div").children("img").attr(
+						"src", srcUrl);
 				marker.alarmFlag = alarmFlag; // 更新marker的alarmFlag
 			}
 		}
 	}
-	
+
 	Sensor.prototype.addMarker = function(opts) {
 		if ((typeof opts) == "string") {
 			try {
@@ -228,7 +231,7 @@
 		point.systemId = opts.systemId;
 
 		// 根据测点名称确定张图片
-//		var typeId = opts.sensorName;
+		// var typeId = opts.sensorName;
 		var typeId = opts.sensorType;
 		var strBasePath = scriptBaseDir + "dataMine/image/";
 		var strTotalPath = strBasePath + typeId + "-normal.png";
@@ -275,7 +278,8 @@
 		if (opts.hasOwnProperty("unit")) {
 			unit = opts.unit;
 		}
-		if (valueObj.hasOwnProperty("value") && valueObj.hasOwnProperty("alarmFlag")) {
+		if (valueObj.hasOwnProperty("value")
+				&& valueObj.hasOwnProperty("alarmFlag")) {
 			value = valueObj.value;
 			alarmFlag = valueObj.alarmFlag;
 			value += unit;
@@ -291,11 +295,11 @@
 		myRichMarker.value = value;
 		myRichMarker.alarmFlag = 0; // 初始是normal
 		this.setValue(sensorId, value, alarmFlag);
-		
+
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}
-	
+
 	Sensor.prototype.updatePoint = function(sensorId, point) {
 		if (this.positionMap.hasOwnProperty(sensorId)) {
 			var oldPoint = this.positionMap[sensorId];
@@ -311,14 +315,14 @@
 			if ($.isEmptyObject(this.positionMap)) {
 				return;
 			}
-			
+
 			if (this.positionMap.hasOwnProperty(sensorId)) {
 				this.removedMap[sensorId] = this.positionMap[sensorId];
 				delete this.positionMap[sensorId];
 			}
 		}
 	}
-	
+
 	Sensor.prototype.getPoint = function(sensorId) {
 		if ($.isEmptyObject(this.positionMap)) {
 			return null;
@@ -327,7 +331,7 @@
 			return this.positionMap[sensorId];
 		}
 	}
-	
+
 	Sensor.prototype.getValue = function(sensorId) {
 		var value = {};
 		if (this.valueMap.hasOwnProperty(sensorId)) {
@@ -335,50 +339,60 @@
 		}
 		return value;
 	}
-	
+
 	Sensor.prototype.addEvent = function(marker) {
 		if ($.isEmptyObject(marker)) {
 			return;
 		}
-		
+
 		var sensorId = marker.sensorId;
 		// 添加点击事件
-		marker.addEventListener("click", function() {
-			// 信息窗口坐标
-			var point = marker.getPosition();
+		marker
+				.addEventListener(
+						"click",
+						function() {
+							// 信息窗口坐标
+							var point = marker.getPosition();
 
-			// 定义信息提示框
-			var bFlag = true;
-			var opts = {
-				width : 240,
-				height : 230,
-				title : "详细信息"
-			};
+							// 定义信息提示框
+							var bFlag = true;
+							var opts = {
+								width : 240,
+								height : 230,
+								title : "详细信息"
+							};
 
-			// 运用ifame框架
-			var sensorInfoUrl = contextPath + "/sensorinfo?sensorId=" + sensorId + "&deviceType=1";
-			var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='"
-				+ sensorInfoUrl + "'></iframe>";
-			// 弹出信息窗口
-			var infoWindow = new mxLib.InfoWindow(map, html, opts);
-			map.openInfoWindow(infoWindow, point);
-		});
+							// 运用ifame框架
+							var sensorInfoUrl = contextPath
+									+ "/sensorinfo?sensorId=" + sensorId
+									+ "&deviceType=1";
+							var html = "<iframe frameborder=0  marginheight=0 marginwidth=0 width='100%' height='98%' src='"
+									+ sensorInfoUrl + "'></iframe>";
+							// 弹出信息窗口
+							var infoWindow = new mxLib.InfoWindow(map, html,
+									opts);
+							map.openInfoWindow(infoWindow, point);
+						});
 
 		var self = this;
-		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir + "dataMine/image/del.gif", "", function(e) {
-				self.removePoint(sensorId);
-			});
-		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir + "dataMine/image/edit.png", "", function(e) {
-				var marker = self.markerMap[sensorId];
-				if (!$.isEmptyObject(marker) && marker instanceof mxLib.RichMarker) {
-					marker.enableDragging();
-					marker.addEventListener("onmouseup", function(e) {
-						// 更新坐标位置
-						self.updatePoint(sensorId, e.point);
-						marker.disableDragging();
-					});
-				}
-			});
+		var menu1 = new mxLib.MenuItem("删除", scriptBaseDir
+				+ "dataMine/image/del.gif", "", function(e) {
+			self.removePoint(sensorId);
+		});
+		var menu2 = new mxLib.MenuItem("拖动", scriptBaseDir
+				+ "dataMine/image/edit.png", "",
+				function(e) {
+					var marker = self.markerMap[sensorId];
+					if (!$.isEmptyObject(marker)
+							&& marker instanceof mxLib.RichMarker) {
+						marker.enableDragging();
+						marker.addEventListener("onmouseup", function(e) {
+							// 更新坐标位置
+							self.updatePoint(sensorId, e.point);
+							marker.disableDragging();
+						});
+					}
+				});
 
 		// 添加右键菜单
 		// 添加到覆盖物
@@ -387,7 +401,7 @@
 		contextMenu.appendItem(menu2);
 		marker.addContextMenu(contextMenu);
 	}
-	
+
 	// 定位
 	Sensor.prototype.dolly = function(sensorId) {
 		if (sensorId == "")
@@ -435,6 +449,15 @@
 		window.setTimeout(function() {
 			map.removeOverlay(markerDolly);
 			map.removeOverlay(alarmMarker);
+		}, 5000);
+	}
+
+	Sensor.prototype.autoRefresh = function() {
+		this.getSensorValue();
+		window.clearInterval(this.timeTask);
+		var self = this;
+		this.timeTask = window.setInterval(function() {
+			self.getSensorValue();
 		}, 5000);
 	}
 })();

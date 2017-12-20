@@ -19,9 +19,6 @@ mxLib.View.setExtData(MV_ATTR_DBCLICKNOPANMAP, true);
  */
 var contextPath = MvHost.GetData("contextPath");
 
-var canvasLayer = new mxLib.CanvasLayer();
-map.addOverlay(canvasLayer);
-
 /**
  * @数据对象,负责数据相关操作
  */
@@ -32,23 +29,29 @@ var abstation = new mxLib.AudioBroadcastingStation();
 
 // 历史轨迹
 var history = new mxLib.History();
-
 // 分站
 var stationpath = new mxLib.StationPath();
 
-// 加入导航条
+// 加入导航条控件
 var naviCtrl = new mxLib.NavigationControl();
 naviCtrl.setOffset(new mxLib.Size(3, 32));
 naviCtrl.setAnchor(MX_ANCHOR_TOP_RIGHT);
 map.addControl(naviCtrl);
 
-// 加入缩略图
+// 加入缩略图控件
 var ovctrl = new mxLib.OverviewMapControl();
 map.addControl(ovctrl);
 
-// 图层
+// 自定义图层控件
 var layerCtrl = new mxLib.LayerControl();
+map.addControl(layerCtrl);
+map.removeControl(layerCtrl); // 不显示
 
+// 画布层
+var canvasLayer = new mxLib.CanvasLayer();
+map.addOverlay(canvasLayer);
+
+// 显示坐标
 map.addEventListener("mousemove", function() {
 	var point = mxLib.Util.getEventPoint(map, event);
 	mxLib.Util.toastInfo("X: " + point.x + ", Y: " + point.y);

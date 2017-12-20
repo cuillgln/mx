@@ -21,8 +21,7 @@ include(scriptBaseDir + "dataMine/staffpositioningstation.js");
 include(scriptBaseDir + "dataMine/audiobroadcastingstation.js");
 include(scriptBaseDir + "dataMine/pickcmd.js");
 include(scriptBaseDir + "dataMine/locatecmd.js");
-include(scriptBaseDir + "dataMine/layer.js");
-include(scriptBaseDir + "dataMine/copyright.js");
+include(scriptBaseDir + "dataMine/layercontrol.js");
 include(scriptBaseDir + "dataMine/history.js");
 include(scriptBaseDir + "dataMine/stationpath.js");
 
