@@ -31,8 +31,8 @@ public class StaffPositioningStationController {
 
 	@RequestMapping(value = "/staff/history", method = RequestMethod.GET)
 	public List<Point> history(@RequestParam("rfId") Long rfId,
-			@RequestParam("begin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date begin,
-			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+			@RequestParam("begin") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
 
 		if (rfId == null) {
 			throw new IllegalArgumentException("rfId cannot be null.");

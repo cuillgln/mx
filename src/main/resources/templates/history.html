@@ -25,11 +25,11 @@
             </div>
             <div style="margin-bottom:20px">
                 <label for="begin">开始时间:</label>
-                <input class="easyui-datebox" style="width:100%;" id="begin" name="begin" data-options="required: true"/>
+                <input class="easyui-datetimebox" style="width:100%;" id="begin" name="begin" data-options="required: true"/>
             </div>
             <div style="margin-bottom:20px">
                 <label for="end">结束时间:</label>
-                <input class="easyui-datebox" style="width:100%;" id="end" name="end" data-options="required: true"/>
+                <input class="easyui-datetimebox" style="width:100%;" id="end" name="end" data-options="required: true"/>
             </div>
         </form>
         <div style="text-align:center;padding:5px 0">
@@ -48,8 +48,8 @@ $(function () {
 	//打开图形
 	openUrl();
 	// $("#rfId").textbox('setValue', '1');
-	// $('#begin').datebox('setValue', '2014-04-01');
-	// $('#end').datebox('setValue', '2014-04-02');
+	// $('#begin').datetimebox('setValue', '2014-04-01');
+	// $('#end').datetimebox('setValue', '2014-04-02');
 });
 
 function openUrl() {
@@ -73,8 +73,8 @@ function queryHistory() {
 		return;
 	}
 	var rfId = $("#rfId").textbox('getValue');
-    var begin = $("#begin").datebox('getValue');
-    var end = $("#end").datebox('getValue');
+    var begin = $("#begin").datetimebox('getValue');
+    var end = $("#end").datetimebox('getValue');
 	MetaMapX.CurViewEvaluateJavaScript("history.getPathData('" + rfId +  "', '" + begin + "', '" + end + "');");
 }
 /*]]>*/
