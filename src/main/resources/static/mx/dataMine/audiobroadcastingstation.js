@@ -195,6 +195,9 @@
 
 		var strBasePath = scriptBaseDir + "dataMine/image/abs/";
 		var strTotalPath = strBasePath + "abs-normal.jpg";
+		if (opts.alarmFlag == 1) {
+			strTotalPath = strBasePath + "abs-alarm.jpg";
+		}
 		// 构造html 无实时值
 		var html = '<div style="position: absolute; margin: 0pt; padding: 0pt; width: 80px; height: 36px; left: 0px; top: 0px; overflow: hidden;">'
 				+ '<img id="rm3_image" style="border:none;left:0px; top:0px; position:absolute;" src="'
@@ -227,8 +230,8 @@
 		this.markerMap[stationId] = myRichMarker;
 		this.updatePoint(stationId, point);
 		
-		myRichMarker.alarmFlag = 0; // 初始是normal
-		this.setValue(stationId, "通讯正常", 0);
+		myRichMarker.alarmFlag = opts.alarmFlag;
+		this.setValue(stationId, opts.value, 0);
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}

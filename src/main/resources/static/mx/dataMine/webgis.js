@@ -163,6 +163,8 @@ function loadSmstation() {
             { field: 'ch4LockFlag', title: '是否风电瓦斯闭锁', width: 90, align: 'center', hidden: true},
             { field: 'portName', title: '开出端口名称', width: 90, align: 'center', hidden: true},
             { field: 'feedMonitor', title: '馈电关联监测', width: 90, align: 'center', hidden: true},
+            { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
+            { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
             { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
             {
@@ -203,6 +205,8 @@ function loadSmstation() {
                 opts.ch4LockFlag = curRow["ch4LockFlag"];
                 opts.portName = curRow["portName"];
                 opts.feedMonitor = curRow["feedMonitor"];
+                opts.alarmFlag = curRow["alarmFlag"];
+                opts.value = curRow["value"];
                 opts.deviceType = 2;
                 
                 var strOpts = "";
@@ -264,6 +268,8 @@ function loadSpstation() {
             { field: 'location', title: '安装地点', width: 120, align: 'center'},
             { field: 'staffCount', title: '周围人员数', width: 120, align: 'center', hidden: true},
             { field: 'staff', title: '周围人员', width: 120, align: 'center', hidden: true},
+            { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
+            { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
             { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
             {
@@ -302,6 +308,8 @@ function loadSpstation() {
                 opts.location = curRow["location"];
                 opts.staffCount = curRow["staffCount"];
                 opts.staff = curRow["staff"];
+                opts.alarmFlag = curRow["alarmFlag"];
+                opts.value = curRow["value"];
                 opts.deviceType = 3;
                 
                 var strOpts = "";
@@ -362,6 +370,8 @@ function loadAbstation() {
             { field: 'stationName', title: '分站名称', width: 75, align: 'center'},
             { field: 'location', title: '安装地点', width: 120, align: 'center' },
             { field: 'type', title: '状态', width: 120, align: 'center' },
+            { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
+            { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
             { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
             {
@@ -399,6 +409,8 @@ function loadAbstation() {
                 opts.stationName = curRow["stationName"];
                 opts.location = curRow["location"];
                 opts.type = curRow["type"];
+                opts.alarmFlag = curRow["alarmFlag"];
+                opts.value = curRow["value"];
                 opts.deviceType = 4;
                 
                 var strOpts = "";

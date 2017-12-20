@@ -47,6 +47,8 @@ var contextPath = /*[[${#httpServletRequest.getContextPath()}]]*/ '';
 $(function () {
 	//打开图形
 	openUrl();
+	window.setTimeout(loadSpstation, 1000);
+
 	// $("#rfId").textbox('setValue', '1');
 	// $('#begin').datetimebox('setValue', '2014-04-01');
 	// $('#end').datetimebox('setValue', '2014-04-02');
@@ -65,7 +67,6 @@ function openUrl() {
 	MetaMapX.OpenUrl(url, false, "");
 }
 
-
 function queryHistory() {
 	var isValid = $("#ff").form("validate");
 	if (!isValid) {
@@ -76,6 +77,27 @@ function queryHistory() {
     var begin = $("#begin").datetimebox('getValue');
     var end = $("#end").datetimebox('getValue');
 	MetaMapX.CurViewEvaluateJavaScript("history.getPathData('" + rfId +  "', '" + begin + "', '" + end + "');");
+}
+
+function loadSpstation() {
+	MetaMapX.CurViewEvaluateJavaScript("window.spstation.getPosition()");
+    var station = MetaMapX.CurViewEvaluateJavaScript("window.spstation.getStation()");
+    
+    if (station == "" || station == null){
+        return;
+    }
+    var stationArr = [];
+    try {
+        stationArr = $.parseJSON(station);
+    } catch (e) {
+        return;
+    }
+
+    var json = {};
+    json.total = stationArr.length;
+    json.rows = stationArr;
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 3); map.startCommand(locateCmd);"
+    MetaMapX.CurViewEvaluateJavaScript(script);
 }
 /*]]>*/
 </script>
