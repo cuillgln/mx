@@ -210,7 +210,6 @@
 				+ strTotalPath
 				+ '"/></div>'
 				+ '<label class=" BMapLabel" unselectable="on" style="position: absolute; -moz-user-select: none; display: inline; cursor: inherit; border: 0px none; padding: 2px 1px 1px; white-space: nowrap; font: 12px arial,simsun bold; z-index: 80; color: rgb(30, 144, 255); left: 25px; top: 3px;"></label>';
-
 		var myRichMarker = new mxLib.RichMarker(html, point, {
 			"anchor" : new mxLib.Size(-18, -27),
 			"enableDragging" : false
@@ -237,7 +236,7 @@
 		this.updatePoint(stationId, point);
 		
 		myRichMarker.alarmFlag = opts.alarmFlag;
-		this.setValue(stationId, opts.value, 0);
+		this.setValue(stationId, opts.value, opts.alarmFlag);
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}

@@ -230,7 +230,7 @@
 		this.updatePoint(stationId, point);
 		
 		myRichMarker.alarmFlag = opts.alarmFlag;
-		this.setValue(stationId, opts.value, 0);
+		this.setValue(stationId, opts.value, opts.alarmFlag);
 		// 添加事件响应
 		this.addEvent(myRichMarker);
 	}
