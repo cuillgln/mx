@@ -28,7 +28,7 @@ var spstation = new mxLib.StaffPositioningStation();
 var abstation = new mxLib.AudioBroadcastingStation();
 
 // 历史轨迹
-var history = new mxLib.History();
+var sphistory = new mxLib.StaffPositionHistory();
 // 分站
 var stationpath = new mxLib.StationPath();
 

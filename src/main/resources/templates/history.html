@@ -76,7 +76,7 @@ function queryHistory() {
 	var rfId = $("#rfId").textbox('getValue');
     var begin = $("#begin").datetimebox('getValue');
     var end = $("#end").datetimebox('getValue');
-	MetaMapX.CurViewEvaluateJavaScript("history.getPathData('" + rfId +  "', '" + begin + "', '" + end + "');");
+	MetaMapX.CurViewEvaluateJavaScript("sphistory.getPathData('" + rfId +  "', '" + begin + "', '" + end + "');");
 }
 
 function loadSpstation() {

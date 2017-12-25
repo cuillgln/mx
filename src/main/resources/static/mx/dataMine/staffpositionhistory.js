@@ -1,10 +1,10 @@
 (function() {
-	var History = mxLib.History = function() {
+	var StaffPositionHistory = mxLib.StaffPositionHistory = function() {
 		this.polyline = null;
 		this.animateId = null;
 	}
 	
-	History.prototype.getPathData = function(rfId, begin, end) {
+	StaffPositionHistory.prototype.getPathData = function(rfId, begin, end) {
 		if (this.polyline) {
 			map.removeOverlay(this.polyline);
 			this.polyline = null;

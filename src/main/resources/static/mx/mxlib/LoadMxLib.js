@@ -22,7 +22,7 @@ include(scriptBaseDir + "dataMine/audiobroadcastingstation.js");
 include(scriptBaseDir + "dataMine/pickcmd.js");
 include(scriptBaseDir + "dataMine/locatecmd.js");
 include(scriptBaseDir + "dataMine/layercontrol.js");
-include(scriptBaseDir + "dataMine/history.js");
+include(scriptBaseDir + "dataMine/staffpositionhistory.js");
 include(scriptBaseDir + "dataMine/stationpath.js");
 
 //二次开发入口文件 加载完成了dom后
