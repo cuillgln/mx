@@ -13,6 +13,12 @@ public class WebgisController {
 	@Value("${app.map.name}")
 	private String baseMap;
 
+	@Value("${mx.server.classid}")
+	private String mxServerClassId;
+
+	@Value("${mx.server.url}")
+	private String mxServerUrl;
+
 	@RequestMapping("/")
 	public String index(WebRequest request, Model model) {
 
@@ -23,9 +29,11 @@ public class WebgisController {
 			model.addAttribute("type", "application/metamap2d");
 		}
 		model.addAttribute("baseMap", baseMap);
+		model.addAttribute("mxServerClassId", mxServerClassId);
+		model.addAttribute("mxServerUrl", mxServerUrl);
 		return "webgis";
 	}
-	
+
 	@RequestMapping("/stationpath")
 	public String stationPath(WebRequest request, Model model) {
 
@@ -36,9 +44,11 @@ public class WebgisController {
 			model.addAttribute("type", "application/metamap2d");
 		}
 		model.addAttribute("baseMap", baseMap);
+		model.addAttribute("mxServerClassId", mxServerClassId);
+		model.addAttribute("mxServerUrl", mxServerUrl);
 		return "stationpath";
 	}
-	
+
 	@RequestMapping("/history")
 	public String history(WebRequest request, Model model) {
 
@@ -49,19 +59,22 @@ public class WebgisController {
 			model.addAttribute("type", "application/metamap2d");
 		}
 		model.addAttribute("baseMap", baseMap);
+		model.addAttribute("mxServerClassId", mxServerClassId);
+		model.addAttribute("mxServerUrl", mxServerUrl);
 		return "history";
 	}
 
 	@RequestMapping("/sensorinfo")
-	public String info(@RequestParam("sensorId") String sensorId, @RequestParam("deviceType") String deviceType, Model model) {
+	public String info(@RequestParam("sensorId") String sensorId, @RequestParam("deviceType") String deviceType,
+			Model model) {
 		model.addAttribute("sensorId", sensorId);
 		model.addAttribute("deviceType", deviceType);
 		return "sensorinfo";
 	}
-	
+
 	@RequestMapping("/dwg")
 	public String history(Model model) {
-		model.addAttribute("baseMap", baseMap);		
+		model.addAttribute("baseMap", baseMap);
 		return "dwg";
 	}
 }
