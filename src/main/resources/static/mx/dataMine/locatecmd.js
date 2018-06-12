@@ -63,6 +63,18 @@ LocateCmd.prototype.start = function (map) {
             	window.abstation.addMarker(sensor);
             }
     		break;
+    	case 5:
+    		var hubId = sensor.hubId;
+    		var point = window.hub.getPoint(hubId);
+    		if ($.isEmptyObject(point)) {
+        		continue;
+        	}
+    		sensor.x = point.x;
+        	sensor.y = point.y;
+        	if ($.isNumeric(sensor.x) && $.isNumeric(sensor.y)) {
+            	window.hub.addMarker(sensor);
+            }
+    		break;
     	default:
     		var sensorId = sensor.sensorId;
     		var point = window.sensor.getPoint(sensorId);

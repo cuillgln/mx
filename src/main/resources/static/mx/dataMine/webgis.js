@@ -431,3 +431,105 @@ function loadAbstation() {
     $('#abs').datagrid('loadData', json);
     $('#abs').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
 }
+
+
+function hubSave() {
+	MetaMapX.CurViewEvaluateJavaScript("window.hub.savePosition()");
+}
+
+function loadHub() {
+	MetaMapX.CurViewEvaluateJavaScript("window.hub.getPosition()");
+	MetaMapX.CurViewEvaluateJavaScript("window.hub.autoRefresh()");
+	var hub = MetaMapX.CurViewEvaluateJavaScript("window.hub.getHub()");
+	
+	if (hub == "" || hub == null){
+		return;
+	}
+    var hubArr = [];
+    try {
+    	hubArr = $.parseJSON(hub);
+    } catch (e) {
+        return;
+    }
+
+    var json = {};
+    json.total = hubArr.length;
+    json.rows = hubArr;
+    var script = "var locateCmd = new mxLib.LocateCmd('', null, '" + JSON.stringify(json) + "', 5); map.startCommand(locateCmd);"
+    MetaMapX.CurViewEvaluateJavaScript(script);
+    
+    $('#hub').datagrid({
+        remoteSort: false,
+        singleSelect: true,
+        nowrap: false,
+        fitColumns: true,
+        loadMsg: '数据正在加载,请耐心的等待...',
+        striped: true,
+        columns: [[
+            { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
+            { field: 'hubId', title: '分站ID', width: 100, align: 'center', hidden:true},
+            { field: 'host', title: 'IP地址', width: 160, align: 'center' },
+            { field: 'port', title: '端口号', width: 90, align: 'center' },
+            { field: 'location', title: '安装地点', width: 100, align: 'center' },
+            { field: 'status', title: '状态', width: 90, align: 'center' },
+            { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
+            { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
+            { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
+            { field: 'y', title: 'y坐标', width: 30, align: 'center', hidden: true},
+            {
+                field: 'pick',
+                title: '拾取',
+                width: 30,
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return '<img src="mx/dataMine/image/pick.png"/>';
+                }
+            }
+        ]]
+    });
+
+    //单击列事件
+    $('#hub').datagrid({
+        onDblClickRow: function (index, row) {
+            var hubId = row.hubId;
+            //执行定位脚本
+            MetaMapX.CurViewEvaluateJavaScript("hub.dolly('" + hubId + "')");
+        },
+        onClickCell: function (index, field, value) {
+            if (field == "pick") {
+                var curRow = $('#hub').datagrid('getData').rows[index];
+                if ($.isEmptyObject(curRow)) {
+                	return;
+                }
+                
+                //构造对象
+                var opts = {};
+                opts.SysID = curRow["SysID"];
+                opts.systemId = curRow["systemId"];
+                opts.hubId = curRow["hubId"];
+                opts.host = curRow["host"];
+                opts.port = curRow["port"];
+                opts.location = curRow["location"];
+                opts.status = curRow["status"];
+                opts.alarmFlag = curRow["alarmFlag"];
+                opts.value = curRow["value"];
+                opts.deviceType = 5;
+                
+                var strOpts = "";
+                try{
+                    strOpts = JSON.stringify(opts);
+                } catch (e) {
+                    return;
+                }
+
+                var script = "var pickCmd = new mxLib.PickCmd('', null, '" + strOpts + "'); map.startCommand(pickCmd);"
+                //执行拾取命令(命令写法参照说明文档,脚本文件sensorPick.js由view层LoadMxLib加载)
+                MetaMapX.CurViewEvaluateJavaScript(script);
+            }
+        }
+    });
+
+    //加载数据
+    $('#hub').datagrid('loadData', json);
+    $('#hub').datagrid('getPanel').removeClass('lines-both lines-no lines-right lines-bottom').addClass('lines-no');
+}

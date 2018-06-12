@@ -10,8 +10,11 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class WebgisController {
 
-	@Value("${app.map.name}")
+	@Value("${app.map.main}")
 	private String baseMap;
+
+	@Value("${app.map.selfcheck}")
+	private String selfCheckMap;
 
 	@Value("${mx.server.classid}")
 	private String mxServerClassId;
@@ -21,46 +24,19 @@ public class WebgisController {
 
 	@RequestMapping("/")
 	public String index(WebRequest request, Model model) {
-
-		String agent = request.getHeader("user-agent");
-		if (agent.indexOf("MSIE") > 0) {
-			model.addAttribute("classid", "clsid:8ACFF379-3E78-4E73-B75E-ECD908072A02");
-		} else {
-			model.addAttribute("type", "application/metamap2d");
-		}
-		model.addAttribute("baseMap", baseMap);
-		model.addAttribute("mxServerClassId", mxServerClassId);
-		model.addAttribute("mxServerUrl", mxServerUrl);
+		initModel(request, model, baseMap);
 		return "webgis";
 	}
 
 	@RequestMapping("/stationpath")
 	public String stationPath(WebRequest request, Model model) {
-
-		String agent = request.getHeader("user-agent");
-		if (agent.indexOf("MSIE") > 0) {
-			model.addAttribute("classid", "clsid:8ACFF379-3E78-4E73-B75E-ECD908072A02");
-		} else {
-			model.addAttribute("type", "application/metamap2d");
-		}
-		model.addAttribute("baseMap", baseMap);
-		model.addAttribute("mxServerClassId", mxServerClassId);
-		model.addAttribute("mxServerUrl", mxServerUrl);
+		initModel(request, model, baseMap);
 		return "stationpath";
 	}
 
 	@RequestMapping("/history")
 	public String history(WebRequest request, Model model) {
-
-		String agent = request.getHeader("user-agent");
-		if (agent.indexOf("MSIE") > 0) {
-			model.addAttribute("classid", "clsid:8ACFF379-3E78-4E73-B75E-ECD908072A02");
-		} else {
-			model.addAttribute("type", "application/metamap2d");
-		}
-		model.addAttribute("baseMap", baseMap);
-		model.addAttribute("mxServerClassId", mxServerClassId);
-		model.addAttribute("mxServerUrl", mxServerUrl);
+		initModel(request, model, baseMap);
 		return "history";
 	}
 
@@ -76,5 +52,23 @@ public class WebgisController {
 	public String history(Model model) {
 		model.addAttribute("baseMap", baseMap);
 		return "dwg";
+	}
+
+	@RequestMapping("/selfcheck")
+	public String selfcheck(WebRequest request, Model model) {
+		initModel(request, model, selfCheckMap);
+		return "selfcheck";
+	}
+
+	private void initModel(WebRequest request, Model model, String map) {
+		String agent = request.getHeader("user-agent");
+		if (agent.indexOf("MSIE") > 0) {
+			model.addAttribute("classid", "clsid:8ACFF379-3E78-4E73-B75E-ECD908072A02");
+		} else {
+			model.addAttribute("type", "application/metamap2d");
+		}
+		model.addAttribute("baseMap", map);
+		model.addAttribute("mxServerClassId", mxServerClassId);
+		model.addAttribute("mxServerUrl", mxServerUrl);
 	}
 }

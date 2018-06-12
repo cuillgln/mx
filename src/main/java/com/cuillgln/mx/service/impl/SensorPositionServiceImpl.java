@@ -75,6 +75,8 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 		case SensorPosition.TYPE_AUDIO_BROADCASTING_STATION:
 			sensorPosition.setSensorId(MxConstant.AUDIO_BROADCASTING_STATION_PREFIX + sensorPosition.getId());
 			break;
+		case SensorPosition.TYPE_HUB:
+			sensorPosition.setSensorId(MxConstant.HUB_PREFIX + sensorPosition.getId());
 		default:
 			sensorPosition.setSensorId(MxConstant.SENSOR_PREFIX + sensorPosition.getId());
 			break;

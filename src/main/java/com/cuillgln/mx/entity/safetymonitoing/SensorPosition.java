@@ -23,6 +23,7 @@ public class SensorPosition implements Serializable {
 	public static final int TYPE_SAFETY_MONITORING_STATION = 2;
 	public static final int TYPE_STAFF_POSITIONING_STATION = 3;
 	public static final int TYPE_AUDIO_BROADCASTING_STATION = 4;
+	public static final int TYPE_HUB = 5;
 
 	// [系统序号]
 	@Id

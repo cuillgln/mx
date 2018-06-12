@@ -26,6 +26,7 @@ var sensor = new mxLib.Sensor();
 var smstation = new mxLib.SafetyMonitoringStation();
 var spstation = new mxLib.StaffPositioningStation();
 var abstation = new mxLib.AudioBroadcastingStation();
+var hub = new mxLib.Hub();
 
 // 历史轨迹
 var sphistory = new mxLib.StaffPositionHistory();

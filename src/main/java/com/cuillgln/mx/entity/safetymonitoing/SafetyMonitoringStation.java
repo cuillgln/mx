@@ -75,13 +75,15 @@ public class SafetyMonitoringStation implements Serializable {
 	@Column(name = "[馈电关联监测]")
 	private String feedMonitor;
 	// [安装地点编号]
-	@Column(name = "[安装地点编号]")
+	// @Column(name = "[安装地点编号]")
+	@Transient
 	private Integer locationNo;
 	// [屏蔽否]
 	@Column(name = "[屏蔽否]")
 	private Integer maskFlag;
 	// [commid]
-	@Column(name = "[commid]")
+	// @Column(name = "[commid]")
+	@Transient
 	private String commId;
 
 	// 实时值

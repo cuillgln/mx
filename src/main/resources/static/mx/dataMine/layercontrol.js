@@ -74,6 +74,20 @@ LayerControl.prototype.initialize = function(map) {
 				}
 			}
 			break;
+        case 5:
+            span.appendChild(document.createTextNode("交换机"));
+			layerDiv.onclick = function(e) {
+				var targetDiv = e.currentTarget;
+				var checkbox = targetDiv.getElementsByTagName("input")[0];
+				if (checkbox.checked) {
+					setOverlayInvisible(5);
+					checkbox.checked = false;
+				} else {
+					setOverlayVisible(5);
+					checkbox.checked = true;
+				}
+			}
+			break;
 		}
 		layerDiv.appendChild(span);
 		div.appendChild(layerDiv);
@@ -148,6 +162,12 @@ function setOverlayVisible(i) {
 			marker.show();
 		}
 		break;
+    case 5:
+		for ( var i in window.hub.markerMap) {
+			var marker = window.hub.markerMap[i];
+			marker.show();
+		}
+		break;
 	}
 }
 function setOverlayInvisible(i) {
@@ -173,6 +193,12 @@ function setOverlayInvisible(i) {
 	case 4:
 		for ( var i in window.abstation.markerMap) {
 			var marker = window.abstation.markerMap[i];
+			marker.hide();
+		}
+		break;
+	case 5:
+		for ( var i in window.hub.markerMap) {
+			var marker = window.hub.markerMap[i];
 			marker.hide();
 		}
 		break;

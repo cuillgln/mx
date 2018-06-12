@@ -60,6 +60,9 @@ function jcProperty(sensorId, deviceType) {
     case '4':
     	absInfo(sensorId);
         break;
+    case '5':
+    	hubInfo(sensorId);
+    	break;
     default:
         break;
     }
@@ -356,6 +359,64 @@ function absInfo(sensorId) {
         typeObj.group = "基本属性";
         typeObj.editor = "text";
         arr.push(typeObj);
+    }
+
+    //加载数据
+    var json = {};
+    json.total = arr.length;
+    json.rows = arr;
+    $("#proertyTip").propertygrid('loadData', json);
+}
+
+function hubInfo(sensorId) {
+    //得到属性对象
+    var sensorObj = parent.abstation.markerMap[sensorId];
+    if ($.isEmptyObject(sensorObj)) {
+        return;
+    }
+
+    //遍历
+    var arr = [];
+    if (sensorObj.hasOwnProperty("systemId") && sensorObj["systemId"]) {
+        var stationObj = {};
+        stationObj.name = "序号:";
+        stationObj.value = sensorObj["systemId"];
+        stationObj.group = "基本属性";
+        stationObj.editor = "text";
+        //添加到数组
+        arr.push(stationObj);
+    }
+    if (sensorObj.hasOwnProperty("host") && sensorObj["host"]) {
+        var hostObj = {};
+        hostObj.name = "IP地址:";
+        hostObj.value = sensorObj["host"];
+        hostObj.group = "基本属性";
+        hostObj.editor = "text";
+        arr.push(hostObj);
+    }
+    if (sensorObj.hasOwnProperty("port") && sensorObj["port"]) {
+        var portObj = {};
+        portObj.name = "端口号:";
+        portObj.value = sensorObj["port"];
+        portObj.group = "基本属性";
+        portObj.editor = "text";
+        arr.push(portObj);
+    }
+    if (sensorObj.hasOwnProperty("location") && sensorObj["location"]) {
+        var locationObj = {};
+        locationObj.name = "安装地点:";
+        locationObj.value = sensorObj["location"];
+        locationObj.group = "基本属性";
+        locationObj.editor = "text";
+        arr.push(locationObj);
+    }
+    if (sensorObj.hasOwnProperty("status") && sensorObj["status"]) {
+        var statusObj = {};
+        statusObj.name = "状态:";
+        statusObj.value = sensorObj["status"];
+        statusObj.group = "基本属性";
+        statusObj.editor = "text";
+        arr.push(statusObj);
     }
 
     //加载数据

@@ -205,7 +205,8 @@ public class Sensor implements Serializable {
 	private String alarmLevelRange;
 
 	// [是否应急联动]
-	@Column(name = "[是否应急联动]")
+	// @Column(name = "[是否应急联动]")
+	@Transient
 	private Integer emergencyFlag;
 
 	public Long getSystemId() {
