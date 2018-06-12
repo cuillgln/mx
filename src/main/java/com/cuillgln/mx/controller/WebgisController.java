@@ -55,7 +55,7 @@ public class WebgisController {
 	}
 
 	@RequestMapping("/selfcheck")
-	public String selfcheck(WebRequest request, Model model) {
+	public String selfCheck(WebRequest request, Model model) {
 		initModel(request, model, selfCheckMap);
 		return "selfcheck";
 	}

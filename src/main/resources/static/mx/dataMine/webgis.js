@@ -24,19 +24,16 @@ function loadSensor() {
     MetaMapX.CurViewEvaluateJavaScript(script);
     
     $('#sensor').datagrid({
-        remoteSort: false,
         singleSelect: true,
-        nowrap: false,
-        fitColumns: true,
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
+            { field: 'sensorName', title: '传感器名称', width: 80, align: 'center'},
+            { field: 'stationPort', title: '端口号', width: 40, align: 'center'},
+            { field: 'location', title: '安装地点', width: 120, align: 'center' },
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'sensorId', title: '测点编号', width: 100, align: 'center', hidden:true},
-            { field: 'stationPort', title: '端口号', width: 40, align: 'center'},
-            { field: 'sensorName', title: '传感器名称', width: 75, align: 'center'},
             { field: 'sensorType', title: '传感器类型', width: 75, align: 'center', hidden: true},
-            { field: 'location', title: '安装地点', width: 120, align: 'center' },
             { field: 'analogFlag', title: '模拟量', width: 75, align: 'center', hidden: true},
             { field: 'offName', title: '停显示', width: 75, align: 'center', hidden: true},
             { field: 'onName', title: '开显示', width: 75, align: 'center', hidden: true},
@@ -146,18 +143,15 @@ function loadSmstation() {
     MetaMapX.CurViewEvaluateJavaScript(script);
     
     $('#sms').datagrid({
-        remoteSort: false,
         singleSelect: true,
-        nowrap: false,
-        fitColumns: true,
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
+            { field: 'station', title: '分站地址', width: 40, align: 'center'},
+            { field: 'stationName', title: '分站名称', width: 80, align: 'center'},
+            { field: 'location', title: '安装地点', width: 120, align: 'center' },
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'stationId', title: '分站ID', width: 100, align: 'center', hidden:true},
-            { field: 'station', title: '分站地址', width: 40, align: 'center'},
-            { field: 'stationName', title: '分站名称', width: 75, align: 'center'},
-            { field: 'location', title: '安装地点', width: 120, align: 'center' },
             { field: 'runningState', title: '运行状态', width: 90, align: 'center', hidden: true},
             { field: 'powerCutFlag', title: '是否就地断电', width: 90, align: 'center', hidden: true},
             { field: 'ch4LockFlag', title: '是否风电瓦斯闭锁', width: 90, align: 'center', hidden: true},
@@ -254,18 +248,15 @@ function loadSpstation() {
     MetaMapX.CurViewEvaluateJavaScript(script);
     
     $('#sps').datagrid({
-        remoteSort: false,
         singleSelect: true,
-        nowrap: false,
-        fitColumns: true,
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
+            { field: 'station', title: '分站地址', width: 40, align: 'center'},
+            { field: 'stationName', title: '分站名称', width: 80, align: 'center'},
+            { field: 'location', title: '安装地点', width: 120, align: 'center'},
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'stationId', title: '分站ID', width: 100, align: 'center', hidden:true},
-            { field: 'station', title: '分站地址', width: 40, align: 'center'},
-            { field: 'stationName', title: '分站名称', width: 75, align: 'center'},
-            { field: 'location', title: '安装地点', width: 120, align: 'center'},
             { field: 'staffCount', title: '周围人员数', width: 120, align: 'center', hidden: true},
             { field: 'staff', title: '周围人员', width: 120, align: 'center', hidden: true},
             { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
@@ -357,19 +348,16 @@ function loadAbstation() {
     MetaMapX.CurViewEvaluateJavaScript(script);
     
     $('#abs').datagrid({
-        remoteSort: false,
         singleSelect: true,
-        nowrap: false,
-        fitColumns: true,
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
+            { field: 'station', title: '分站地址', width: 40, align: 'center'},
+            { field: 'stationName', title: '分站名称', width: 80, align: 'center'},
+            { field: 'location', title: '安装地点', width: 80, align: 'center' },
+            { field: 'type', title: '状态', width: 40, align: 'center' },
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'stationId', title: '分站ID', width: 100, align: 'center', hidden:true},
-            { field: 'station', title: '分站地址', width: 40, align: 'center'},
-            { field: 'stationName', title: '分站名称', width: 75, align: 'center'},
-            { field: 'location', title: '安装地点', width: 120, align: 'center' },
-            { field: 'type', title: '状态', width: 120, align: 'center' },
             { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
             { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},
@@ -459,19 +447,16 @@ function loadHub() {
     MetaMapX.CurViewEvaluateJavaScript(script);
     
     $('#hub').datagrid({
-        remoteSort: false,
         singleSelect: true,
-        nowrap: false,
-        fitColumns: true,
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
+            { field: 'host', title: 'IP地址', width: 120, align: 'center' },
+            { field: 'port', title: '端口号', width: 40, align: 'center' },
+            { field: 'location', title: '安装地点', width: 40, align: 'center' },
+            { field: 'status', title: '状态', width: 40, align: 'center' },
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'hubId', title: '分站ID', width: 100, align: 'center', hidden:true},
-            { field: 'host', title: 'IP地址', width: 160, align: 'center' },
-            { field: 'port', title: '端口号', width: 90, align: 'center' },
-            { field: 'location', title: '安装地点', width: 100, align: 'center' },
-            { field: 'status', title: '状态', width: 90, align: 'center' },
             { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
             { field: 'alarmFlag', title: 'AlarmFlag', width: 120, align: 'center', hidden: true},
             { field: 'x', title: 'x坐标', width: 30, align: 'center', hidden: true},

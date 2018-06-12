@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>山东淄博瑞安特GIS信息平台</title>
+	<title>系统自检图</title>
 	<link href="mx/dataMine/css/dmExplit.css" rel="stylesheet" />
 	<link href="mx/dataMine/easyui/easyui-ribbon/ribbon.css" rel="stylesheet" />
 	<link href="mx/dataMine/easyui/themes/metro-blue/easyui.css" rel="stylesheet" />
@@ -98,8 +98,9 @@
 		//打开图形，第二个参数表示是否新增View，第三个参数表示view名称
 		MetaMapX.SetWebRootPath(webUrl + "/");
 		MetaMapX.SetMapScriptPath("mx/");
-		MetaMapX.SetPirvateKey(/*[[${mxServerClassId}]]*/ "{}");
-		MetaMapX.SetRegisterMode(2, /*[[${mxServerUrl}]]*/ "http://127.0.0.1:6789");
+		MetaMapX.SetPirvateKey(/*[[${mxServerClassId}]]*/"{}");
+		MetaMapX.SetRegisterMode(2, /*[[${mxServerUrl}]]*/
+				"http://127.0.0.1:6789");
 
 		//新增空白view,目的为了传入扩展数据
 		//设置扩展数据,view层通过MvHost.GetData("mineId")来取出扩展数据
@@ -120,22 +121,16 @@
 					addPanel('传感器管理', 'sensor');
 					addPanel('交换机管理', 'hub');
 					addPanel('安全监控分站管理', 'sms');
-					addPanel('人员定位分站管理', 'sps');
-					addPanel('语音广播音响管理', 'abs');
 					$("#westPanelData").accordion("select", "传感器管理");
 					loadSensor();
 					loadHub();
 					loadSmstation();
-					loadSpstation();
-					loadAbstation();
 					$("#westPanelData").accordion("select", "传感器管理");
 					break;
 				case "jcdSave":
 					sensorSave();
 					hubSave();
 					smstationSave();
-					spstationSave();
-					abstationSave();
 					break;
 				case "pointDistance":
 					pointDistance();
