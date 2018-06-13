@@ -32,6 +32,8 @@ public class HubServiceImpl implements HubService {
 	}
 
 	private Hub fillup(Hub st) {
+		st.setHubId(MxConstant.HUB_PREFIX + st.getSystemId());
+		st.setStatus(st.getStatus() != null ? st.getStatus() : "");
 		st.setValue(st.getStatus());
 		st.setAlarmFlag(MxConstant.HUB_STATUS_BREAK.equals(st.getStatus()) ? 1 : 0);
 		return st;

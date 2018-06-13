@@ -9,4 +9,12 @@ import com.cuillgln.mx.entity.safetymonitoing.SensorData;
 public interface SensorDataRepository extends CrudRepository<SensorData, Long> {
 
 	Iterable<SensorData> findByValidFlag(int validFlag);
+
+	/**
+	 * 非0的认为合法
+	 * 
+	 * @param validFlag
+	 * @return
+	 */
+	Iterable<SensorData> findByValidFlagNot(int validFlag);
 }

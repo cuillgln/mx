@@ -30,7 +30,8 @@ public class StaffPositioningStation implements Serializable {
 	private String stationName;
 	@Column(name = "[address]")
 	private String location;
-	@Column(name = "[createdt]")
+	// @Column(name = "[createdt]")
+	@Transient
 	private Timestamp createTime;
 	@Column(name = "[fztype]")
 	private Integer type;

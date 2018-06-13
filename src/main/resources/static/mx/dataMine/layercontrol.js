@@ -7,7 +7,7 @@ LayerControl.prototype = new mxLib.Control();
 
 LayerControl.prototype.initialize = function(map) {
 	var div = document.createElement("div");
-	for (var i = 1; i <= 4; i++) {
+	for (var i = 1; i <= 5; i++) {
 		// <p id="layerName" ><checkedbox/><span>layerName</span></p>
 		var layerDiv = document.createElement("p");
 		layerDiv.style.margin = "2px";

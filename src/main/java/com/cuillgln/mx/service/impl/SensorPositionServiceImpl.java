@@ -77,6 +77,7 @@ public class SensorPositionServiceImpl implements SensorPositionService {
 			break;
 		case SensorPosition.TYPE_HUB:
 			sensorPosition.setSensorId(MxConstant.HUB_PREFIX + sensorPosition.getId());
+			break;
 		default:
 			sensorPosition.setSensorId(MxConstant.SENSOR_PREFIX + sensorPosition.getId());
 			break;

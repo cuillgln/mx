@@ -19,7 +19,7 @@ public class SensorDataServiceImpl implements SensorDataService {
 
 	@Override
 	public List<SensorData> list() {
-		Iterable<SensorData> itr = sensorDataRepository.findByValidFlag(MxConstant.VALID_FLAG_YES);
+		Iterable<SensorData> itr = sensorDataRepository.findByValidFlagNot(MxConstant.VALID_FLAG_NO);
 		List<SensorData> result = new ArrayList<>();
 		for (SensorData sensorData : itr) {
 			result.add(fillup(sensorData));

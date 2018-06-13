@@ -20,8 +20,8 @@ public class SensorServiceImpl implements SensorService {
 
 	@Override
 	public List<Sensor> list() {
-		Iterable<Sensor> itr = sensorRepository.findByRemovedFlagAndValidFlag(MxConstant.REMOVED_FLAG_NO,
-				MxConstant.VALID_FLAG_YES);
+		Iterable<Sensor> itr = sensorRepository.findByRemovedFlagNotAndValidFlagNotOrderByStationAscPortIdAsc(
+				MxConstant.REMOVED_FLAG_YES, MxConstant.VALID_FLAG_NO);
 		List<Sensor> result = new ArrayList<>();
 		for (Sensor sensor : itr) {
 			result.add(fillup(sensor));

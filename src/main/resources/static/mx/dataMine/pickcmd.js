@@ -117,6 +117,9 @@ PickCmd.prototype.leftMouseup = function (e, data) {
 	case 4:
 		window.abstation.addMarker(this.opts);
 		break;
+	case 5:
+		window.hub.addMarker(this.opts);
+		break;
 	default:
 		window.sensor.addMarker(this.opts);
 		break;
