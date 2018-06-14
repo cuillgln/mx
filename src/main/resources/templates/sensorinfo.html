@@ -370,22 +370,13 @@ function absInfo(sensorId) {
 
 function hubInfo(sensorId) {
     //得到属性对象
-    var sensorObj = parent.abstation.markerMap[sensorId];
+    var sensorObj = parent.hub.markerMap[sensorId];
     if ($.isEmptyObject(sensorObj)) {
         return;
     }
 
     //遍历
     var arr = [];
-    if (sensorObj.hasOwnProperty("systemId") && sensorObj["systemId"]) {
-        var stationObj = {};
-        stationObj.name = "序号:";
-        stationObj.value = sensorObj["systemId"];
-        stationObj.group = "基本属性";
-        stationObj.editor = "text";
-        //添加到数组
-        arr.push(stationObj);
-    }
     if (sensorObj.hasOwnProperty("host") && sensorObj["host"]) {
         var hostObj = {};
         hostObj.name = "IP地址:";
@@ -409,14 +400,6 @@ function hubInfo(sensorId) {
         locationObj.group = "基本属性";
         locationObj.editor = "text";
         arr.push(locationObj);
-    }
-    if (sensorObj.hasOwnProperty("status") && sensorObj["status"]) {
-        var statusObj = {};
-        statusObj.name = "状态:";
-        statusObj.value = sensorObj["status"];
-        statusObj.group = "基本属性";
-        statusObj.editor = "text";
-        arr.push(statusObj);
     }
 
     //加载数据

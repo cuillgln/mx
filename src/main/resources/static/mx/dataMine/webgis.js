@@ -451,10 +451,10 @@ function loadHub() {
         loadMsg: '数据正在加载,请耐心的等待...',
         striped: true,
         columns: [[
-            { field: 'host', title: 'IP地址', width: 120, align: 'center' },
+            { field: 'host', title: 'IP地址', width: 140, align: 'center' },
             { field: 'port', title: '端口号', width: 40, align: 'center' },
-            { field: 'location', title: '安装地点', width: 40, align: 'center' },
-            { field: 'status', title: '状态', width: 40, align: 'center' },
+            { field: 'location', title: '安装地点', width: 60, align: 'center' },
+            { field: 'status', title: '状态', width: 40, align: 'center', hidden: true },
             { field: 'systemId', title: '系统序号', width: 100, align: 'center', hidden:true},
             { field: 'hubId', title: '分站ID', width: 100, align: 'center', hidden:true},
             { field: 'value', title: 'Value', width: 120, align: 'center', hidden: true},
