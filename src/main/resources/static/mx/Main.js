@@ -28,6 +28,9 @@ var spstation = new mxLib.StaffPositioningStation();
 var abstation = new mxLib.AudioBroadcastingStation();
 var hub = new mxLib.Hub();
 
+var logicalarm = new mxLib.LogicAlarm();
+logicalarm.autoRefresh();
+
 // 历史轨迹
 var sphistory = new mxLib.StaffPositionHistory();
 // 分站

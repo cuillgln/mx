@@ -20,6 +20,7 @@ include(scriptBaseDir + "dataMine/safetymonitoringstation.js");
 include(scriptBaseDir + "dataMine/staffpositioningstation.js");
 include(scriptBaseDir + "dataMine/audiobroadcastingstation.js");
 include(scriptBaseDir + "dataMine/hub.js");
+include(scriptBaseDir + "dataMine/logicalarm.js");
 include(scriptBaseDir + "dataMine/pickcmd.js");
 include(scriptBaseDir + "dataMine/locatecmd.js");
 include(scriptBaseDir + "dataMine/layercontrol.js");

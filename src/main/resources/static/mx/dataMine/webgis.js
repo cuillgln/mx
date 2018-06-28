@@ -64,9 +64,9 @@ function loadSensor() {
     //单击列事件
     $('#sensor').datagrid({
         onDblClickRow: function (index, row) {
-            var stationId = row.stationId;
+            var sensorId = row.sensorId;
             //执行定位脚本
-            MetaMapX.CurViewEvaluateJavaScript("sensor.dolly('" + stationId + "')");
+            MetaMapX.CurViewEvaluateJavaScript("sensor.dolly('" + sensorId + "')");
         },
         onClickCell: function (index, field, value) {
             if (field == "pick") {
