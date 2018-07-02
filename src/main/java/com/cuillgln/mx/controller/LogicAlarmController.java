@@ -3,6 +3,7 @@ package com.cuillgln.mx.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,9 @@ import com.cuillgln.mx.service.LogicAlarmService;
 
 @RestController
 public class LogicAlarmController {
+
+	@Value("${app.alarmFormat}")
+	private String alarmFormat;
 
 	@Autowired
 	private LogicAlarmService service;
@@ -24,8 +28,8 @@ public class LogicAlarmController {
 		}
 		StringBuilder sb = new StringBuilder();
 		for (LogicAlarm la : list) {
-			sb.append("应急联动->").append(la.getStatus()).append("，联动人员定位：").append(la.getStaffPosition())
-					.append(" /语音广播：").append(la.getAudioBroadcast()).append("<br/>");
+			sb.append(String.format(alarmFormat, la.getStatus(), la.getStaffPosition(), la.getAudioBroadcast(),
+					la.getAssociate())).append("<br/>");
 		}
 		return sb.toString();
 	}

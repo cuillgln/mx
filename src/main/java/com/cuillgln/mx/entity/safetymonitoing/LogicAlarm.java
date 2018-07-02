@@ -36,6 +36,10 @@ public class LogicAlarm implements Serializable {
 	@Column(name = "[状态]")
 	private String status;
 
+	// ,[开出关联]
+	@Column(name = "[开出关联]")
+	private String associate;
+
 	public Long getSystemId() {
 		return systemId;
 	}
@@ -91,5 +95,13 @@ public class LogicAlarm implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+    public String getAssociate() {
+        return associate;
+    }
+
+    public void setAssociate(String associate) {
+        this.associate = associate;
+    }
 
 }
