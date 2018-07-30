@@ -26,6 +26,7 @@ include(scriptBaseDir + "dataMine/locatecmd.js");
 include(scriptBaseDir + "dataMine/layercontrol.js");
 include(scriptBaseDir + "dataMine/staffpositionhistory.js");
 include(scriptBaseDir + "dataMine/stationpath.js");
+include(scriptBaseDir + "dataMine/vehicle.js");
 
 //二次开发入口文件 加载完成了dom后
 domLoadedInclude(scriptBaseDir + "Main.js");

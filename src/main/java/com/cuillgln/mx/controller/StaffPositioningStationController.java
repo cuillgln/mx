@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cuillgln.mx.entity.safetymonitoing.Point;
+import com.cuillgln.mx.entity.staffpositioning.StaffPosition;
 import com.cuillgln.mx.entity.staffpositioning.StaffPositioningStation;
 import com.cuillgln.mx.service.StaffPositioningStationService;
 import com.cuillgln.mx.service.StationPathService;
@@ -46,5 +47,15 @@ public class StaffPositioningStationController {
 		List<Point> points = stationPathService.getHistoryPath(service.queryHistory(rfId, begin, end));
 
 		return points;
+	}
+
+	@RequestMapping(value = "/vehicle/list", method = RequestMethod.GET)
+	public List<StaffPosition> vehicle() {
+		return service.queryVehicle();
+	}
+
+	@RequestMapping(value = "/staff/list", method = RequestMethod.GET)
+	public List<StaffPosition> staff() {
+		return service.queryAllStaff();
 	}
 }

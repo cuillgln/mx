@@ -28,6 +28,10 @@ var spstation = new mxLib.StaffPositioningStation();
 var abstation = new mxLib.AudioBroadcastingStation();
 var hub = new mxLib.Hub();
 
+// 车辆
+var vehicle = new mxLib.Vehicle();
+
+// 逻辑报警
 var logicalarm = new mxLib.LogicAlarm();
 logicalarm.autoRefresh();
 

@@ -1,10 +1,17 @@
 package com.cuillgln.mx.entity.staffpositioning;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+
 public class StaffPosition {
 
 	private Long rfId;
 	private String name;
 	private Long stationSystemId;
+
+	private BigDecimal x;
+	private BigDecimal y;
 
 	public Long getRfId() {
 		return rfId;
@@ -28,6 +35,22 @@ public class StaffPosition {
 
 	public void setStationSystemId(Long stationSystemId) {
 		this.stationSystemId = stationSystemId;
+	}
+
+	public BigDecimal getX() {
+		return x;
+	}
+
+	public void setX(BigDecimal x) {
+		this.x = x;
+	}
+
+	public BigDecimal getY() {
+		return y;
+	}
+
+	public void setY(BigDecimal y) {
+		this.y = y;
 	}
 
 }

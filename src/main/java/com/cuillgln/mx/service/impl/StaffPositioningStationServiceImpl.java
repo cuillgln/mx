@@ -75,18 +75,7 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 	}
 
 	private Map<Long, String> getStaffDetails() {
-		String sql = "SELECT [RFID], [name], [fzAdd] FROM [t_rymc]";
-		List<StaffPosition> spList = jdbcTemplate.query(sql, new RowMapper<StaffPosition>() {
-
-			@Override
-			public StaffPosition mapRow(ResultSet rs, int rowNum) throws SQLException {
-				StaffPosition sp = new StaffPosition();
-				sp.setRfId(rs.getLong(1));
-				sp.setName(rs.getString(2));
-				sp.setStationSystemId(rs.getLong(3));
-				return sp;
-			}
-		});
+		List<StaffPosition> spList = queryAllStaff();
 		Map<Long, String> ssMap = new HashMap<>();
 		for (StaffPosition sp : spList) {
 			if (ssMap.containsKey(sp.getStationSystemId())) {
@@ -125,4 +114,37 @@ public class StaffPositioningStationServiceImpl implements StaffPositioningStati
 		return slList;
 	}
 
+	@Override
+	public List<StaffPosition> queryAllStaff() {
+		String sql = "SELECT [RFID], [name], [fzAdd] FROM [t_rymc]";
+		List<StaffPosition> spList = jdbcTemplate.query(sql, new RowMapper<StaffPosition>() {
+
+			@Override
+			public StaffPosition mapRow(ResultSet rs, int rowNum) throws SQLException {
+				StaffPosition sp = new StaffPosition();
+				sp.setRfId(rs.getLong(1));
+				sp.setName(rs.getString(2));
+				sp.setStationSystemId(rs.getLong(3));
+				return sp;
+			}
+		});
+		return spList;
+	}
+
+	@Override
+	public List<StaffPosition> queryVehicle() {
+		String sql = "SELECT [RFID], [name], [fzAdd] FROM [t_rymc] t where t.[name] like '车辆%'";
+		List<StaffPosition> spList = jdbcTemplate.query(sql, new RowMapper<StaffPosition>() {
+
+			@Override
+			public StaffPosition mapRow(ResultSet rs, int rowNum) throws SQLException {
+				StaffPosition sp = new StaffPosition();
+				sp.setRfId(rs.getLong(1));
+				sp.setName(rs.getString(2));
+				sp.setStationSystemId(rs.getLong(3));
+				return sp;
+			}
+		});
+		return spList;
+	}
 }

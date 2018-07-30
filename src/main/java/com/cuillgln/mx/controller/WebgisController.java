@@ -60,6 +60,12 @@ public class WebgisController {
 		return "selfcheck";
 	}
 
+	@RequestMapping("/vehicle")
+	public String vehicle(WebRequest request, Model model) {
+		initModel(request, model, baseMap);
+		return "vehicle";
+	}
+
 	private void initModel(WebRequest request, Model model, String map) {
 		String agent = request.getHeader("user-agent");
 		if (agent.indexOf("MSIE") > 0) {
